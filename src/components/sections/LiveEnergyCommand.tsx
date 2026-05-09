@@ -1,0 +1,150 @@
+"use client";
+
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { Sun, Cpu, Home } from "lucide-react";
+
+export const LiveEnergyCommand = () => {
+  const containerRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      // Animate the flow lines
+      gsap.to(".energy-line-animated", {
+        backgroundPosition: "-200% 0",
+        ease: "none",
+        duration: 2,
+        repeat: -1,
+      });
+
+      // Animate the stats numbers counting up
+      gsap.from(".stat-number", {
+        textContent: 0,
+        duration: 2,
+        ease: "power2.out",
+        snap: { textContent: 1 },
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+        },
+      });
+
+      // Pulse the central hub
+      gsap.to(".nexus-core-ring", {
+        scale: 1.2,
+        opacity: 0,
+        duration: 2,
+        repeat: -1,
+        ease: "power2.out",
+      });
+    },
+    { scope: containerRef }
+  );
+
+  return (
+    <section ref={containerRef} className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto overflow-hidden">
+      <div className="glass-panel rounded-[40px] p-8 md:p-16 relative border border-white/5 shadow-2xl">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-8">
+          <div>
+            <h2 className="font-headline-lg text-headline-lg text-primary mb-2">
+              Live Energy Command
+            </h2>
+            <p className="font-body-md text-body-md text-on-surface-variant">
+              Monitor every watt moving through your ecosystem.
+            </p>
+          </div>
+          <div className="flex gap-4">
+            <div className="px-6 py-3 rounded-2xl glass-panel text-center">
+              <p className="font-label-caps text-[10px] text-on-surface-variant uppercase mb-1">
+                Solar Production
+              </p>
+              <p className="font-headline-md text-headline-md text-primary-fixed-dim">
+                7.4 kW
+              </p>
+            </div>
+            <div className="px-6 py-3 rounded-2xl glass-panel text-center">
+              <p className="font-label-caps text-[10px] text-on-surface-variant uppercase mb-1">
+                Grid Impact
+              </p>
+              <p className="font-headline-md text-headline-md text-error">
+                -0.2 kW
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Diagram Shell */}
+        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-12 items-center text-center">
+          {/* Source 1 */}
+          <div className="space-y-4">
+            <div className="w-24 h-24 mx-auto glass-panel rounded-full flex items-center justify-center border border-primary-fixed/40 shadow-[0_0_30px_rgba(163,255,18,0.1)]">
+              <Sun className="w-10 h-10 text-primary-fixed" />
+            </div>
+            <p className="font-headline-md text-headline-md">Solar Array</p>
+            <div className="h-1 w-2/3 mx-auto energy-line energy-line-animated rounded-full opacity-80"></div>
+          </div>
+
+          {/* Hub */}
+          <div className="relative">
+            <div className="w-48 h-48 mx-auto glass-panel rounded-3xl flex flex-col items-center justify-center border border-white/20 glow-border z-10 relative">
+              <Cpu className="w-12 h-12 text-primary mb-2" />
+              <p className="font-label-caps text-label-caps font-bold">NEXUS CORE</p>
+            </div>
+            {/* Decorative HUD elements */}
+            <div className="absolute inset-0 flex items-center justify-center -z-0">
+              <div className="nexus-core-ring absolute w-64 h-64 border border-primary-fixed/30 rounded-full"></div>
+              <div className="w-64 h-64 border border-primary-fixed/10 rounded-full"></div>
+            </div>
+          </div>
+
+          {/* Sink */}
+          <div className="space-y-4">
+            <div className="w-24 h-24 mx-auto glass-panel rounded-full flex items-center justify-center border border-white/20">
+              <Home className="w-10 h-10 text-primary" />
+            </div>
+            <p className="font-headline-md text-headline-md">Your Home</p>
+            <div className="h-1 w-2/3 mx-auto bg-white/10 rounded-full"></div>
+          </div>
+        </div>
+
+        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="text-center p-6 border-r border-white/5 last:border-0">
+            <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">
+              SELF SUFFICIENCY
+            </p>
+            <p className="text-4xl font-headline-lg text-primary">
+              <span className="stat-number">98</span>%
+            </p>
+          </div>
+          <div className="text-center p-6 border-r border-white/5 last:border-0">
+            <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">
+              EST. SAVINGS
+            </p>
+            <p className="text-4xl font-headline-lg text-primary-fixed-dim">
+              $<span className="stat-number">412</span>
+            </p>
+          </div>
+          <div className="text-center p-6 border-r border-white/5 last:border-0">
+            <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">
+              CO2 SAVED
+            </p>
+            <p className="text-4xl font-headline-lg text-primary">
+              <span className="stat-number">1.2</span>t
+            </p>
+          </div>
+          <div className="text-center p-6 last:border-0 flex flex-col items-center justify-center">
+            <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">
+              GRID STATUS
+            </p>
+            <div className="flex items-center justify-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-primary-fixed shadow-[0_0_8px_#A3FF12] animate-pulse"></div>
+              <p className="text-lg font-headline-md text-primary">OPTIMAL</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
