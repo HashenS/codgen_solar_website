@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#bfc7d4",
+                    "surface-variant": "#353534",
+                    "surface-container": "#201f1f",
+                    "on-tertiary": "#3c2f00",
+                    "on-background": "#e5e2e1",
+                    "inverse-primary": "#406900",
+                    "tertiary-container": "#ffe085",
+                    "background": "#050505",
+                    "inverse-on-surface": "#313030",
+                    "tertiary": "#ffffff",
+                    "surface-container-highest": "#353534",
+                    "on-tertiary-fixed-variant": "#574500",
+                    "surface-tint": "#8bdc00",
+                    "outline": "#8a947a",
+                    "inverse-surface": "#e5e2e1",
+                    "tertiary-fixed-dim": "#ebc238",
+                    "secondary-fixed": "#dbe3f0",
+                    "on-surface-variant": "#c0caae",
+                    "on-secondary": "#29313b",
+                    "on-primary": "#1f3700",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-bright": "#3a3939",
+                    "surface-dim": "#131313",
+                    "primary-fixed": "#9ffb06",
+                    "on-tertiary-container": "#7a6200",
+                    "primary": "#A3FF12",
+                    "secondary": "#bfc7d4",
+                    "on-error": "#690005",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-secondary-container": "#aeb6c2",
+                    "on-primary-fixed": "#102000",
+                    "secondary-container": "#3f4752",
+                    "on-tertiary-fixed": "#231b00",
+                    "on-secondary-fixed": "#141c25",
+                    "error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#3f4752",
+                    "on-error-container": "#ffdad6",
+                    "primary-container": "#9ffb06",
+                    "outline-variant": "#414a34",
+                    "surface": "#131313",
+                    "on-primary-container": "#447000",
+                    "error": "#ffb4ab",
+                    "surface-container-low": "#1c1b1b",
+                    "primary-fixed-dim": "#8bdc00",
+                    "on-surface": "#e5e2e1",
+                    "tertiary-fixed": "#ffe085",
+                    "on-primary-fixed-variant": "#2f4f00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "section-gap": "120px",
+                    "margin-mobile": "20px",
+                    "margin-desktop": "80px",
+                    "container-max": "1440px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Space Grotesk"],
+                    "label-caps": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Space Grotesk"],
+                    "headline-lg": ["Space Grotesk"],
+                    "display-hero": ["Space Grotesk"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "display-hero": ["80px", {"lineHeight": "90px", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(15, 23, 32, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .luminous-border:hover {
+            border-color: #A3FF12;
+            box-shadow: 0 0 15px rgba(163, 255, 18, 0.2);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at top right, rgba(163, 255, 18, 0.05), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(15, 23, 32, 1), transparent 50%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-transparent backdrop-blur-xl border-b border-white/10">
+<nav class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 max-w-container-max mx-auto">
+<div class="font-headline-md text-headline-md font-bold text-primary tracking-tighter">
+                Codegen Solar
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-primary-fixed-dim font-bold font-label-caps text-label-caps hover:text-primary-fixed-dim transition-colors duration-300" href="#">Solutions</a>
+<a class="text-on-surface/80 font-medium font-label-caps text-label-caps hover:text-primary-fixed-dim transition-colors duration-300" href="#">Technology</a>
+<a class="text-on-surface/80 font-medium font-label-caps text-label-caps hover:text-primary-fixed-dim transition-colors duration-300" href="#">Projects</a>
+<a class="text-on-surface/80 font-medium font-label-caps text-label-caps hover:text-primary-fixed-dim transition-colors duration-300" href="#">Calculator</a>
+</div>
+<button class="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-6 py-3 rounded-full scale-95 active:scale-90 transition-transform font-bold">
+                Get Started
+            </button>
+</nav>
+</header>
+<main>
+<!-- Cinematic Hero -->
+<section class="relative h-[921px] flex items-center justify-center overflow-hidden pt-20">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-60" data-alt="A wide cinematic shot of a vast solar farm integrated into a mountainous landscape during the blue hour. The panels reflect the deep indigo sky while the last light of the sun creates a sharp, high-contrast silhouette of the mountain range. The atmosphere is quiet, majestic, and high-tech, emphasizing clean energy at a massive scale with a deep blue and black color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbiJACh4LTzaOcFuUfmJhrSH5dFwpJkccHTfKB2U2LFpPDdBQJIYhj7kUNCkrGt5HbdEMHB4_1qjblheiL57ZjcmnVCbd5EmXmoyytWiwYAdu2nTKAKwinRWIAP3ox7MFx8qomYunrRy-5UWGz0VGz0UUZ6h27nvcA0NltSCvSulR4ip84AJ1KrQ7se6xqHfBpErTlLOqKmISvuQltINobAq4sUGVBHZUZ3z3xkS6NiqFYm3RuEv-JBTAm2sC6yhy3ieWYOFVQ3S5O"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+</div>
+<div class="relative z-10 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-center">
+<span class="font-label-caps text-label-caps text-primary mb-6 block tracking-widest uppercase">Solar Architecture</span>
+<h1 class="font-display-hero text-[40px] md:text-display-hero leading-[1.1] text-on-surface max-w-4xl mx-auto mb-8">
+                    Tailored Solar Ecosystems. Precision Engineering for Every Environment.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
+                    Redefining energy independence through atmospheric-grade technology and intelligent storage systems designed for the next century.
+                </p>
+<div class="flex flex-col md:flex-row gap-6 justify-center">
+<button class="bg-primary text-on-primary-fixed font-label-caps text-label-caps px-10 py-5 rounded-full font-bold hover:shadow-[0_0_20px_rgba(163,255,18,0.4)] transition-all">
+                        Consult an Engineer
+                    </button>
+<button class="glass-panel text-on-surface font-label-caps text-label-caps px-10 py-5 rounded-full font-bold hover:bg-white/10 transition-all">
+                        View Architecture
+                    </button>
+</div>
+</div>
+</section>
+<!-- Solution Grid -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- On-Grid -->
+<div class="glass-panel luminous-border p-10 rounded-xl group transition-all duration-500">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-8 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">grid_view</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">On-Grid Precision</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 h-24">
+                        Seamless integration with the global utility network. Optimized for maximum financial yield and accelerated ROI through smart feed-in protocols.
+                    </p>
+<div class="flex items-center justify-between mt-auto">
+<span class="font-label-caps text-label-caps text-primary">ROI Focus</span>
+<a class="text-on-surface font-label-caps text-label-caps flex items-center gap-2 group-hover:gap-4 transition-all" href="#">
+                            Explore Solution <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Off-Grid -->
+<div class="glass-panel luminous-border p-10 rounded-xl group transition-all duration-500">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-8 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">bolt</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Off-Grid Autonomy</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 h-24">
+                        Complete energy sovereignty for remote environments. Built with high-capacity storage to ensure uninterrupted power in the harshest conditions.
+                    </p>
+<div class="flex items-center justify-between mt-auto">
+<span class="font-label-caps text-label-caps text-primary">Freedom First</span>
+<a class="text-on-surface font-label-caps text-label-caps flex items-center gap-2 group-hover:gap-4 transition-all" href="#">
+                            Explore Solution <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Hybrid -->
+<div class="glass-panel luminous-border p-10 rounded-xl group transition-all duration-500">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-8 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">layers</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Hybrid Resilience</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 h-24">
+                        The ultimate compromise: grid connectivity with independent backup security. Automated switching protocols manage peak loads and grid outages.
+                    </p>
+<div class="flex items-center justify-between mt-auto">
+<span class="font-label-caps text-label-caps text-primary">Total Resilience</span>
+<a class="text-on-surface font-label-caps text-label-caps flex items-center gap-2 group-hover:gap-4 transition-all" href="#">
+                            Explore Solution <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Technical Comparison -->
+<section class="py-section-gap bg-surface-container-lowest">
+<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="text-center mb-20">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-6">Technical Architecture Comparison</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                        Precision metrics for informed decision-making.
+                    </p>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse glass-panel rounded-xl overflow-hidden">
+<thead>
+<tr class="border-b border-white/10 bg-white/5">
+<th class="p-8 font-label-caps text-label-caps text-on-surface-variant">Metric</th>
+<th class="p-8 font-headline-md text-headline-md text-primary">On-Grid</th>
+<th class="p-8 font-headline-md text-headline-md text-primary">Off-Grid</th>
+<th class="p-8 font-headline-md text-headline-md text-primary">Hybrid</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md">
+<tr class="border-b border-white/10 hover:bg-white/5 transition-colors">
+<td class="p-8 text-on-surface font-medium">Energy Autonomy</td>
+<td class="p-8 text-on-surface-variant">Low (Grid Dependent)</td>
+<td class="p-8 text-on-surface-variant">100% (Total Independent)</td>
+<td class="p-8 text-on-surface-variant">Partial (Intelligent Backup)</td>
+</tr>
+<tr class="border-b border-white/10 hover:bg-white/5 transition-colors">
+<td class="p-8 text-on-surface font-medium">ROI Speed</td>
+<td class="p-8 text-on-surface-variant">Rapid (3-5 Years)</td>
+<td class="p-8 text-on-surface-variant">Moderate (LCOE focus)</td>
+<td class="p-8 text-on-surface-variant">Balanced (5-8 Years)</td>
+</tr>
+<tr class="border-b border-white/10 hover:bg-white/5 transition-colors">
+<td class="p-8 text-on-surface font-medium">Backup Capability</td>
+<td class="p-8 text-on-surface-variant">None</td>
+<td class="p-8 text-on-surface-variant">Infinite (Battery Limited)</td>
+<td class="p-8 text-on-surface-variant">Priority Load Support</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="p-8 text-on-surface font-medium">Installation Complexity</td>
+<td class="p-8 text-on-surface-variant">Minimal</td>
+<td class="p-8 text-on-surface-variant">High Precision</td>
+<td class="p-8 text-on-surface-variant">Sophisticated</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- Integrated Technology -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row items-center gap-20">
+<div class="flex-1">
+<img class="rounded-2xl shadow-2xl" data-alt="A high-fidelity studio shot of a modular, sleek black battery storage unit with glowing green LED indicators along its vertical seams. The unit is placed in a minimalist industrial setting with polished concrete floors and subtle atmospheric smoke. The lighting is focused, casting long shadows and highlighting the premium matte finish of the hardware, echoing a futuristic energy aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkQ5PFn9zP6fwybcpNdP1kmDdt7k4e6Roco4UGW42BLxqALQoansQfprnYObGQbL8pEXQXwH1rBbyvhLBH8mMcMQhRtB0_xrIoKEqIuyomggFU5ffgJJxSRtcvneDrGcuwsNHMX9xymWdiBTpNsxlXheW9rMBKsqpMRw_xLG1tsbw1wJnQSyBU4EtrPgvAedBO6OR6mfz6YYglDzt9Kza1w_cE0T_2mPpl2Q0SbqSLCt_APZkb8FMpew7Uu9px1UolK5XN4pchD6OT"/>
+</div>
+<div class="flex-1 space-y-12">
+<div>
+<span class="font-label-caps text-label-caps text-primary tracking-widest block mb-4 uppercase">The Core Stack</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-6">Unified Intelligence</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                            Every system we design is powered by our proprietary hardware ecosystem, ensuring 100% compatibility and zero latency in energy transfer.
+                        </p>
+</div>
+<div class="space-y-8">
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-12 h-12 glass-panel flex items-center justify-center rounded-lg border-primary/30">
+<span class="material-symbols-outlined text-primary">battery_charging_full</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">LuminousCore Battery</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">High-density solid-state storage with 25-year performance guarantee.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-12 h-12 glass-panel flex items-center justify-center rounded-lg border-primary/30">
+<span class="material-symbols-outlined text-primary">monitoring</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">Nexus OS Monitoring</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">AI-driven energy orchestration that predicts consumption patterns.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-section-gap px-margin-mobile">
+<div class="max-w-container-max mx-auto glass-panel rounded-3xl p-16 md:p-32 text-center relative overflow-hidden">
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
+<img class="w-full h-full object-cover" data-alt="A top-down abstract view of complex circuit patterns glowing in neon green against a deep charcoal background. The patterns resemble a digital city or a microscopic look at high-performance conductors. The lighting is atmospheric with a shallow depth of field, emphasizing the intricate and advanced nature of energy technology." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLDWdMsFsYmkyfbo_29_43T7O5ttn1iWyeUVyPIF5fGL-rD_WDKC7J2ky24h-M_K-3VlIPs9Y1OcwAVMDZ8xi0zDom2846xnRFmrWhz5hl-x32NgV5EYsUar_806fVSob31sLSbh8_-FRBQdS6oKevvQnwn7P4QJ8N6AXj_tJtY5CegZ9duE1ksrKD_2LLUmK8-IedJzaxxzKYvYGMD_S-SSaUpL11G4VCDWPV9hLUUhHsq2aFSphW425gXJ9Gbt5gfG0EME26kz6c"/>
+</div>
+<div class="relative z-10">
+<h2 class="font-display-hero text-[40px] md:text-headline-lg text-on-surface mb-8">Ready to Transcend the Grid?</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto mb-12">
+                        Our engineering team is standing by to architect your bespoke energy ecosystem. Experience the future of clean energy today.
+                    </p>
+<button class="bg-primary text-on-primary-fixed font-label-caps text-label-caps px-12 py-6 rounded-full font-bold hover:scale-105 transition-transform">
+                        Consult with our engineers
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full rounded-t-xl border-t border-outline-variant bg-surface-container-lowest">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto">
+<div class="space-y-6">
+<div class="font-headline-md text-headline-md font-bold text-primary">Codegen Solar</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Precision Engineering for a Sustainable Future.</p>
+</div>
+<div class="space-y-4">
+<h5 class="font-label-caps text-label-caps text-on-surface font-bold">Solutions</h5>
+<ul class="space-y-2 font-body-md text-body-md text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">On-Grid</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Off-Grid</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Hybrid</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h5 class="font-label-caps text-label-caps text-on-surface font-bold">Resources</h5>
+<ul class="space-y-2 font-body-md text-body-md text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">Sustainability Report</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Press Kit</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Calculator</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h5 class="font-label-caps text-label-caps text-on-surface font-bold">Legal</h5>
+<ul class="space-y-2 font-body-md text-body-md text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+<div class="px-margin-mobile md:px-margin-desktop py-8 border-t border-white/5 text-center font-label-caps text-label-caps text-on-surface-variant/60">
+            © 2024 Codegen Solar. Precision Engineering for a Sustainable Future.
+        </div>
+</footer>
+</body></html>

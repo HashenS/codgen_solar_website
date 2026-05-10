@@ -15,7 +15,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", size = "md", children, ...props }, ref) => {
     const variants = {
       primary:
-        "bg-[#A3FF12] text-[#102000] hover:shadow-[0_0_20px_rgba(163,255,18,0.4)] hover:scale-105 active:scale-95",
+        "bg-[#A3FF12] text-black hover:shadow-[0_0_20px_rgba(163,255,18,0.4)] hover:scale-105 active:scale-95",
       secondary:
         "bg-transparent border border-primary-fixed/30 text-primary-fixed hover:bg-primary-fixed/10",
       glass:
@@ -38,6 +38,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           variant === "primary" && size === "sm" ? "rounded-full" : "",
           className
         )}
+        style={variant === "primary" ? { color: "#102000" } : undefined}
         {...props}
       >
         {children}

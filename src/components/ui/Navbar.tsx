@@ -30,18 +30,28 @@ export const Navbar = () => {
         </Link>
         
         <div className="hidden md:flex gap-8 items-center">
-          {["Home", "About", "Solutions", "Projects", "Contact", "FAQs"].map((item) => (
+          {[
+            { label: "Home", href: "/" },
+            { label: "About", href: "/about" },
+            { label: "Solutions", href: "/solutions" },
+            { label: "Projects", href: "/#projects" },
+            { label: "Contact", href: "/#contact" },
+            { label: "FAQs", href: "/#faqs" }
+          ].map((item) => (
             <Link
-              key={item}
-              href={item === "Home" ? "/" : `#${item.toLowerCase()}`}
-              className="text-on-surface-variant font-medium hover:text-primary-fixed-dim transition-colors duration-300 font-label-caps text-label-caps"
+              key={item.label}
+              href={item.href}
+              className="text-on-surface-variant font-medium hover:text-primary-fixed-dim transition-colors duration-300 font-label-caps text-label-caps uppercase"
             >
-              {item}
+              {item.label}
             </Link>
           ))}
         </div>
         
-        <button className="bg-primary-fixed text-[#102000] px-6 py-2 rounded-full font-label-caps text-label-caps font-bold scale-95 hover:scale-100 active:scale-90 transition-all shadow-[0_0_15px_rgba(163,255,18,0.3)] hover:shadow-[0_0_25px_rgba(163,255,18,0.5)]">
+        <button 
+          className="bg-primary-fixed text-black px-6 py-2 rounded-full font-label-caps text-label-caps font-bold scale-95 hover:scale-100 active:scale-90 transition-all shadow-[0_0_15px_rgba(163,255,18,0.3)] hover:shadow-[0_0_25px_rgba(163,255,18,0.5)]"
+          style={{ color: "#102000" }}
+        >
           Get Started
         </button>
       </div>
