@@ -96,9 +96,9 @@ export const ContactGrid = () => {
                   <MapPin className="text-primary-fixed w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-headline-md text-white text-lg mb-1">Engineering HQ</h4>
-                  <p className="text-on-surface-variant text-body-md">Silicon Valley Research Park</p>
-                  <p className="text-on-surface-variant text-body-md">Palo Alto, CA 94304</p>
+                  <h4 className="font-headline-md text-white text-lg mb-1">Head Office</h4>
+                  <p className="text-on-surface-variant text-body-md">Trace Expert City, Bay 1-5,</p>
+                  <p className="text-on-surface-variant text-body-md">Maradana Rd, Colombo</p>
                 </div>
               </div>
               
@@ -107,9 +107,9 @@ export const ContactGrid = () => {
                   <Network className="text-primary-fixed w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-headline-md text-white text-lg mb-1">European Operations</h4>
-                  <p className="text-on-surface-variant text-body-md">Innovation District Berlin</p>
-                  <p className="text-on-surface-variant text-body-md">10115 Berlin, Germany</p>
+                  <h4 className="font-headline-md text-white text-lg mb-1">Working Hours</h4>
+                  <p className="text-on-surface-variant text-body-md">Mon to Fri</p>
+                  <p className="text-on-surface-variant text-body-md">8:30am - 5:00pm</p>
                 </div>
               </div>
               
@@ -118,9 +118,9 @@ export const ContactGrid = () => {
                   <Mail className="text-primary-fixed w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-headline-md text-white text-lg mb-1">Direct Inquiries</h4>
-                  <p className="text-on-surface-variant text-body-md">press@codegensolar.com</p>
-                  <p className="text-on-surface-variant text-body-md">engineering@codegensolar.com</p>
+                  <h4 className="font-headline-md text-white text-lg mb-1">Contact Information</h4>
+                  <p className="text-on-surface-variant text-body-md">info@codegensolar.com</p>
+                  <p className="text-on-surface-variant text-body-md">(+94) 114 222 501</p>
                 </div>
               </div>
             </div>

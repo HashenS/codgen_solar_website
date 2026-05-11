@@ -16,22 +16,22 @@ export const Footer = () => {
         
         <div>
           <h6 className="text-primary font-bold font-label-caps text-label-caps mb-6">
-            TECHNOLOGY
+            SERVICES
           </h6>
           <ul className="space-y-4">
             <li>
-              <Link href="#" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
-                Hybrid Inverters
+              <Link href="/solutions-on-grid" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
+                On Grid Solar Systems
               </Link>
             </li>
             <li>
-              <Link href="#" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
-                Nexus OS
+              <Link href="/solutions-off-grid" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
+                Off Grid Solar Systems
               </Link>
             </li>
             <li>
-              <Link href="#" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
-                Solar Storage
+              <Link href="/solutions-hybrid" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
+                Hybrid Solar Systems
               </Link>
             </li>
           </ul>
@@ -39,22 +39,22 @@ export const Footer = () => {
         
         <div>
           <h6 className="text-primary font-bold font-label-caps text-label-caps mb-6">
-            COMPANY
+            EXPLORE
           </h6>
           <ul className="space-y-4">
             <li>
-              <Link href="#" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
-                Privacy Policy
+              <Link href="/about" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
+                About
               </Link>
             </li>
             <li>
-              <Link href="#" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
-                Terms of Service
+              <Link href="/projects" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
+                Recent Projects
               </Link>
             </li>
             <li>
-              <Link href="#" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
-                Sustainability Report
+              <Link href="/contact" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
+                Contact
               </Link>
             </li>
           </ul>
@@ -66,19 +66,24 @@ export const Footer = () => {
           </h6>
           <ul className="space-y-4">
             <li>
-              <Link href="#" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
-                Press Kit
-              </Link>
+              <p className="text-on-surface-variant font-body-md text-body-md">
+                Trace Expert City, Bay 1-5,<br />Maradana Rd, Colombo
+              </p>
             </li>
             <li>
-              <Link href="#" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
-                System Support
-              </Link>
+              <a href="mailto:info@codegensolar.com" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
+                info@codegensolar.com
+              </a>
             </li>
             <li>
-              <Link href="#" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
-                Find an Installer
-              </Link>
+              <a href="tel:+94114222501" className="text-on-surface-variant hover:text-primary-fixed-dim transition-colors font-body-md text-body-md">
+                (+94) 114 222 501
+              </a>
+            </li>
+            <li>
+              <p className="text-on-surface-variant font-body-md text-body-md">
+                Mon to Fri: 8:30am - 5:00pm
+              </p>
             </li>
           </ul>
         </div>
