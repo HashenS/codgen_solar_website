@@ -94,11 +94,13 @@ export const Hero = () => {
 
   return (
     <section
-      ref={containerRef}
-      className="relative h-[300vh] bg-[#050505]"
+      className="relative h-[400vh] bg-[#050505] -mb-[100vh]"
     >
+      {/* Invisible container to track the first 300vh of scroll for animation */}
+      <div ref={containerRef} className="absolute top-0 left-0 w-full h-[300vh] pointer-events-none" />
+
       {/* Sticky container that stays in view */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col pt-24">
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col pt-24 z-0">
         {/* Background Canvas */}
         <div className="absolute inset-0 z-0">
           <motion.canvas

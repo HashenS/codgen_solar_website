@@ -13,13 +13,15 @@ export default function Home() {
     <main className="flex min-h-screen flex-col bg-background text-on-background relative">
       <Navbar />
       <Hero />
-      <SmartSwitching />
-      <PeaceOfMind />
-      <LiveEnergyCommand />
-      <SolarCalculator />
-      <FAQ />
-      <CTA />
-      <Footer />
+      <div className="relative z-20 bg-background w-full">
+        <SmartSwitching />
+        <PeaceOfMind />
+        <LiveEnergyCommand />
+        <SolarCalculator />
+        <FAQ />
+        <CTA />
+        <Footer />
+      </div>
     </main>
   );
 }
