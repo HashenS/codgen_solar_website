@@ -1,109 +1,155 @@
 "use client";
 
-import React, { useRef } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { Button } from "../ui/Button";
+import React, { useRef, useEffect, useState } from "react";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+
+const frameCount = 210;
+
+const currentFrame = (index: number) => 
+  `/hero-images/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
 
 export const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [images, setImages] = useState<HTMLImageElement[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
 
-  useGSAP(
-    () => {
-      const tl = gsap.timeline();
+  // Preload images
+  useEffect(() => {
+    setIsMounted(true);
+    const loadedImages: HTMLImageElement[] = [];
+    
+    for (let i = 1; i <= frameCount; i++) {
+      const img = new Image();
+      img.src = currentFrame(i);
+      loadedImages.push(img);
+    }
+    setImages(loadedImages);
+  }, []);
 
-      // Subtle zoom out on the background video on load
-      tl.fromTo(
-        videoRef.current,
-        { scale: 1.1, opacity: 0 },
-        { scale: 1, opacity: 0.6, duration: 3, ease: "power2.out" }
-      );
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
 
-      // Stagger elements inside the hero content
-      tl.from(
-        ".hero-element",
-        {
-          y: 30,
-          opacity: 0,
-          duration: 1,
-          stagger: 0.2,
-          ease: "power3.out",
-        },
-        "-=2"
-      );
+  const frameIndex = useTransform(scrollYProgress, [0, 1], [1, frameCount]);
 
-      // Scrub video playback with GSAP ScrollTrigger
-      const video = videoRef.current;
-      if (video) {
-        const setupScrollScrub = () => {
-          // Set a defined end scroll distance, e.g. 3000px, so there's plenty of scroll room to play the video
-          gsap.to(video, {
-            currentTime: video.duration || 5, // Fallback duration
-            ease: "none",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top top",
-              end: "+=3000", // Much longer scroll distance to make the playback slower/smoother
-              scrub: 1.5, // Adding a scrub delay (1.5s) massively smooths out video playback
-              pin: true, // This locks the hero in place until the scroll distance is covered
-              pinSpacing: true, // Forces following sections to wait
-            },
-          });
-        };
+  const ultimateOpacity = useTransform(scrollYProgress, [0.3, 0.4, 0.5, 0.6], [0, 1, 1, 0]);
+  const ultimateY = useTransform(scrollYProgress, [0.3, 0.4, 0.5, 0.6], [30, 0, 0, -30]);
 
-        if (video.readyState >= 1) {
-          setupScrollScrub();
-        } else {
-          video.addEventListener("loadedmetadata", setupScrollScrub);
-          return () => video.removeEventListener("loadedmetadata", setupScrollScrub);
-        }
+  const safetyOpacity = useTransform(scrollYProgress, [0.6, 0.7, 0.9, 1.0], [0, 1, 1, 1]);
+  const safetyY = useTransform(scrollYProgress, [0.6, 0.7, 0.9, 1.0], [30, 0, 0, 0]);
+
+  const drawImage = (index: number) => {
+    if (images[index - 1] && canvasRef.current) {
+      const context = canvasRef.current.getContext("2d");
+      if (context) {
+        const img = images[index - 1];
+        if (!img.complete) return; // Don't draw if not loaded yet
+        
+        const canvas = canvasRef.current;
+        const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+        const x = (canvas.width / 2) - (img.width / 2) * scale;
+        const y = (canvas.height / 2) - (img.height / 2) * scale;
+        
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(img, x, y, img.width * scale, img.height * scale);
       }
-    },
-    { scope: containerRef }
-  );
+    }
+  };
+
+  useMotionValueEvent(frameIndex, "change", (latest) => {
+    const index = Math.round(latest);
+    drawImage(index);
+  });
+
+  // Handle resizing canvas
+  useEffect(() => {
+    const resizeCanvas = () => {
+      if (canvasRef.current) {
+        canvasRef.current.width = window.innerWidth;
+        canvasRef.current.height = window.innerHeight;
+        // Redraw current frame
+        const index = Math.round(frameIndex.get());
+        drawImage(index);
+      }
+    };
+    
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas(); // Initial call
+    return () => window.removeEventListener("resize", resizeCanvas);
+  }, [images, frameIndex]);
+
+  // Initial draw once first image is loaded
+  useEffect(() => {
+    if (images[0] && canvasRef.current) {
+      const img = images[0];
+      if (img.complete) {
+        drawImage(1);
+      } else {
+        img.onload = () => drawImage(1);
+      }
+    }
+  }, [images]);
 
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center pt-24 overflow-hidden"
+      className="relative h-[300vh] bg-[#050505]"
     >
-      {/* Background Video */}
-      <div className="absolute inset-0 z-0 bg-[#050505]">
-        <video
-          ref={videoRef}
-          src="/hero_video.mp4"
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-60 transform-gpu"
-        />
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-      </div>
-
-      <div className="relative z-10 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full flex flex-col md:flex-row justify-between items-end gap-12 pb-20">
-        <div className="max-w-2xl">
-          <span className="hero-element inline-block px-4 py-1 rounded-full border border-primary-fixed/30 text-primary-fixed font-label-caps text-label-caps mb-6 bg-primary-fixed/10 backdrop-blur-md">
-            HYBRID RESILIENCE
-          </span>
-          <h1 className="hero-element font-display-hero text-display-hero text-primary mb-0 leading-none drop-shadow-2xl">
-            The Ultimate <br/><span className="text-primary-fixed-dim drop-shadow-[0_0_15px_rgba(159,251,6,0.3)]">Safety Net.</span>
-          </h1>
+      {/* Sticky container that stays in view */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col pt-24">
+        {/* Background Canvas */}
+        <div className="absolute inset-0 z-0">
+          <motion.canvas
+            ref={canvasRef}
+            initial={{ scale: 1.1, opacity: 0 }}
+            animate={{ scale: 1, opacity: 0.6 }}
+            transition={{ duration: 3, ease: "easeOut" }}
+            className="w-full h-full object-cover"
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
         </div>
-        
-        <div className="max-w-xl flex flex-col gap-8">
-          <p className="hero-element font-body-lg text-body-lg text-on-surface-variant drop-shadow-md">
-            Experience uninterrupted power with Codegen Solar's Hybrid Resilience.
-            A tri-mode energy architecture that bridges the gap between solar,
-            storage, and the grid.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button variant="primary" className="hero-element w-full sm:w-auto shadow-[0_0_20px_rgba(159,251,6,0.3)]">
-              Explore System
-            </Button>
-            <Button variant="glass" className="hero-element w-full sm:w-auto">
-              Watch Technical Film
-            </Button>
+
+        {/* Centered Animated Text */}
+        {isMounted && (
+          <div className="absolute inset-0 z-10 pointer-events-none">
+            {/* The Ultimate */}
+            <motion.div
+              style={{ opacity: ultimateOpacity, y: ultimateY }}
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              <h1 className="font-display-hero text-display-hero text-primary mb-0 leading-none drop-shadow-2xl text-center">
+                The Ultimate
+              </h1>
+            </motion.div>
+
+            {/* Safety Net. */}
+            <motion.div
+              style={{ opacity: safetyOpacity, y: safetyY }}
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              <h1 className="font-display-hero text-display-hero text-primary-fixed-dim drop-shadow-[0_0_15px_rgba(159,251,6,0.3)] mb-0 leading-none text-center">
+                Safety Net.
+              </h1>
+            </motion.div>
+          </div>
+        )}
+
+        {/* Bottom content (paragraph) */}
+        <div className="relative z-10 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full flex flex-col items-end justify-end h-full pb-20 pointer-events-none">
+          <div className="max-w-xl pointer-events-auto">
+            <motion.p
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, delay: 1.4, ease: "easeOut" }}
+              className="font-body-lg text-body-lg text-on-surface-variant drop-shadow-md text-right"
+            >
+              Experience uninterrupted power with Codegen Solar's Hybrid Resilience.
+              A tri-mode energy architecture that bridges the gap between solar,
+              storage, and the grid.
+            </motion.p>
           </div>
         </div>
       </div>
