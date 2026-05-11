@@ -10,17 +10,24 @@ export const Values = () => {
 
   useGSAP(
     () => {
-      gsap.from(".value-pillar", {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 75%",
+      gsap.fromTo(
+        ".value-pillar",
+        {
+          y: 40,
+          opacity: 0,
         },
-      });
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 75%",
+          },
+        }
+      );
     },
     { scope: containerRef }
   );

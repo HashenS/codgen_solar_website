@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#141c25",
+                    "tertiary": "#ffffff",
+                    "outline-variant": "#414a34",
+                    "surface-container-high": "#2a2a2a",
+                    "surface": "#131313",
+                    "on-background": "#e5e2e1",
+                    "error-container": "#93000a",
+                    "on-surface-variant": "#c0caae",
+                    "tertiary-container": "#ffe085",
+                    "on-primary-container": "#447000",
+                    "background": "#131313",
+                    "primary-fixed-dim": "#8bdc00",
+                    "on-surface": "#e5e2e1",
+                    "on-primary": "#1f3700",
+                    "surface-variant": "#353534",
+                    "surface-container-low": "#1c1b1b",
+                    "error": "#ffb4ab",
+                    "outline": "#8a947a",
+                    "tertiary-fixed-dim": "#ebc238",
+                    "on-error-container": "#ffdad6",
+                    "inverse-surface": "#e5e2e1",
+                    "on-tertiary-container": "#7a6200",
+                    "on-tertiary-fixed": "#231b00",
+                    "on-primary-fixed": "#102000",
+                    "primary-fixed": "#9ffb06",
+                    "secondary": "#bfc7d4",
+                    "surface-bright": "#3a3939",
+                    "on-secondary": "#29313b",
+                    "on-tertiary-fixed-variant": "#574500",
+                    "on-primary-fixed-variant": "#2f4f00",
+                    "inverse-primary": "#406900",
+                    "surface-container-highest": "#353534",
+                    "secondary-fixed-dim": "#bfc7d4",
+                    "primary": "#ffffff",
+                    "tertiary-fixed": "#ffe085",
+                    "secondary-container": "#3f4752",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container": "#201f1f",
+                    "on-tertiary": "#3c2f00",
+                    "on-secondary-container": "#aeb6c2",
+                    "primary-container": "#9ffb06",
+                    "surface-dim": "#131313",
+                    "secondary-fixed": "#dbe3f0",
+                    "on-error": "#690005",
+                    "inverse-on-surface": "#313030",
+                    "surface-tint": "#8bdc00",
+                    "on-secondary-fixed-variant": "#3f4752"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "gutter": "24px",
+                    "margin-desktop": "80px",
+                    "container-max": "1440px",
+                    "section-gap": "120px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Space Grotesk"],
+                    "display-hero": ["Space Grotesk"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Space Grotesk"],
+                    "label-caps": ["Inter"],
+                    "headline-lg-mobile": ["Space Grotesk"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "display-hero": ["80px", {"lineHeight": "90px", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(15, 23, 32, 0.7);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease-in-out;
+        }
+        .glass-card:hover {
+            border-color: #9ffb06;
+            box-shadow: 0 0 20px rgba(159, 251, 6, 0.1);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at top right, rgba(159, 251, 6, 0.08), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(15, 23, 32, 1), transparent 50%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-xl border-b border-white/10 shadow-none">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 w-full max-w-container-max mx-auto transition-all duration-500 ease-in-out">
+<div class="font-headline-lg text-headline-lg-mobile tracking-tighter text-primary-fixed">Codegen Solar</div>
+<nav class="hidden md:flex gap-10">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Commercial</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Residential</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Innovation</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Sustainability</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-label-caps hover:bg-primary-fixed-dim transition-all">Consultation</button>
+<span class="material-symbols-outlined text-primary text-2xl cursor-pointer md:hidden">menu</span>
+</div>
+</div>
+</header>
+<main class="pt-[120px]">
+<!-- Hero Section -->
+<section class="relative min-h-[409px] flex items-center justify-center overflow-hidden hero-gradient border-b border-white/5">
+<div class="absolute inset-0 opacity-20 pointer-events-none" data-alt="A cinematic wide shot of a high-tech solar energy farm at dusk, with sleek black solar panels reflecting a deep indigo sky. The lighting is moody and atmospheric, featuring subtle neon green highlights along the panel edges to evoke a futuristic, premium energy aesthetic. The composition is expansive and architectural, focusing on clean lines and sustainable luxury technology." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAVC1YHjakzlsDrkfWvCp6gAIKtSOA6GlPmI7JWBc25e6sFO6c8FgXc1SK3fU1bLhlSLL3FE_aIVHp-lEMksOCKEhqv3G64ReDC33N7p5goS62SRw1C50T9zCUaNizelmsqBS1HCkeCx23Ehx1zrUai2M_dC7FUU4fIP525SB53iYs8SXZ7PS_KK19Kk1r2pZx9LHXbkiaJZLyTH4bywU6ghNTJRXaqRJlUh2OKphXN-UyIVjo7E2j-r7o7zyaMNHheJXRUsFV4zhzP'); background-size: cover; background-position: center;"></div>
+<div class="relative z-10 px-margin-mobile md:px-margin-desktop text-center max-w-4xl">
+<span class="font-label-caps text-primary-fixed tracking-[0.2em] mb-4 block">KNOWLEDGE BASE</span>
+<h1 class="font-display-hero text-headline-lg md:text-display-hero mb-8 text-primary">Technical Intelligence</h1>
+<div class="relative max-w-2xl mx-auto">
+<input class="w-full bg-surface-container-low border border-white/10 rounded-full py-4 px-8 text-body-md focus:outline-none focus:border-primary-fixed focus:ring-1 focus:ring-primary-fixed transition-all placeholder:text-on-surface-variant/50" placeholder="Search systems, ROI, or warranties..." type="text"/>
+<span class="material-symbols-outlined absolute right-6 top-1/2 -translate-y-1/2 text-primary-fixed">search</span>
+</div>
+</div>
+</section>
+<!-- FAQ Categories & Content -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Sidebar Navigation (Desktop) -->
+<aside class="hidden lg:block lg:col-span-3 sticky top-[140px] h-fit">
+<div class="flex flex-col gap-2">
+<button class="flex items-center gap-3 px-6 py-4 rounded-xl bg-primary-container text-on-primary-container font-headline-md text-[18px]">
+<span class="material-symbols-outlined" data-weight="fill">bolt</span>
+                        Systems
+                    </button>
+<button class="flex items-center gap-3 px-6 py-4 rounded-xl text-on-surface-variant font-headline-md text-[18px] hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">verified</span>
+                        Warranties
+                    </button>
+<button class="flex items-center gap-3 px-6 py-4 rounded-xl text-on-surface-variant font-headline-md text-[18px] hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">payments</span>
+                        Financials
+                    </button>
+<button class="flex items-center gap-3 px-6 py-4 rounded-xl text-on-surface-variant font-headline-md text-[18px] hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">engineering</span>
+                        Installation
+                    </button>
+</div>
+</aside>
+<!-- Accordion List -->
+<div class="col-span-1 lg:col-span-9 flex flex-col gap-6">
+<h2 class="font-headline-lg text-primary mb-4">On-Grid &amp; Off-Grid Systems</h2>
+<!-- FAQ Item 1 -->
+<div class="glass-card rounded-2xl p-8 group">
+<div class="flex justify-between items-center cursor-pointer">
+<h3 class="font-headline-md text-primary group-hover:text-primary-fixed transition-colors">What is the primary difference between on-grid and off-grid solutions?</h3>
+<span class="material-symbols-outlined text-primary-fixed group-hover:rotate-180 transition-transform duration-500">expand_more</span>
+</div>
+<div class="mt-6 pt-6 border-t border-white/5">
+<p class="font-body-lg text-on-surface-variant leading-relaxed">
+                            On-grid systems are connected to the public utility grid, allowing you to use solar energy during the day and grid power at night, often benefiting from net metering. Off-grid systems are entirely autonomous, requiring high-capacity battery storage like our Kinetic Lumina Core to provide power 24/7 without external utility reliance.
+                        </p>
+</div>
+</div>
+<!-- FAQ Item 2 -->
+<div class="glass-card rounded-2xl p-8 group">
+<div class="flex justify-between items-center cursor-pointer">
+<h3 class="font-headline-md text-primary group-hover:text-primary-fixed transition-colors">How does the ROI calculation account for seasonal variance?</h3>
+<span class="material-symbols-outlined text-primary-fixed transition-transform duration-500">expand_more</span>
+</div>
+<div class="mt-6 pt-6 border-t border-white/5 hidden">
+<p class="font-body-lg text-on-surface-variant leading-relaxed">
+                            Our proprietary Codegen Analytics engine uses 20 years of localized meteorological data to project annual generation. We account for shorter winter days and lower sun angles, ensuring your 6-8 year ROI projection remains accurate across all four seasons.
+                        </p>
+</div>
+</div>
+<!-- FAQ Item 3 -->
+<div class="glass-card rounded-2xl p-8 group">
+<div class="flex justify-between items-center cursor-pointer">
+<h3 class="font-headline-md text-primary group-hover:text-primary-fixed transition-colors">What are the specific terms of the 25-year Performance Guarantee?</h3>
+<span class="material-symbols-outlined text-primary-fixed transition-transform duration-500">expand_more</span>
+</div>
+<div class="mt-6 pt-6 border-t border-white/5 hidden">
+<p class="font-body-lg text-on-surface-variant leading-relaxed">
+                            Codegen Solar guarantees that our Tier 1 monocrystalline panels will maintain at least 85% of their original nameplate power capacity after 25 years of operation. If production falls below this threshold, we provide hardware replacement and labor at zero cost to the owner.
+                        </p>
+</div>
+</div>
+<!-- FAQ Item 4 -->
+<div class="glass-card rounded-2xl p-8 group border-primary-fixed/20">
+<div class="flex justify-between items-center cursor-pointer">
+<h3 class="font-headline-md text-primary-fixed">Can I integrate EV charging into an existing residential installation?</h3>
+<span class="material-symbols-outlined text-primary-fixed rotate-180 transition-transform duration-500">expand_more</span>
+</div>
+<div class="mt-6 pt-6 border-t border-white/10">
+<p class="font-body-lg text-on-surface-variant leading-relaxed mb-4">
+                            Absolutely. Our systems are designed with a modular architecture. We can integrate Level 2 fast-charging stations (7kW to 22kW) into your existing Smart Inverter setup at any time.
+                        </p>
+<div class="flex gap-4">
+<span class="px-3 py-1 bg-surface-container-high rounded text-[12px] font-label-caps text-primary-fixed">RESIDENTIAL</span>
+<span class="px-3 py-1 bg-surface-container-high rounded text-[12px] font-label-caps text-primary-fixed">EV READY</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop relative overflow-hidden">
+<div class="absolute inset-0 bg-primary-container/5 pointer-events-none"></div>
+<div class="max-w-4xl mx-auto glass-card border border-primary-fixed/30 rounded-[2rem] p-12 md:p-20 text-center relative z-10">
+<h2 class="font-headline-lg text-primary mb-6">Still have questions?</h2>
+<p class="font-body-lg text-on-surface-variant mb-10 max-w-2xl mx-auto">Our engineering consultants are available for complex technical inquiries and custom architectural project planning.</p>
+<div class="flex flex-col md:flex-row justify-center gap-6">
+<button class="bg-primary-fixed text-on-primary-fixed px-10 py-4 rounded-full font-headline-md text-[18px] hover:shadow-[0_0_30px_rgba(159,251,6,0.4)] transition-all">Contact Engineering</button>
+<button class="border border-white/20 text-primary px-10 py-4 rounded-full font-headline-md text-[18px] hover:bg-white/5 transition-all">Download Technical PDF</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-section-gap bg-surface-container-lowest border-t border-white/5">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-gutter max-w-container-max mx-auto">
+<div class="flex flex-col gap-4">
+<div class="font-headline-md text-headline-md text-primary">Codegen Solar</div>
+<div class="font-body-md text-body-md text-on-secondary-container opacity-80">© 2024 Codegen Solar. Engineering the Infinite.</div>
+</div>
+<div class="flex gap-8">
+<a class="text-on-secondary-container font-body-md hover:text-primary-fixed transition-opacity opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="text-on-secondary-container font-body-md hover:text-primary-fixed transition-opacity opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="text-on-secondary-container font-body-md hover:text-primary-fixed transition-opacity opacity-80 hover:opacity-100" href="#">Project Archive</a>
+<a class="text-on-secondary-container font-body-md hover:text-primary-fixed transition-opacity opacity-80 hover:opacity-100" href="#">Investor Relations</a>
+</div>
+</div>
+</footer>
+</body></html>

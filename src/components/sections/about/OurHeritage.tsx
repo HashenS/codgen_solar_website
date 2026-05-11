@@ -12,17 +12,21 @@ export const OurHeritage = () => {
 
   useGSAP(
     () => {
-      gsap.from(".heritage-card", {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 75%",
-        },
-      });
+      gsap.fromTo(
+        ".heritage-card",
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 75%",
+          },
+        }
+      );
     },
     { scope: containerRef }
   );

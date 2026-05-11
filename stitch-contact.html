@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact | Codegen Solar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#141c25",
+                    "tertiary": "#ffffff",
+                    "outline-variant": "#414a34",
+                    "surface-container-high": "#2a2a2a",
+                    "surface": "#131313",
+                    "on-background": "#e5e2e1",
+                    "error-container": "#93000a",
+                    "on-surface-variant": "#c0caae",
+                    "tertiary-container": "#ffe085",
+                    "on-primary-container": "#447000",
+                    "background": "#131313",
+                    "primary-fixed-dim": "#8bdc00",
+                    "on-surface": "#e5e2e1",
+                    "on-primary": "#1f3700",
+                    "surface-variant": "#353534",
+                    "surface-container-low": "#1c1b1b",
+                    "error": "#ffb4ab",
+                    "outline": "#8a947a",
+                    "tertiary-fixed-dim": "#ebc238",
+                    "on-error-container": "#ffdad6",
+                    "inverse-surface": "#e5e2e1",
+                    "on-tertiary-container": "#7a6200",
+                    "on-tertiary-fixed": "#231b00",
+                    "on-primary-fixed": "#102000",
+                    "primary-fixed": "#9ffb06",
+                    "secondary": "#bfc7d4",
+                    "surface-bright": "#3a3939",
+                    "on-secondary": "#29313b",
+                    "on-tertiary-fixed-variant": "#574500",
+                    "on-primary-fixed-variant": "#2f4f00",
+                    "inverse-primary": "#406900",
+                    "surface-container-highest": "#353534",
+                    "secondary-fixed-dim": "#bfc7d4",
+                    "primary": "#ffffff",
+                    "tertiary-fixed": "#ffe085",
+                    "secondary-container": "#3f4752",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container": "#201f1f",
+                    "on-tertiary": "#3c2f00",
+                    "on-secondary-container": "#aeb6c2",
+                    "primary-container": "#9ffb06",
+                    "surface-dim": "#131313",
+                    "secondary-fixed": "#dbe3f0",
+                    "on-error": "#690005",
+                    "inverse-on-surface": "#313030",
+                    "surface-tint": "#8bdc00",
+                    "on-secondary-fixed-variant": "#3f4752"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "gutter": "24px",
+                    "margin-desktop": "80px",
+                    "container-max": "1440px",
+                    "section-gap": "120px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Space Grotesk"],
+                    "display-hero": ["Space Grotesk"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Space Grotesk"],
+                    "label-caps": ["Inter"],
+                    "headline-lg-mobile": ["Space Grotesk"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "display-hero": ["80px", {"lineHeight": "90px", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #050505;
+            color: #e5e2e1;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 32, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .luminous-border:focus-within {
+            border-color: #9ffb06;
+            box-shadow: 0 0 15px rgba(159, 251, 6, 0.2);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(159, 251, 6, 0.4);
+        }
+    </style>
+</head>
+<body class="font-body-md">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-xl border-b border-white/10">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 w-full max-w-container-max mx-auto">
+<div class="font-headline-lg text-headline-lg-mobile tracking-tighter text-primary-fixed">Codegen Solar</div>
+<nav class="hidden md:flex gap-gutter items-center">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Commercial</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Residential</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Innovation</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Sustainability</a>
+</nav>
+<div class="flex items-center gap-6">
+<button class="hidden md:block bg-primary-container text-on-primary-fixed px-6 py-2 rounded-full font-bold hover:shadow-[0_0_20px_rgba(159,251,6,0.5)] transition-all duration-300">Consultation</button>
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="menu">menu</span>
+</div>
+</div>
+</header>
+<main class="pt-32">
+<!-- Hero Section -->
+<section class="relative min-h-[614px] flex items-center px-margin-mobile md:px-margin-desktop overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#050505] z-10"></div>
+<img alt="Cinematic solar installation" class="w-full h-full object-cover opacity-40" data-alt="A wide cinematic shot of a vast high-tech solar farm located in a futuristic desert landscape during the golden hour. The solar panels are sleek and reflective, catching the deep orange and purple light of the setting sun. The atmosphere is hazy and atmospheric, with subtle lens flares and a feeling of immense scale and precision engineering. The overall mood is epic, serene, and represents the pinnacle of clean energy technology in a dark, premium aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlqLlU5C8e8shsY3jHzQLhEW2O3MnSQ6omWAF1TeLDngjeMZwP66fMvsjHvyX1vjJpNhOmnLZojpzJNGXRN-UEFnZPdKBivK5bnpNI5-lAKeXR3WTGe8T2LeILOeBK_WqbGekbvPstpCV9978GlqJ7f1kXRuJTquHSR7nuZj5QIs44BvCdkF1pjJ7Rti0__-sLfu6ZthhWCegRfelth7XUVu9JLWp6bu1rT7Kc-nl1CQWp1qmCpyh8NfU8XK25isSeY9gTgEv2dIFU"/>
+</div>
+<div class="relative z-20 max-w-4xl">
+<h1 class="font-display-hero text-display-hero text-white mb-6 leading-none">Connect with <span class="text-primary-fixed">Infinite</span> Potential.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Whether you're looking for a large-scale commercial integration or a bespoke residential array, our engineering team is ready to redefine your energy footprint.</p>
+</div>
+</section>
+<!-- Main Content Grid -->
+<section class="px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+<!-- Contact Form Column -->
+<div class="lg:col-span-7">
+<div class="glass-panel p-8 md:p-12 rounded-xl">
+<h2 class="font-headline-lg text-white mb-8">Inquiry Portal</h2>
+<form class="space-y-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Full Name</label>
+<input class="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none luminous-border transition-all" placeholder="John Doe" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Corporate Email</label>
+<input class="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none luminous-border transition-all" placeholder="john@company.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Inquiry Type</label>
+<select class="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none luminous-border transition-all appearance-none">
+<option>Technical Audit</option>
+<option>Commercial Consultation</option>
+<option>Project Partnership</option>
+<option>Residential Engineering</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Project Brief</label>
+<textarea class="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none luminous-border transition-all" placeholder="Describe your vision or technical requirements..." rows="4"></textarea>
+</div>
+<button class="w-full bg-primary-fixed text-on-primary-fixed font-headline-md py-5 rounded-lg hover:shadow-[0_0_30px_rgba(159,251,6,0.4)] transition-all duration-500" type="submit">
+                                Initiate Consultation
+                            </button>
+</form>
+</div>
+</div>
+<!-- Corporate Details Column -->
+<div class="lg:col-span-5 space-y-12">
+<div class="space-y-6">
+<h3 class="font-headline-md text-primary-fixed text-glow">Global Hubs</h3>
+<div class="space-y-8">
+<div class="flex gap-4">
+<div class="w-12 h-12 flex items-center justify-center rounded-lg bg-surface-container-high border border-white/5">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="location_on">location_on</span>
+</div>
+<div>
+<h4 class="font-headline-md text-white text-lg">Engineering HQ</h4>
+<p class="text-on-surface-variant">Silicon Valley Research Park</p>
+<p class="text-on-surface-variant">Palo Alto, CA 94304</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 flex items-center justify-center rounded-lg bg-surface-container-high border border-white/5">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="hub">hub</span>
+</div>
+<div>
+<h4 class="font-headline-md text-white text-lg">European Operations</h4>
+<p class="text-on-surface-variant">Innovation District Berlin</p>
+<p class="text-on-surface-variant">10115 Berlin, Germany</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 flex items-center justify-center rounded-lg bg-surface-container-high border border-white/5">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="mail">mail</span>
+</div>
+<div>
+<h4 class="font-headline-md text-white text-lg">Direct Inquiries</h4>
+<p class="text-on-surface-variant">press@codegensolar.com</p>
+<p class="text-on-surface-variant">engineering@codegensolar.com</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Map/Visual Section -->
+<div class="relative group cursor-crosshair">
+<div class="absolute inset-0 bg-primary-fixed/10 opacity-0 group-hover:opacity-20 transition-opacity rounded-xl"></div>
+<img alt="Regional hub location" class="w-full h-64 object-cover rounded-xl border border-white/10 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A stylized aerial satellite view of a high-tech corporate campus with architectural glass buildings and rooftop solar panels. The image is treated with a dark, blue-toned overlay and glowing green data points representing engineering hubs. The lighting is nocturnal, with bright white interior lights visible through windows, creating a sleek, global-tech aesthetic consistent with a premier solar company." data-location="Palo Alto, California" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQvSQ344LwVjJlN2cu30TN8Chg7lp-vtrMEM9y516tPPDkzu-X0PfG_ykII_KNDvEL0yug6-WVAQ-_rceJFAJGYuynSYlAxsw8AeIBMxRlLs2sGYCtsX6EeMu29XM9L-BKhY1Ajn4tTuxtiTfilebod_0AxBmWtl4T3rODYNVwLvY-fTPWQXqullQZGtfabeeFkuSqcb9qu5qHJbJcXngO1WEwCCDesbUjkUvwxJIHpPm4rn8_y-Kc0oFnmY8O7xFbWGd7HoPaej_p"/>
+<div class="absolute bottom-4 left-4 glass-panel px-4 py-2 rounded-full flex items-center gap-2">
+<span class="w-2 h-2 bg-primary-fixed rounded-full animate-pulse"></span>
+<span class="text-xs font-label-caps text-white tracking-widest">GLOBAL GRID ACTIVE</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-section-gap bg-surface-container-low/30 px-margin-mobile">
+<div class="max-w-4xl mx-auto text-center space-y-8">
+<span class="font-label-caps text-primary-fixed tracking-[0.3em] uppercase">Ready for transition?</span>
+<h2 class="font-headline-lg text-headline-lg text-white">Schedule a Comprehensive Technical Audit</h2>
+<p class="text-on-surface-variant text-body-lg">Our specialists will evaluate your structural capacity, atmospheric efficiency, and grid-backbone compatibility within 48 hours.</p>
+<div class="flex flex-col md:flex-row gap-4 justify-center pt-8">
+<a class="px-12 py-5 bg-white text-background font-bold rounded-full hover:bg-primary-fixed transition-colors" href="#">Start Technical Audit</a>
+<a class="px-12 py-5 border border-white/20 text-white font-bold rounded-full hover:bg-white/5 transition-colors" href="#">Download Specs</a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest w-full py-section-gap border-t border-white/5">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-gutter max-w-container-max mx-auto">
+<div class="space-y-4 text-center md:text-left">
+<div class="font-headline-md text-headline-md text-primary">Codegen Solar</div>
+<p class="font-body-md text-body-md text-on-secondary-container opacity-80">© 2024 Codegen Solar. Engineering the Infinite.</p>
+</div>
+<div class="flex gap-8">
+<a class="text-on-secondary-container hover:text-primary-fixed transition-opacity" href="#">Privacy Policy</a>
+<a class="text-on-secondary-container hover:text-primary-fixed transition-opacity" href="#">Terms of Service</a>
+<a class="text-on-secondary-container hover:text-primary-fixed transition-opacity" href="#">Project Archive</a>
+<a class="text-on-secondary-container hover:text-primary-fixed transition-opacity" href="#">Investor Relations</a>
+</div>
+</div>
+</footer>
+</body></html>

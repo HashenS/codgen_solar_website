@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#bfc7d4",
+                        "on-error": "#690005",
+                        "primary": "#ffffff",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-container": "#aeb6c2",
+                        "on-primary-fixed": "#102000",
+                        "secondary-container": "#3f4752",
+                        "on-tertiary-fixed": "#231b00",
+                        "on-secondary-fixed": "#141c25",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#3f4752",
+                        "outline-variant": "#414a34",
+                        "surface": "#131313",
+                        "on-primary-container": "#447000",
+                        "primary-container": "#9ffb06",
+                        "surface-container-low": "#1c1b1b",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#ffe085",
+                        "on-primary-fixed-variant": "#2f4f00",
+                        "primary-fixed-dim": "#8bdc00",
+                        "on-surface": "#e5e2e1",
+                        "surface-container": "#201f1f",
+                        "secondary-fixed-dim": "#bfc7d4",
+                        "surface-variant": "#353534",
+                        "tertiary-container": "#ffe085",
+                        "background": "#050505",
+                        "on-tertiary": "#3c2f00",
+                        "on-background": "#e5e2e1",
+                        "inverse-primary": "#406900",
+                        "surface-container-highest": "#353534",
+                        "inverse-on-surface": "#313030",
+                        "tertiary": "#ffffff",
+                        "surface-tint": "#8bdc00",
+                        "on-tertiary-fixed-variant": "#574500",
+                        "outline": "#8a947a",
+                        "inverse-surface": "#e5e2e1",
+                        "tertiary-fixed-dim": "#ebc238",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-bright": "#3a3939",
+                        "surface-dim": "#131313",
+                        "secondary-fixed": "#dbe3f0",
+                        "on-surface-variant": "#c0caae",
+                        "on-secondary": "#29313b",
+                        "on-primary": "#1f3700",
+                        "primary-fixed": "#9ffb06",
+                        "on-tertiary-container": "#7a6200"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "80px",
+                        "container-max": "1440px",
+                        "section-gap": "120px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Space Grotesk"],
+                        "headline-lg": ["Space Grotesk"],
+                        "display-hero": ["Space Grotesk"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "display-hero": ["80px", {"lineHeight": "90px", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(15, 23, 32, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-border:hover {
+            border-color: #9ffb06;
+            box-shadow: 0 0 15px rgba(159, 251, 6, 0.3);
+        }
+        .luminous-edge {
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        body {
+            background-color: #050505;
+            color: #e5e2e1;
+        }
+    </style>
+</head>
+<body class="font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-xl border-b border-white/10">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 w-full max-w-container-max mx-auto transition-all duration-500 ease-in-out">
+<div class="font-headline-lg text-headline-lg-mobile tracking-tighter text-primary-fixed">Codegen Solar</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Commercial</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Residential</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Innovation</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Sustainability</a>
+<a class="text-primary-fixed font-bold border-b-2 border-primary-fixed pb-1" href="#">Projects</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="bg-primary-fixed text-on-primary-fixed px-6 py-2.5 font-bold rounded-full hover:brightness-110 transition-all">Consultation</button>
+<button class="text-primary p-2 md:hidden">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-[716px] flex items-center pt-32 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-background"></div>
+<img class="w-full h-full object-cover opacity-40" data-alt="A sprawling industrial solar farm at sunset, where thousands of panels reflect the deep orange sky. The camera uses a wide-angle drone perspective to capture the massive scale of the installation. The lighting is cinematic with long shadows and a warm golden hour glow, emphasizing the fusion of technology and nature in a dark, prestige aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdRkVFEYNKhYzWpe2ob72FsCY0dZyRg5iOMK1vspfTnY50Ix_urP5tnU6Ofe7WvifMcdjliIVAHPbFtm3C-tuRdwFs1JsQYaYMuLkv2M7kDSqnVrM1oMjWNRoXE1TSTkl8FDQfUEjcybOkXTye0RG_ZYXznX9CnMBJ6QCvAcFmLyNMOy0y_dojZ0IU11D3hvlIuq6q93RCtIWJ_l3IPNHtjOGgynGBWaOIw5_Z_UDiNdN9__4PYmuFaGBQTMOPT8soqohdsYy_WhEp"/>
+</div>
+<div class="relative z-10 w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="max-w-3xl">
+<span class="inline-block px-4 py-1.5 mb-6 glass-panel rounded-full text-primary-fixed font-label-caps text-label-caps">
+                        THE FUTURE OF CLEAN ENERGY
+                    </span>
+<h1 class="font-display-hero text-headline-lg-mobile md:text-display-hero text-primary mb-8 leading-tight">
+                        Engineering the Renewable Revolution
+                    </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-2xl">
+                        Codegen Solar delivers precision-engineered photovoltaic ecosystems designed for global impact. From massive industrial grids to bespoke residential arrays, we define the architecture of sustainability.
+                    </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary-fixed text-on-primary-fixed px-8 py-4 font-headline-md text-body-md rounded-lg hover:shadow-[0_0_20px_rgba(159,251,6,0.4)] transition-all">Explore Projects</button>
+<button class="glass-panel text-primary px-8 py-4 font-headline-md text-body-md rounded-lg hover:bg-white/5 transition-all">Technical Specs</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Project Filter & Grid -->
+<section class="py-section-gap w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+<div>
+<h2 class="font-headline-lg text-primary mb-4">Select Portfolio</h2>
+<p class="text-on-surface-variant max-w-md">Our global deployments represent the pinnacle of solar integration and carbon-negative engineering.</p>
+</div>
+<div class="flex gap-2 p-1 glass-panel rounded-xl">
+<button class="px-6 py-2 rounded-lg bg-primary-fixed text-on-primary-fixed font-bold text-body-md">All</button>
+<button class="px-6 py-2 rounded-lg text-on-surface-variant hover:text-primary transition-colors font-medium text-body-md">Commercial</button>
+<button class="px-6 py-2 rounded-lg text-on-surface-variant hover:text-primary transition-colors font-medium text-body-md">Residential</button>
+</div>
+</div>
+<!-- Bento-style Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Project Card 1 (Large) -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-2xl glass-panel glow-border transition-all duration-500">
+<div class="aspect-[16/9] w-full">
+<img class="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-700" data-alt="Aerial view of a massive 100kW commercial solar installation on a modern warehouse roof. The panels are arranged in a perfect grid, shimmering under high-noon sunlight. The surrounding landscape shows a clean industrial park at the edge of a lush green tropical forest, creating a sharp contrast between technology and nature. Professional architectural photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjjR6DfK24Uz3R76VwCNiYOa_4aU9h7NvLKrhb9louVpcwwJHJRSiuchocc21JQz2_HDIDA4XymnYIyMUjWOZSVY0fgy68uFZ8fn0EXZAkG1oeI8qRvTY4yzO4mMYkb3zs7MK_epfAqClDX4gJVUdL2UGgG0xAAEc0q7c4vaZSe_xenLFCzSLWEVruPcM-P_RKDhOmC4dlkz7B--uo3gBJ_MOTRMw6lkYkqLfkeK3sXZ4Xzi4o65zUJ4J4rDuTaL7lW--8SaaqC3re"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-8">
+<div class="flex justify-between items-end">
+<div>
+<span class="text-primary-fixed font-label-caps text-label-caps mb-2 block">COMMERCIAL | SRI LANKA</span>
+<h3 class="font-headline-md text-primary text-headline-md">100kW Commercial Solar | Henuka Fresh Fruits</h3>
+</div>
+<span class="material-symbols-outlined text-primary-fixed text-4xl opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0">arrow_outward</span>
+</div>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-2xl glass-panel glow-border transition-all duration-500">
+<div class="h-full">
+<img class="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-700 min-h-[300px]" data-alt="Top-down drone shot of a specialized industrial power project. A cluster of high-efficiency solar arrays is integrated into the complex architecture of a manufacturing plant. The image has a cool, blue-tinted atmosphere with vibrant green accents from the surrounding vegetation. Crisp, high-fidelity digital photography with a cinematic wide-angle perspective." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbySG6fudrxsACbL2MBk9_vdwhp6wl69ig6SwXD7g6WIOxJOJYgHUMQM26UjBd_6S0WLnbhtoA5_AYG3StRVOiwhUlE8a1TQOmL90H-O8rioSNgFw45aqCUZC0ZradFCBWZw85uJxL3rD8EcRSqfsT2LapJG3PkLvqm6el63nvDtFbHadyHVxyc4V44wZvMO2y5CnaFuJ8Z8BeZzC1r_EhqERwUio325u6_iWW1gPfxYHHnmq9OCj7Uzef3a5J1aEoOz4dBWfzAr9v"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-8">
+<span class="text-primary-fixed font-label-caps text-label-caps mb-2 block">INDUSTRIAL | GANEMULLA</span>
+<h3 class="font-headline-md text-primary text-headline-md">100kW Industrial Power | Malitha Lanka</h3>
+</div>
+</div>
+<!-- Project Card 3 -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-2xl glass-panel glow-border transition-all duration-500">
+<div class="h-full">
+<img class="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-700 min-h-[300px]" data-alt="Sleek residential solar array installed on a modern minimalist luxury villa. The house is built with dark concrete and glass, reflecting the glowing green energy of the panels on the roof. The shot is taken during twilight, highlighting the premium glassmorphic textures of the building. Mood is serene, high-end, and technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFXLw-7QG-C5K_i0XnUjhaC64lEIVYaJyRhgpNENeFGD2Kgws0KUa9KY4CvHvllmxzeLF5Twxfg0LQY7qJ0Wsv_SKLlVNyiy3iwhcx4WmCLYCKg9mV6p-YaBK5cXRA69uPKBvD_9CZP_2vnmr3uDrvissqWgPQ-ExYrTHhp5NQxc5yfNB8ri8Ej8DsYA7h8uVj0rcHPsIcbKB2o-Hmzmzj4NgXfYE78o-CFgrdgdPNxbVnLZUocYgs9r1fkWTGk4QpFZC8DB-wBTH4"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-8">
+<span class="text-primary-fixed font-label-caps text-label-caps mb-2 block">SMART GRID | KANDY</span>
+<h3 class="font-headline-md text-primary text-headline-md">100kW Smart Grid | The Rise Tech Village</h3>
+</div>
+</div>
+<!-- Project Card 4 -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-2xl glass-panel glow-border transition-all duration-500">
+<div class="aspect-[16/9] w-full">
+<img class="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-700" data-alt="Wide cinematic shot of a grid-connected solar array on a hillside. The morning mist rolls through the valley below as the first light hits the glass surfaces of the panels. The image focuses on the precision alignment and advanced mounting hardware, symbolizing engineering excellence. Dark-toned, high-contrast imagery with soft atmospheric lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEEPW4TsMcjs2l49KmwtYloR_KCZ8HDGnqnX88yxCMMq9cq3RzIrVtKVujHPKJfhRJzX16-bnJY-3YmPzu2ZI1ARA5nufRv5ys_Es7CPHvfP2nE9KAVoXLbAlhXOMFr729v67NAQPG_whyDbRnHJRZ4sRXE_059c24xyJHQak8_kLoqATEiFDCIc3fRuoCSG729k5hi-low8E4N_tBXVCZqbbbWmzlhlfO58CPgnl8wnRIiV4gjstQ83OP6IP0p1XeyarVS2hFaClC"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-8">
+<span class="text-primary-fixed font-label-caps text-label-caps mb-2 block">FUTURE GRID | COLOMBO</span>
+<h3 class="font-headline-md text-primary text-headline-md">Next-Gen Urban Integration | Waterfront Complex</h3>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop">
+<div class="max-w-container-max mx-auto glass-panel rounded-3xl p-12 md:p-24 relative overflow-hidden text-center">
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary-fixed opacity-5 blur-[120px]"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-primary-fixed opacity-5 blur-[100px]"></div>
+<div class="relative z-10 max-w-2xl mx-auto">
+<h2 class="font-headline-lg text-primary mb-6">Ready to Power the Infinite?</h2>
+<p class="text-on-surface-variant font-body-lg mb-10">
+                        Join the vanguard of renewable energy. Our engineering team is ready to design your customized solar ecosystem.
+                    </p>
+<div class="flex flex-col sm:flex-row justify-center gap-4">
+<button class="bg-primary-fixed text-on-primary-fixed px-10 py-5 font-bold rounded-xl hover:scale-[1.02] transition-transform shadow-[0_10px_40px_rgba(159,251,6,0.2)]">Partner with Us</button>
+<button class="border border-white/20 text-primary px-10 py-5 font-bold rounded-xl hover:bg-white/5 transition-all">Request Technical Audit</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-section-gap bg-surface-container-lowest border-t border-white/5">
+<div class="max-w-container-max mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-start md:items-center gap-gutter">
+<div class="max-w-xs">
+<div class="font-headline-md text-headline-md text-primary mb-4">Codegen Solar</div>
+<p class="text-on-secondary-container text-body-md opacity-80 mb-6">Engineering the infinite through sustainable energy ecosystems and high-fidelity technology.</p>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:text-primary-fixed transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[20px]">language</span>
+</div>
+<div class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:text-primary-fixed transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+</div>
+<div class="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:text-primary-fixed transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-12">
+<div class="flex flex-col gap-4">
+<span class="font-label-caps text-primary uppercase opacity-60">Company</span>
+<a class="text-on-secondary-container hover:text-primary-fixed transition-opacity opacity-80 hover:opacity-100" href="#">Project Archive</a>
+<a class="text-on-secondary-container hover:text-primary-fixed transition-opacity opacity-80 hover:opacity-100" href="#">Investor Relations</a>
+<a class="text-on-secondary-container hover:text-primary-fixed transition-opacity opacity-80 hover:opacity-100" href="#">Sustainability Report</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-label-caps text-primary uppercase opacity-60">Legal</span>
+<a class="text-on-secondary-container hover:text-primary-fixed transition-opacity opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="text-on-secondary-container hover:text-primary-fixed transition-opacity opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop mt-16 pt-8 border-t border-white/5 flex justify-between items-center text-on-secondary-container text-body-md opacity-50">
+<span>© 2024 Codegen Solar. Engineering the Infinite.</span>
+<div class="flex gap-6">
+<span>ISO 9001:2015</span>
+<span>Solar-Tech Global</span>
+</div>
+</div>
+</footer>
+</body></html>

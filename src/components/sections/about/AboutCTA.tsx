@@ -9,17 +9,21 @@ export const AboutCTA = () => {
 
   useGSAP(
     () => {
-      gsap.from(".about-cta-content", {
-        scale: 0.95,
-        opacity: 0,
-        y: 40,
-        duration: 1.2,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-        },
-      });
+      gsap.fromTo(
+        ".about-cta-content",
+        { scale: 0.95, opacity: 0, y: 40 },
+        {
+          scale: 1,
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+          },
+        }
+      );
     },
     { scope: containerRef }
   );

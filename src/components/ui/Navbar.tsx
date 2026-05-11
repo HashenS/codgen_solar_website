@@ -34,9 +34,9 @@ export const Navbar = () => {
             { label: "Home", href: "/" },
             { label: "About", href: "/about" },
             { label: "Solutions", href: "/solutions" },
-            { label: "Projects", href: "/#projects" },
-            { label: "Contact", href: "/#contact" },
-            { label: "FAQs", href: "/#faqs" }
+            { label: "Projects", href: "/projects" },
+            { label: "Contact", href: "/contact" },
+            { label: "FAQs", href: "/faqs" }
           ].map((item) => (
             <Link
               key={item.label}

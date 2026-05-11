@@ -15,8 +15,8 @@ export default function SolutionsPage() {
       <SolutionGrid />
       <TechnicalComparison />
       <IntegratedTechnology />
-      <SolutionsCTA />
       <QuoteForm />
+      <SolutionsCTA />
       <Footer />
     </main>
   );
