@@ -128,30 +128,21 @@ export const Hero = () => {
             {/* Safety Net. */}
             <motion.div
               style={{ opacity: safetyOpacity, y: safetyY }}
-              className="absolute inset-0 flex items-center justify-center"
+              className="absolute inset-0 flex flex-col items-center justify-center"
             >
-              <h1 className="font-display-hero text-display-hero text-primary-fixed-dim drop-shadow-[0_0_15px_rgba(159,251,6,0.3)] mb-0 leading-none text-center">
+              <h1 className="font-display-hero text-display-hero text-primary-fixed-dim drop-shadow-[0_0_15px_rgba(159,251,6,0.3)] mb-6 leading-none text-center">
                 Safety Net.
               </h1>
+              <p className="font-body-lg text-body-lg text-on-surface-variant drop-shadow-md text-center max-w-2xl px-4">
+                Experience uninterrupted power with Codegen Solar's Hybrid Resilience.
+                A tri-mode energy architecture that bridges the gap between solar,
+                storage, and the grid.
+              </p>
             </motion.div>
           </div>
         )}
 
-        {/* Bottom content (paragraph) */}
-        <div className="relative z-10 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full flex flex-col items-end justify-end h-full pb-20 pointer-events-none">
-          <div className="max-w-xl pointer-events-auto">
-            <motion.p
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1, delay: 1.4, ease: "easeOut" }}
-              className="font-body-lg text-body-lg text-on-surface-variant drop-shadow-md text-right"
-            >
-              Experience uninterrupted power with Codegen Solar's Hybrid Resilience.
-              A tri-mode energy architecture that bridges the gap between solar,
-              storage, and the grid.
-            </motion.p>
-          </div>
-        </div>
+
       </div>
     </section>
   );
