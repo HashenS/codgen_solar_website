@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { useScroll, useTransform, motion, useMotionValueEvent, useSpring } from "framer-motion";
 import { GlassCard } from "../ui/GlassCard";
 import { Route, Zap, BatteryCharging } from "lucide-react";
 
@@ -66,25 +66,34 @@ export const SmartSwitching = () => {
     offset: ["start start", "end end"],
   });
 
-  // Phase 1: Scrub video from 0 to 0.3
-  const frameIndex = useTransform(scrollYProgress, [0, 0.3], [1, frameCount]);
+  // Apply a smooth spring to "slow down" and fluidify the parallax/scroll effect
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 50,
+    damping: 20,
+    restDelta: 0.001
+  });
 
-  // Phase 2: Shrink canvas to target bounds from 0.3 to 0.6
-  const canvasWidth = useTransform(scrollYProgress, [0.3, 0.6], [windowBounds.width || 1920, targetBounds.width || 800]);
-  const canvasHeight = useTransform(scrollYProgress, [0.3, 0.6], [windowBounds.height || 1080, targetBounds.height || 450]);
-  const canvasTop = useTransform(scrollYProgress, [0.3, 0.6], [0, targetBounds.top]);
-  const canvasLeft = useTransform(scrollYProgress, [0.3, 0.6], [0, targetBounds.left]);
-  const canvasRadius = useTransform(scrollYProgress, [0.3, 0.6], [0, 24]); // 24px = rounded-3xl
+  // Phase 1: Scrub video from 0 to 0.4
+  const frameIndex = useTransform(smoothProgress, [0, 0.4], [1, frameCount]);
+
+  // Phase 2: Shrink canvas to target bounds from 0.4 to 0.8
+  const canvasWidth = useTransform(smoothProgress, [0.4, 0.8], [windowBounds.width || 1920, targetBounds.width || 800]);
+  const canvasHeight = useTransform(smoothProgress, [0.4, 0.8], [windowBounds.height || 1080, targetBounds.height || 450]);
+  const canvasTop = useTransform(smoothProgress, [0.4, 0.8], [0, targetBounds.top]);
+  const canvasLeft = useTransform(smoothProgress, [0.4, 0.8], [0, targetBounds.left]);
+  const canvasRadius = useTransform(smoothProgress, [0.4, 0.8], [0, 24]); // 24px = rounded-3xl
 
   // Fade in the dark gradient over the video ONLY as it shrinks to a card
-  const gradientOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
+  const gradientOpacity = useTransform(smoothProgress, [0.4, 0.8], [0, 1]);
 
-  // Trigger the UI fade-up animation AFTER the shrink completes (at 60% scroll)
+  // Title fade up and slide up (tied to scroll so it fades out on reverse)
+  const titleOpacity = useTransform(smoothProgress, [0.6, 0.8], [0, 1]);
+  const titleY = useTransform(smoothProgress, [0.6, 0.8], [30, 0]);
+
+  // Trigger the UI fade-up animation AFTER the shrink completes (at 80% scroll)
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (latest >= 0.6 && !showUI) {
+    if (latest >= 0.8) {
       setShowUI(true);
-    } else if (latest < 0.6 && showUI) {
-      setShowUI(false);
     }
   });
 
@@ -136,7 +145,7 @@ export const SmartSwitching = () => {
   }, [images, windowBounds]);
 
   return (
-    <section ref={containerRef} className="h-[300vh] relative z-20 bg-background">
+    <section ref={containerRef} className="h-[250vh] relative z-20 bg-background">
       <div ref={stickyRef} className="sticky top-0 min-h-screen w-full flex flex-col justify-center pt-24 md:pt-32 pb-16 md:pb-24">
         
         {/* Animated Background Canvas */}
@@ -149,7 +158,7 @@ export const SmartSwitching = () => {
             left: canvasLeft,
             borderRadius: canvasRadius,
           }}
-          className="z-0 overflow-hidden shadow-2xl bg-black"
+          className="z-20 overflow-hidden shadow-2xl bg-black"
         >
           <canvas
             ref={canvasRef}
@@ -160,13 +169,11 @@ export const SmartSwitching = () => {
           <motion.div style={{ opacity: gradientOpacity }} className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent pointer-events-none"></motion.div>
         </motion.div>
 
-        {/* Foreground Content Grid */}
-        <div className="px-margin-mobile md:px-margin-desktop max-w-container-max w-full mx-auto relative z-10 pointer-events-none">
+        {/* Foreground Content Grid Wrapper (No z-index to allow interleaving) */}
+        <div className="px-margin-mobile md:px-margin-desktop max-w-[1440px] w-full mx-auto relative pointer-events-none mt-8">
           <motion.div 
-            initial={{ y: 50, opacity: 0 }}
-            animate={showUI ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-center mb-16 pointer-events-auto"
+            style={{ opacity: titleOpacity, y: titleY }}
+            className="text-center mb-16 pointer-events-auto relative z-30"
           >
             <h2 className="font-headline-lg text-headline-lg text-primary mb-4">
               Intelligent Power Orchestration
@@ -177,7 +184,7 @@ export const SmartSwitching = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 relative z-10">
             {/* Target Layout Box for Video Only */}
             <div className="md:col-span-8 relative group flex flex-col justify-end p-8 md:p-12 pointer-events-auto h-full min-h-[400px]">
               {/* Invisible Target Div */}
