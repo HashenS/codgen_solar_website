@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import { useScroll, useTransform, motion, useMotionValueEvent, useSpring } from "framer-motion";
+import { useScroll, useTransform, motion, useMotionValueEvent, useSpring, useMotionValue } from "framer-motion";
 import { GlassCard } from "../ui/GlassCard";
 import { Route, Zap, BatteryCharging } from "lucide-react";
 
@@ -66,36 +66,61 @@ export const SmartSwitching = () => {
     offset: ["start start", "end end"],
   });
 
+  // Create custom motion values that behave differently based on scroll direction
+  const rawVideoProgress = useMotionValue(0);
+  const rawFrameProgress = useMotionValue(0);
+
   // Apply a smooth spring to "slow down" and fluidify the parallax/scroll effect
-  const smoothProgress = useSpring(scrollYProgress, {
+  const smoothVideoProgress = useSpring(rawVideoProgress, {
+    stiffness: 40,
+    damping: 15, // Make reverse very smooth
+    restDelta: 0.001
+  });
+
+  const smoothFrameProgress = useSpring(rawFrameProgress, {
     stiffness: 50,
     damping: 20,
     restDelta: 0.001
   });
 
-  // Phase 1: Scrub video from 0 to 0.4
-  const frameIndex = useTransform(smoothProgress, [0, 0.4], [1, frameCount]);
-
-  // Phase 2: Shrink canvas to target bounds from 0.4 to 0.8
-  const canvasWidth = useTransform(smoothProgress, [0.4, 0.8], [windowBounds.width || 1920, targetBounds.width || 800]);
-  const canvasHeight = useTransform(smoothProgress, [0.4, 0.8], [windowBounds.height || 1080, targetBounds.height || 450]);
-  const canvasTop = useTransform(smoothProgress, [0.4, 0.8], [0, targetBounds.top]);
-  const canvasLeft = useTransform(smoothProgress, [0.4, 0.8], [0, targetBounds.left]);
-  const canvasRadius = useTransform(smoothProgress, [0.4, 0.8], [0, 24]); // 24px = rounded-3xl
-
-  // Fade in the dark gradient over the video ONLY as it shrinks to a card
-  const gradientOpacity = useTransform(smoothProgress, [0.4, 0.8], [0, 1]);
-
-  // Title fade up and slide up (tied to scroll so it fades out on reverse)
-  const titleOpacity = useTransform(smoothProgress, [0.6, 0.8], [0, 1]);
-  const titleY = useTransform(smoothProgress, [0.6, 0.8], [30, 0]);
-
-  // Trigger the UI fade-up animation AFTER the shrink completes (at 80% scroll)
+  // Calculate direction-dependent timings
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const previous = scrollYProgress.getPrevious() || 0;
+    const isScrollingDown = latest >= previous;
+
+    if (isScrollingDown) {
+      // SCROLL DOWN: Original perfect timings
+      // Phase 1: Scrub video from 0 to 0.4
+      rawFrameProgress.set(Math.max(0, Math.min(1, latest / 0.4)));
+      // Phase 2: Shrink canvas from 0.4 to 0.8
+      rawVideoProgress.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.4)));
+    } else {
+      // SCROLL UP: Start reverse animations IMMEDIATELY at 1.0, very gradual
+      // Frames reverse gradually across the entire 1.0 -> 0.0 range
+      rawFrameProgress.set(Math.max(0, Math.min(1, latest)));
+      // Video expands gradually across 1.0 -> 0.4
+      rawVideoProgress.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.6)));
+    }
+
+    // Trigger the UI fade-up animation AFTER the shrink completes (at 80% scroll)
     if (latest >= 0.8) {
       setShowUI(true);
     }
   });
+
+  // Map the specific animations using the smoothed unified values!
+  const frameIndex = useTransform(smoothFrameProgress, [0, 1], [1, frameCount]);
+
+  const canvasWidth = useTransform(smoothVideoProgress, [0, 1], [windowBounds.width || 1920, targetBounds.width || 800]);
+  const canvasHeight = useTransform(smoothVideoProgress, [0, 1], [windowBounds.height || 1080, targetBounds.height || 450]);
+  const canvasTop = useTransform(smoothVideoProgress, [0, 1], [0, targetBounds.top]);
+  const canvasLeft = useTransform(smoothVideoProgress, [0, 1], [0, targetBounds.left]);
+  const canvasRadius = useTransform(smoothVideoProgress, [0, 1], [0, 24]); // 24px = rounded-3xl
+
+  const gradientOpacity = useTransform(smoothVideoProgress, [0, 1], [0, 1]);
+
+  const titleOpacity = useTransform(smoothVideoProgress, [0.5, 1], [0, 1]);
+  const titleY = useTransform(smoothVideoProgress, [0.5, 1], [30, 0]);
 
   // Canvas drawing logic
   const drawImage = (index: number) => {
