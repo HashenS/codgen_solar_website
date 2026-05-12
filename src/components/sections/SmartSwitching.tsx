@@ -17,6 +17,9 @@ export const SmartSwitching = () => {
   // Track target bounds relative to the sticky container
   const [targetBounds, setTargetBounds] = useState({ top: 0, left: 0, width: 0, height: 0 });
   const [windowBounds, setWindowBounds] = useState({ width: 0, height: 0 });
+  
+  // State to trigger the UI entrance animation
+  const [showUI, setShowUI] = useState(false);
 
   useEffect(() => {
     const measure = () => {
@@ -63,19 +66,27 @@ export const SmartSwitching = () => {
     offset: ["start start", "end end"],
   });
 
-  // Phase 1: Scrub video from 0 to 0.4
-  const frameIndex = useTransform(scrollYProgress, [0, 0.4], [1, frameCount]);
+  // Phase 1: Scrub video from 0 to 0.3
+  const frameIndex = useTransform(scrollYProgress, [0, 0.3], [1, frameCount]);
 
-  // Phase 2: Shrink canvas to target bounds from 0.4 to 0.7
-  const canvasWidth = useTransform(scrollYProgress, [0.4, 0.7], [windowBounds.width || 1920, targetBounds.width || 800]);
-  const canvasHeight = useTransform(scrollYProgress, [0.4, 0.7], [windowBounds.height || 1080, targetBounds.height || 450]);
-  const canvasTop = useTransform(scrollYProgress, [0.4, 0.7], [0, targetBounds.top]);
-  const canvasLeft = useTransform(scrollYProgress, [0.4, 0.7], [0, targetBounds.left]);
-  const canvasRadius = useTransform(scrollYProgress, [0.4, 0.7], [0, 24]); // 24px = rounded-3xl
+  // Phase 2: Shrink canvas to target bounds from 0.3 to 0.6
+  const canvasWidth = useTransform(scrollYProgress, [0.3, 0.6], [windowBounds.width || 1920, targetBounds.width || 800]);
+  const canvasHeight = useTransform(scrollYProgress, [0.3, 0.6], [windowBounds.height || 1080, targetBounds.height || 450]);
+  const canvasTop = useTransform(scrollYProgress, [0.3, 0.6], [0, targetBounds.top]);
+  const canvasLeft = useTransform(scrollYProgress, [0.3, 0.6], [0, targetBounds.left]);
+  const canvasRadius = useTransform(scrollYProgress, [0.3, 0.6], [0, 24]); // 24px = rounded-3xl
 
-  // Phase 3: Fade in UI from 0.6 to 0.8
-  const uiOpacity = useTransform(scrollYProgress, [0.6, 0.8], [0, 1]);
-  const uiY = useTransform(scrollYProgress, [0.6, 0.8], [50, 0]);
+  // Fade in the dark gradient over the video ONLY as it shrinks to a card
+  const gradientOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
+
+  // Trigger the UI fade-up animation AFTER the shrink completes (at 60% scroll)
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (latest >= 0.6 && !showUI) {
+      setShowUI(true);
+    } else if (latest < 0.6 && showUI) {
+      setShowUI(false);
+    }
+  });
 
   // Canvas drawing logic
   const drawImage = (index: number) => {
@@ -145,13 +156,18 @@ export const SmartSwitching = () => {
             className="w-full h-full object-cover"
           />
           {/* Gradient overlay specifically for the card mode */}
-          <motion.div style={{ opacity: uiOpacity }} className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent mix-blend-multiply pointer-events-none"></motion.div>
-          <motion.div style={{ opacity: uiOpacity }} className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent pointer-events-none"></motion.div>
+          <motion.div style={{ opacity: gradientOpacity }} className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent mix-blend-multiply pointer-events-none"></motion.div>
+          <motion.div style={{ opacity: gradientOpacity }} className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent pointer-events-none"></motion.div>
         </motion.div>
 
         {/* Foreground Content Grid */}
-        <div className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max w-full mx-auto relative z-10 pointer-events-none">
-          <motion.div style={{ opacity: uiOpacity, y: uiY }} className="text-center mb-16 pointer-events-auto">
+        <div className="px-margin-mobile md:px-margin-desktop max-w-container-max w-full mx-auto relative z-10 pointer-events-none">
+          <motion.div 
+            initial={{ y: 50, opacity: 0 }}
+            animate={showUI ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center mb-4 pointer-events-auto"
+          >
             <h2 className="font-headline-lg text-headline-lg text-primary mb-4">
               Intelligent Power Orchestration
             </h2>
@@ -162,40 +178,56 @@ export const SmartSwitching = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-            {/* Target Layout Box for Smart Switching */}
+            {/* Target Layout Box for Video Only */}
             <div className="md:col-span-8 relative group md:aspect-video flex flex-col justify-end p-8 md:p-12 pointer-events-auto">
               {/* Invisible Target Div */}
-              <div ref={targetRef} className="absolute inset-0 w-full h-full pointer-events-none" />
-              
-              <motion.div style={{ opacity: uiOpacity, y: uiY }} className="relative z-10">
-                <Route className="text-primary-fixed mb-4 w-10 h-10" />
-                <h3 className="font-headline-lg text-headline-lg text-primary mb-3">Smart Switching</h3>
-                <p className="font-body-lg text-body-lg text-white max-w-xl drop-shadow-md">
-                  Seamlessly transitions between solar harvesting, battery discharge,
-                  and grid backup in less than 10 milliseconds. You won't even see
-                  your lights flicker.
-                </p>
-              </motion.div>
+              <div ref={targetRef} className="absolute inset-0 w-full h-full pointer-events-none rounded-3xl" />
             </div>
 
             {/* Side Cards */}
-            <div className="md:col-span-4 flex flex-col gap-gutter pointer-events-auto">
-              <motion.div style={{ opacity: uiOpacity, y: uiY }} className="flex-1 flex flex-col">
-                <GlassCard glowBorder className="flex-1 h-full">
-                  <Zap className="text-primary-fixed mb-4 w-8 h-8" />
-                  <h4 className="font-headline-md text-headline-md text-primary mb-2">Grid Sync</h4>
-                  <p className="font-body-md text-body-md text-on-surface-variant">
+            <div className="md:col-span-4 flex flex-col gap-3 pointer-events-auto">
+              <motion.div 
+                initial={{ y: 50, opacity: 0 }}
+                animate={showUI ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+                className="flex-1 flex flex-col"
+              >
+                <GlassCard glowBorder className="flex-1 h-full !p-5 md:!p-6">
+                  <Route className="text-primary-fixed mb-2 w-6 h-6" />
+                  <h4 className="font-headline-sm text-headline-sm text-primary mb-1">Smart Switching</h4>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant">
+                    Seamlessly transitions between solar harvesting, battery discharge,
+                    and grid backup in less than 10 milliseconds.
+                  </p>
+                </GlassCard>
+              </motion.div>
+
+              <motion.div 
+                initial={{ y: 50, opacity: 0 }}
+                animate={showUI ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                className="flex-1 flex flex-col"
+              >
+                <GlassCard glowBorder className="flex-1 h-full !p-5 md:!p-6">
+                  <Zap className="text-primary-fixed mb-2 w-6 h-6" />
+                  <h4 className="font-headline-sm text-headline-sm text-primary mb-1">Grid Sync</h4>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant">
                     Real-time synchronization with local utility prices to export energy
                     at peak value.
                   </p>
                 </GlassCard>
               </motion.div>
 
-              <motion.div style={{ opacity: uiOpacity, y: uiY }} className="flex-1 flex flex-col">
-                <GlassCard className="flex-1 h-full">
-                  <BatteryCharging className="text-primary-fixed mb-4 w-8 h-8" />
-                  <h4 className="font-headline-md text-headline-md text-primary mb-2">Battery Guard</h4>
-                  <p className="font-body-md text-body-md text-on-surface-variant">
+              <motion.div 
+                initial={{ y: 50, opacity: 0 }}
+                animate={showUI ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+                className="flex-1 flex flex-col"
+              >
+                <GlassCard className="flex-1 h-full !p-5 md:!p-6">
+                  <BatteryCharging className="text-primary-fixed mb-2 w-6 h-6" />
+                  <h4 className="font-headline-sm text-headline-sm text-primary mb-1">Battery Guard</h4>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant">
                     Advanced thermal management ensures 20-year operational lifespan for
                     your storage.
                   </p>
