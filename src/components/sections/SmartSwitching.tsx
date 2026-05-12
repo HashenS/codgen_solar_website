@@ -137,7 +137,7 @@ export const SmartSwitching = () => {
 
   return (
     <section ref={containerRef} className="h-[300vh] relative z-20 bg-background">
-      <div ref={stickyRef} className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
+      <div ref={stickyRef} className="sticky top-0 min-h-screen w-full flex flex-col justify-center pt-24 md:pt-32 pb-16 md:pb-24">
         
         {/* Animated Background Canvas */}
         <motion.div
@@ -166,7 +166,7 @@ export const SmartSwitching = () => {
             initial={{ y: 50, opacity: 0 }}
             animate={showUI ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-center mb-4 pointer-events-auto"
+            className="text-center mb-16 pointer-events-auto"
           >
             <h2 className="font-headline-lg text-headline-lg text-primary mb-4">
               Intelligent Power Orchestration
@@ -179,7 +179,7 @@ export const SmartSwitching = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
             {/* Target Layout Box for Video Only */}
-            <div className="md:col-span-8 relative group md:aspect-video flex flex-col justify-end p-8 md:p-12 pointer-events-auto">
+            <div className="md:col-span-8 relative group flex flex-col justify-end p-8 md:p-12 pointer-events-auto h-full min-h-[400px]">
               {/* Invisible Target Div */}
               <div ref={targetRef} className="absolute inset-0 w-full h-full pointer-events-none rounded-3xl" />
             </div>
