@@ -88,8 +88,8 @@ export const LiveEnergyCommand = () => {
 
           {/* Hub */}
           <div className="relative">
-            <div className="w-48 h-48 mx-auto glass-panel rounded-3xl flex flex-col items-center justify-center border border-white/20 glow-border z-10 relative">
-              <Cpu className="w-12 h-12 text-primary mb-2" />
+            <div className="w-40 h-40 mx-auto glass-panel rounded-3xl flex flex-col items-center justify-center border border-white/20 glow-border z-10 relative">
+              <Cpu className="w-10 h-10 text-primary mb-2" />
               <p className="font-label-caps text-label-caps font-bold">NEXUS CORE</p>
             </div>
             {/* Decorative HUD elements */}
