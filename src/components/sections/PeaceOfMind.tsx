@@ -54,29 +54,41 @@ export const PeaceOfMind = () => {
         ease: "elastic.out(1, 0.4)",
       }, "<")
       
-      // 4. Stagger in the feature texts
-      .to(".pom-text", {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
+      // 4. Stagger in the feature texts (3D Parallax Entrance)
+      .from(".pom-card", {
+        y: 80,
+        rotationX: 25,
+        rotationY: -15,
+        opacity: 0,
+        duration: 1.2,
         stagger: 0.2,
         ease: "power3.out",
+      }, "<0.2")
+      
+      // 5. Inner element parallax
+      .from(".pom-icon", {
+        y: 30,
+        scale: 0.8,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "back.out(1.5)",
       }, "<0.2");
     },
     { scope: containerRef }
   );
 
   return (
-    <section ref={containerRef} className="py-section-gap bg-surface-container-lowest overflow-hidden">
+    <section ref={containerRef} className="py-section-gap bg-surface-container-lowest overflow-hidden" style={{ perspective: "1000px" }}>
       <div className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
         <div>
           <h2 ref={headingRef} className="font-headline-lg text-headline-lg text-primary mb-8">
             Zero Downtime.<br />
             <span className="text-primary-fixed-dim">Zero Compromise.</span>
           </h2>
-          <div className="space-y-6">
-            <div className="pom-text flex items-start gap-4">
-              <div className="w-12 h-12 rounded-full bg-primary-fixed/10 flex items-center justify-center shrink-0">
+          <div className="space-y-6 perspective-[1000px]">
+            <div className="pom-card glass-panel p-6 rounded-2xl flex items-start gap-4 border border-white/5 relative z-10 transform-style-3d">
+              <div className="pom-icon w-12 h-12 rounded-full bg-primary-fixed/10 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(163,255,18,0.2)]">
                 <ShieldCheck className="text-primary-fixed w-6 h-6" />
               </div>
               <div>
@@ -90,8 +102,8 @@ export const PeaceOfMind = () => {
               </div>
             </div>
 
-            <div className="pom-text flex items-start gap-4">
-              <div className="w-12 h-12 rounded-full bg-primary-fixed/10 flex items-center justify-center shrink-0">
+            <div className="pom-card glass-panel p-6 rounded-2xl flex items-start gap-4 border border-white/5 relative z-10 transform-style-3d">
+              <div className="pom-icon w-12 h-12 rounded-full bg-primary-fixed/10 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(163,255,18,0.2)]">
                 <CloudLightning className="text-primary-fixed w-6 h-6" />
               </div>
               <div>

@@ -4,31 +4,19 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Sun, Cpu, Home } from "lucide-react";
+import { ScrambleText } from "../ui/ScrambleText";
 
 export const LiveEnergyCommand = () => {
   const containerRef = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
-      // Animate the flow lines
-      gsap.to(".energy-line-animated", {
-        backgroundPosition: "-200% 0",
+      // Animate the flow lines (SVG pulse)
+      gsap.to(".circuit-pulse", {
+        strokeDashoffset: -15, // matches dasharray length
         ease: "none",
-        duration: 2,
+        duration: 1.5,
         repeat: -1,
-      });
-
-      // Animate the stats numbers counting up
-      gsap.from(".stat-number", {
-        textContent: 0,
-        duration: 2,
-        ease: "power2.out",
-        snap: { textContent: 1 },
-        stagger: 0.2,
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-        },
       });
 
       // Pulse the central hub
@@ -77,35 +65,46 @@ export const LiveEnergyCommand = () => {
 
         {/* Diagram Shell */}
         <div className="relative grid grid-cols-1 md:grid-cols-3 gap-12 items-center text-center">
+          
+          {/* Background Circuit SVG - Desktop */}
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full pointer-events-none hidden md:block -z-10">
+            <path d="M 16.66 50 L 83.33 50" stroke="rgba(255,255,255,0.05)" strokeWidth="2" fill="none" vectorEffect="non-scaling-stroke" />
+            <path className="circuit-pulse" d="M 16.66 50 L 83.33 50" pathLength="100" stroke="#A3FF12" strokeWidth="3" fill="none" vectorEffect="non-scaling-stroke" strokeDasharray="15 100" strokeDashoffset="115" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 5px #A3FF12)' }} />
+          </svg>
+
+          {/* Background Circuit SVG - Mobile */}
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full pointer-events-none block md:hidden -z-10">
+            <path d="M 50 16.66 L 50 83.33" stroke="rgba(255,255,255,0.05)" strokeWidth="2" fill="none" vectorEffect="non-scaling-stroke" />
+            <path className="circuit-pulse" d="M 50 16.66 L 50 83.33" pathLength="100" stroke="#A3FF12" strokeWidth="3" fill="none" vectorEffect="non-scaling-stroke" strokeDasharray="15 100" strokeDashoffset="115" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 5px #A3FF12)' }} />
+          </svg>
+
           {/* Source 1 */}
-          <div className="space-y-4">
-            <div className="w-24 h-24 mx-auto glass-panel rounded-full flex items-center justify-center border border-primary-fixed/40 shadow-[0_0_30px_rgba(163,255,18,0.1)]">
+          <div className="space-y-4 relative z-10">
+            <div className="w-24 h-24 mx-auto glass-panel rounded-full flex items-center justify-center border border-primary-fixed/40 shadow-[0_0_30px_rgba(163,255,18,0.1)] bg-background">
               <Sun className="w-10 h-10 text-primary-fixed" />
             </div>
             <p className="font-headline-md text-headline-md">Solar Array</p>
-            <div className="h-1 w-2/3 mx-auto energy-line energy-line-animated rounded-full opacity-80"></div>
           </div>
 
           {/* Hub */}
-          <div className="relative">
-            <div className="w-40 h-40 mx-auto glass-panel rounded-3xl flex flex-col items-center justify-center border border-white/20 glow-border z-10 relative">
+          <div className="relative z-10">
+            <div className="w-40 h-40 mx-auto glass-panel bg-background rounded-3xl flex flex-col items-center justify-center border border-white/20 glow-border relative">
               <Cpu className="w-10 h-10 text-primary mb-2" />
               <p className="font-label-caps text-label-caps font-bold">NEXUS CORE</p>
             </div>
             {/* Decorative HUD elements */}
-            <div className="absolute inset-0 flex items-center justify-center -z-0">
+            <div className="absolute inset-0 flex items-center justify-center -z-10">
               <div className="nexus-core-ring absolute w-64 h-64 border border-primary-fixed/30 rounded-full"></div>
               <div className="w-64 h-64 border border-primary-fixed/10 rounded-full"></div>
             </div>
           </div>
 
           {/* Sink */}
-          <div className="space-y-4">
-            <div className="w-24 h-24 mx-auto glass-panel rounded-full flex items-center justify-center border border-white/20">
+          <div className="space-y-4 relative z-10">
+            <div className="w-24 h-24 mx-auto glass-panel bg-background rounded-full flex items-center justify-center border border-white/20">
               <Home className="w-10 h-10 text-primary" />
             </div>
             <p className="font-headline-md text-headline-md">Your Home</p>
-            <div className="h-1 w-2/3 mx-auto bg-white/10 rounded-full"></div>
           </div>
         </div>
 
@@ -115,7 +114,7 @@ export const LiveEnergyCommand = () => {
               SELF SUFFICIENCY
             </p>
             <p className="text-4xl font-headline-lg text-primary">
-              <span className="stat-number">98</span>%
+              <ScrambleText text="98" className="stat-number" />%
             </p>
           </div>
           <div className="text-center p-6 border-r border-white/5 last:border-0">
@@ -123,7 +122,7 @@ export const LiveEnergyCommand = () => {
               EST. SAVINGS
             </p>
             <p className="text-4xl font-headline-lg text-primary-fixed-dim">
-              $<span className="stat-number">412</span>
+              $<ScrambleText text="412" className="stat-number" />
             </p>
           </div>
           <div className="text-center p-6 border-r border-white/5 last:border-0">
@@ -131,7 +130,7 @@ export const LiveEnergyCommand = () => {
               CO2 SAVED
             </p>
             <p className="text-4xl font-headline-lg text-primary">
-              <span className="stat-number">1.2</span>t
+              <ScrambleText text="1.2" className="stat-number" />t
             </p>
           </div>
           <div className="text-center p-6 last:border-0 flex flex-col items-center justify-center">

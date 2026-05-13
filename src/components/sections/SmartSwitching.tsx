@@ -4,6 +4,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useScroll, useTransform, motion, useMotionValueEvent, useSpring, useMotionValue } from "framer-motion";
 import { GlassCard } from "../ui/GlassCard";
 import { Route, Zap, BatteryCharging } from "lucide-react";
+import { EnergyTextReveal } from "../ui/EnergyTextReveal";
 
 export const SmartSwitching = () => {
   const containerRef = useRef<HTMLElement>(null);
@@ -200,9 +201,10 @@ export const SmartSwitching = () => {
             style={{ opacity: titleOpacity, y: titleY }}
             className="text-center mb-16 pointer-events-auto relative z-30"
           >
-            <h2 className="font-headline-lg text-headline-lg text-primary mb-4">
-              Intelligent Power Orchestration
-            </h2>
+            <EnergyTextReveal 
+              text="Intelligent Power Orchestration" 
+              className="font-headline-lg text-headline-lg mb-4" 
+            />
             <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">
               Our proprietary Nexus Inverter acts as the brain of your home, making
               microsecond decisions to optimize energy flow.

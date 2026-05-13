@@ -1,6 +1,9 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import gsap from "gsap";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -9,13 +12,69 @@ function cn(...inputs: ClassValue[]) {
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "glass";
   size?: "sm" | "md" | "lg";
+  magnetic?: boolean;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "primary", size = "md", children, ...props }, ref) => {
+  ({ className, variant = "primary", size = "md", magnetic = false, children, ...props }, ref) => {
+    const internalRef = useRef<HTMLButtonElement>(null);
+    const flareContainerRef = useRef<HTMLDivElement>(null);
+
+    const setRefs = React.useCallback(
+      (node: HTMLButtonElement) => {
+        internalRef.current = node;
+        if (typeof ref === "function") {
+          ref(node);
+        } else if (ref) {
+          (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+        }
+      },
+      [ref]
+    );
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (!magnetic || !internalRef.current) return;
+      const { clientX, clientY } = e;
+      const { width, height, left, top } = internalRef.current.getBoundingClientRect();
+      const x = clientX - (left + width / 2);
+      const y = clientY - (top + height / 2);
+      gsap.to(internalRef.current, { x: x * 0.3, y: y * 0.3, duration: 1, ease: "power3.out" });
+
+      if (flareContainerRef.current && variant === "primary") {
+        const flares = flareContainerRef.current.children;
+        if (flares.length > 0 && Math.random() > 0.6) {
+          const idx = Math.floor(Math.random() * flares.length);
+          const flare = flares[idx] as HTMLElement;
+          if (!gsap.isTweening(flare)) {
+            gsap.fromTo(flare, {
+              x: (clientX - left),
+              y: (clientY - top),
+              scale: 0,
+              opacity: 1
+            }, {
+              x: (clientX - left) + (Math.random() - 0.5) * 80,
+              y: (clientY - top) + (Math.random() - 0.5) * 80,
+              scale: Math.random() * 2 + 0.5,
+              opacity: 0,
+              duration: 0.6 + Math.random() * 0.4,
+              ease: "power2.out"
+            });
+          }
+        }
+      }
+      
+      if (props.onMouseMove) props.onMouseMove(e);
+    };
+
+    const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (!magnetic || !internalRef.current) return;
+      gsap.to(internalRef.current, { x: 0, y: 0, duration: 1, ease: "elastic.out(1, 0.3)" });
+      if (props.onMouseLeave) props.onMouseLeave(e);
+    };
+
     const variants = {
       primary:
-        "bg-[#A3FF12] text-black hover:shadow-[0_0_20px_rgba(163,255,18,0.4)] hover:scale-105 active:scale-95",
+        "bg-[#A3FF12] text-black hover:shadow-[0_0_20px_rgba(163,255,18,0.4)]", // removed scale here since gsap handles transform
       secondary:
         "bg-transparent border border-primary-fixed/30 text-primary-fixed hover:bg-primary-fixed/10",
       glass:
@@ -30,9 +89,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button
-        ref={ref}
+        ref={setRefs}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         className={cn(
-          "rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2",
+          "rounded-xl font-bold transition-colors duration-300 flex items-center justify-center gap-2 relative overflow-visible z-10",
           variants[variant],
           sizes[size],
           variant === "primary" && size === "sm" ? "rounded-full" : "",
@@ -41,7 +102,14 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         style={variant === "primary" ? { color: "#102000" } : undefined}
         {...props}
       >
-        {children}
+        {magnetic && variant === "primary" && (
+          <div ref={flareContainerRef} className="absolute inset-0 pointer-events-none z-[-1] overflow-visible">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="absolute w-2 h-2 rounded-full bg-[#A3FF12] opacity-0 shadow-[0_0_8px_#A3FF12]"></div>
+            ))}
+          </div>
+        )}
+        <span className="relative z-10 flex items-center gap-2 pointer-events-none">{children}</span>
       </button>
     );
   }
