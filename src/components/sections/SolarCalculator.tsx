@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { GlassCard } from "../ui/GlassCard";
 import { Button } from "../ui/Button";
+import { EnergyTextReveal } from "../ui/EnergyTextReveal";
 
 export const SolarCalculator = () => {
   const [bill, setBill] = useState(250);
@@ -44,9 +45,10 @@ export const SolarCalculator = () => {
   return (
     <section ref={containerRef} className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
       <div className="text-center mb-16 calc-element">
-        <h2 className="font-headline-lg text-headline-lg text-primary mb-4">
-          Calculate Your Future
-        </h2>
+        <EnergyTextReveal 
+          text="Calculate Your Future" 
+          className="font-headline-lg text-headline-lg mb-4" 
+        />
         <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">
           See exactly how much you can save with a custom Codegen Solar array.
         </p>
