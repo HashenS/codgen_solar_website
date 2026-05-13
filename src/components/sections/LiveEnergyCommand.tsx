@@ -13,9 +13,9 @@ export const LiveEnergyCommand = () => {
     () => {
       // Animate the flow lines (SVG pulse)
       gsap.to(".circuit-pulse", {
-        strokeDashoffset: -15, // matches dasharray length
+        strokeDashoffset: -16, // matches dasharray length (8+8)
         ease: "none",
-        duration: 1.5,
+        duration: 0.5,
         repeat: -1,
       });
 
@@ -67,15 +67,15 @@ export const LiveEnergyCommand = () => {
         <div className="relative grid grid-cols-1 md:grid-cols-3 gap-12 items-center text-center">
           
           {/* Background Circuit SVG - Desktop */}
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full pointer-events-none hidden md:block -z-10">
-            <path d="M 16.66 50 L 83.33 50" stroke="rgba(255,255,255,0.05)" strokeWidth="2" fill="none" vectorEffect="non-scaling-stroke" />
-            <path className="circuit-pulse" d="M 16.66 50 L 83.33 50" pathLength="100" stroke="#A3FF12" strokeWidth="3" fill="none" vectorEffect="non-scaling-stroke" strokeDasharray="15 100" strokeDashoffset="115" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 5px #A3FF12)' }} />
+          <svg className="absolute inset-0 w-full h-full pointer-events-none hidden md:block -z-10">
+            <line x1="16.66%" y1="50%" x2="83.33%" y2="50%" stroke="rgba(255,255,255,0.05)" strokeWidth="2" />
+            <line className="circuit-pulse" x1="16.66%" y1="50%" x2="83.33%" y2="50%" stroke="#A3FF12" strokeWidth="2" strokeDasharray="8 8" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 5px #A3FF12)' }} />
           </svg>
 
           {/* Background Circuit SVG - Mobile */}
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full pointer-events-none block md:hidden -z-10">
-            <path d="M 50 16.66 L 50 83.33" stroke="rgba(255,255,255,0.05)" strokeWidth="2" fill="none" vectorEffect="non-scaling-stroke" />
-            <path className="circuit-pulse" d="M 50 16.66 L 50 83.33" pathLength="100" stroke="#A3FF12" strokeWidth="3" fill="none" vectorEffect="non-scaling-stroke" strokeDasharray="15 100" strokeDashoffset="115" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 5px #A3FF12)' }} />
+          <svg className="absolute inset-0 w-full h-full pointer-events-none block md:hidden -z-10">
+            <line x1="50%" y1="16.66%" x2="50%" y2="83.33%" stroke="rgba(255,255,255,0.05)" strokeWidth="2" />
+            <line className="circuit-pulse" x1="50%" y1="16.66%" x2="50%" y2="83.33%" stroke="#A3FF12" strokeWidth="2" strokeDasharray="8 8" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 5px #A3FF12)' }} />
           </svg>
 
           {/* Source 1 */}
