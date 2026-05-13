@@ -120,6 +120,7 @@ export const Hero = () => {
             {/* The Ultimate */}
             <motion.div
               style={{ opacity: ultimateOpacity, y: ultimateY }}
+              initial={{ opacity: 0 }}
               className="absolute inset-0 flex items-center justify-center"
             >
               <h1 className="font-display-hero text-display-hero text-primary mb-0 leading-none drop-shadow-2xl text-center">
@@ -130,6 +131,7 @@ export const Hero = () => {
             {/* Safety Net. */}
             <motion.div
               style={{ opacity: safetyOpacity, y: safetyY }}
+              initial={{ opacity: 0 }}
               className="absolute inset-0 flex flex-col items-center justify-center"
             >
               <h1 className="font-display-hero text-display-hero text-primary-fixed-dim drop-shadow-[0_0_15px_rgba(159,251,6,0.3)] mb-6 leading-none text-center">
