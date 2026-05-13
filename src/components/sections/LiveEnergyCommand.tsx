@@ -80,7 +80,7 @@ export const LiveEnergyCommand = () => {
 
           {/* Source 1 */}
           <div className="space-y-4 relative z-10">
-            <div className="w-24 h-24 mx-auto glass-panel rounded-full flex items-center justify-center border border-primary-fixed/40 shadow-[0_0_30px_rgba(163,255,18,0.1)] bg-background">
+            <div className="w-24 h-24 mx-auto bg-background rounded-full flex items-center justify-center border border-primary-fixed/40 shadow-[0_0_30px_rgba(163,255,18,0.1)]">
               <Sun className="w-10 h-10 text-primary-fixed" />
             </div>
             <p className="font-headline-md text-headline-md">Solar Array</p>
@@ -88,7 +88,7 @@ export const LiveEnergyCommand = () => {
 
           {/* Hub */}
           <div className="relative z-10">
-            <div className="w-40 h-40 mx-auto glass-panel bg-background rounded-3xl flex flex-col items-center justify-center border border-white/20 glow-border relative">
+            <div className="w-40 h-40 mx-auto bg-background rounded-3xl flex flex-col items-center justify-center border border-white/20 glow-border relative">
               <Cpu className="w-10 h-10 text-primary mb-2" />
               <p className="font-label-caps text-label-caps font-bold">NEXUS CORE</p>
             </div>
@@ -101,7 +101,7 @@ export const LiveEnergyCommand = () => {
 
           {/* Sink */}
           <div className="space-y-4 relative z-10">
-            <div className="w-24 h-24 mx-auto glass-panel bg-background rounded-full flex items-center justify-center border border-white/20">
+            <div className="w-24 h-24 mx-auto bg-background rounded-full flex items-center justify-center border border-white/20">
               <Home className="w-10 h-10 text-primary" />
             </div>
             <p className="font-headline-md text-headline-md">Your Home</p>
