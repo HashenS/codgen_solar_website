@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Button } from "../ui/Button";
+import { EnergyTextReveal } from "../ui/EnergyTextReveal";
 
 export const CTA = () => {
   const containerRef = useRef<HTMLElement>(null);
@@ -30,9 +31,10 @@ export const CTA = () => {
       <div className="cta-content max-w-container-max mx-auto glass-panel rounded-[48px] overflow-hidden relative border border-primary-fixed/20">
         <div className="absolute inset-0 bg-gradient-to-br from-primary-fixed/10 via-transparent to-transparent"></div>
         <div className="relative z-10 p-12 md:p-24 text-center">
-          <h2 className="font-display-hero text-headline-lg md:text-display-hero text-primary mb-8">
-            Ready for Independence?
-          </h2>
+          <EnergyTextReveal 
+            text="Ready for Independence?" 
+            className="font-display-hero text-headline-lg md:text-display-hero mb-8" 
+          />
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
             Our engineering team is ready to design your custom Hybrid Resilience
             system. Get a detailed energy audit and technical proposal tailored

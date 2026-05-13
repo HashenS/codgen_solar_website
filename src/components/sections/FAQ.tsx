@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Plus, Minus } from "lucide-react";
 import { GlassCard } from "../ui/GlassCard";
+import { EnergyTextReveal } from "../ui/EnergyTextReveal";
 
 const faqs = [
   {
@@ -45,9 +46,10 @@ export const FAQ = () => {
   return (
     <section ref={containerRef} className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
       <div className="text-center mb-16">
-        <h2 className="font-headline-lg text-headline-lg text-primary mb-4">
-          Common Inquiries
-        </h2>
+        <EnergyTextReveal 
+          text="Common Inquiries" 
+          className="font-headline-lg text-headline-lg mb-4" 
+        />
       </div>
 
       <div className="max-w-3xl mx-auto space-y-4">

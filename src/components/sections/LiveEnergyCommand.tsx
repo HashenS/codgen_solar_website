@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Sun, Cpu, Home } from "lucide-react";
 import { ScrambleText } from "../ui/ScrambleText";
+import { EnergyTextReveal } from "../ui/EnergyTextReveal";
 
 export const LiveEnergyCommand = () => {
   const containerRef = useRef<HTMLElement>(null);
@@ -36,9 +37,10 @@ export const LiveEnergyCommand = () => {
       <div className="glass-panel rounded-[40px] p-8 md:p-16 relative border border-white/5 shadow-2xl">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-8">
           <div>
-            <h2 className="font-headline-lg text-headline-lg text-primary mb-2">
-              Live Energy Command
-            </h2>
+            <EnergyTextReveal 
+              text="Live Energy Command" 
+              className="font-headline-lg text-headline-lg mb-2" 
+            />
             <p className="font-body-md text-body-md text-on-surface-variant">
               Monitor every watt moving through your ecosystem.
             </p>
