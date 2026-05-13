@@ -40,6 +40,13 @@ export const Hero = () => {
   const safetyOpacity = useTransform(scrollYProgress, [0.6, 0.7, 0.9, 1.0], [0, 1, 1, 1]);
   const safetyY = useTransform(scrollYProgress, [0.6, 0.7, 0.9, 1.0], [30, 0, 0, 0]);
 
+  const [scrollVal, setScrollVal] = useState(0);
+  useMotionValueEvent(scrollYProgress, "change", (latest) => setScrollVal(latest));
+
+  // Manually calculate logo opacity and Y to bypass any useTransform glitches
+  const manualLogoOpacity = Math.max(0, 1 - (scrollVal / 0.2));
+  const manualLogoY = scrollVal < 0.2 ? -(scrollVal / 0.2) * 100 : -100;
+
   const drawImage = (index: number) => {
     if (images[index - 1] && canvasRef.current) {
       const context = canvasRef.current.getContext("2d");
@@ -117,6 +124,18 @@ export const Hero = () => {
         {/* Centered Animated Text */}
         {isMounted && (
           <div className="absolute inset-0 z-10 pointer-events-none">
+            {/* Initial Logo */}
+            <motion.div
+              style={{ opacity: manualLogoOpacity, transform: `translateY(${manualLogoY}px)` }}
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            >
+              <img 
+                src="/cg-solar.png" 
+                alt="Codegen Solar" 
+                className="w-48 md:w-80 h-auto drop-shadow-[0_0_30px_rgba(163,255,18,0.3)]" 
+              />
+            </motion.div>
+
             {/* The Ultimate */}
             <motion.div
               style={{ opacity: ultimateOpacity, y: ultimateY }}
