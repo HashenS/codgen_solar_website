@@ -22,10 +22,10 @@
   --color-on-surface-variant: #c0caae;
   --color-surface-container-low: #1c1b1b;
   --color-inverse-on-surface: #313030;
-  --color-background: #131313;
+  --color-background: #000000;
   --color-surface-tint: #8bdc00;
   --color-secondary: #bfc7d4;
-  --color-surface-container-lowest: #0e0e0e;
+  --color-surface-container-lowest: #000000;
   --color-surface-bright: #3a3939;
   --color-on-primary-fixed-variant: #2f4f00;
   --color-on-tertiary-container: #7a6200;
@@ -47,7 +47,7 @@
   --color-on-tertiary-fixed: #231b00;
   --color-primary-container: #9ffb06;
   --color-outline-variant: #414a34;
-  --color-surface: #131313;
+  --color-surface: #000000;
 
   --font-body-lg: "Inter", sans-serif;
   --font-headline-lg: "Space Grotesk", sans-serif;

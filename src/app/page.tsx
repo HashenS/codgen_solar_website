@@ -7,6 +7,7 @@ const PeaceOfMind = dynamic(() => import("@/components/sections/PeaceOfMind").th
 const LiveEnergyCommand = dynamic(() => import("@/components/sections/LiveEnergyCommand").then(m => m.LiveEnergyCommand));
 const SolarCalculator = dynamic(() => import("@/components/sections/SolarCalculator").then(m => m.SolarCalculator));
 const FAQ = dynamic(() => import("@/components/sections/FAQ").then(m => m.FAQ));
+const ScrollVelocity = dynamic(() => import("@/components/ui/ScrollVelocity").then(m => m.ScrollVelocity));
 const CTA = dynamic(() => import("@/components/sections/CTA").then(m => m.CTA));
 const Footer = dynamic(() => import("@/components/sections/Footer").then(m => m.Footer));
 
@@ -21,6 +22,13 @@ export default function Home() {
         <LiveEnergyCommand />
         <SolarCalculator />
         <FAQ />
+        <div className="py-12 md:py-24 overflow-hidden bg-background border-y border-white/5 relative z-10">
+          <ScrollVelocity 
+            text="POWER YOUR FUTURE • TAKE COMMAND • SMART GRID READY • " 
+            className="font-display-hero text-[60px] md:text-[120px] font-bold text-primary drop-shadow-[0_0_20px_rgba(163,255,18,0.3)] tracking-tighter"
+            velocity={1}
+          />
+        </div>
         <CTA />
         <Footer />
       </div>
