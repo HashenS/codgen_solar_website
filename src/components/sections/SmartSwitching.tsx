@@ -1,240 +1,204 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
-import { useScroll, useTransform, motion, useMotionValueEvent, useSpring, useMotionValue } from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
+import {
+  useScroll,
+  useTransform,
+  motion,
+  useMotionValueEvent,
+  useSpring,
+  useMotionValue,
+  MotionValue,
+} from "framer-motion";
 import { GlassCard } from "../ui/GlassCard";
 import { Route, Zap, BatteryCharging } from "lucide-react";
 import { EnergyTextReveal } from "../ui/EnergyTextReveal";
 
+const FRAME_COUNT = 81;
+const FRAMES = Array.from({ length: FRAME_COUNT }, (_, i) =>
+  `/bulbe_animation/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`
+);
+
+// A sub-component that reads frameIndex MotionValue and swaps images
+function BulbFramePlayer({ frameIndex }: { frameIndex: MotionValue<number> }) {
+  const [currentFrame, setCurrentFrame] = useState(0);
+
+  useMotionValueEvent(frameIndex, "change", (latest) => {
+    const idx = Math.round(latest);
+    if (idx !== currentFrame) setCurrentFrame(idx);
+  });
+
+  return (
+    <>
+      {FRAMES.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ opacity: i === currentFrame ? 1 : 0 }}
+        />
+      ))}
+    </>
+  );
+}
+
 export const SmartSwitching = () => {
   const containerRef = useRef<HTMLElement>(null);
-  const stickyRef = useRef<HTMLDivElement>(null);
-  const targetRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const stickyRef   = useRef<HTMLDivElement>(null);
+  const targetRef   = useRef<HTMLDivElement>(null);
 
-  const [images, setImages] = useState<HTMLImageElement[]>([]);
-  const frameCount = 81;
-
-  // Track target bounds relative to the sticky container
   const [targetBounds, setTargetBounds] = useState({ top: 0, left: 0, width: 0, height: 0 });
   const [windowBounds, setWindowBounds] = useState({ width: 0, height: 0 });
-  
-  // State to trigger the UI entrance animation
   const [showUI, setShowUI] = useState(false);
 
   useEffect(() => {
     const measure = () => {
       if (targetRef.current && stickyRef.current) {
-        const targetRect = targetRef.current.getBoundingClientRect();
-        const stickyRect = stickyRef.current.getBoundingClientRect();
-        
+        const tRect = targetRef.current.getBoundingClientRect();
+        const sRect = stickyRef.current.getBoundingClientRect();
         setTargetBounds({
-          top: targetRect.top - stickyRect.top,
-          left: targetRect.left - stickyRect.left,
-          width: targetRect.width,
-          height: targetRect.height,
+          top: tRect.top - sRect.top,
+          left: tRect.left - sRect.left,
+          width: tRect.width,
+          height: tRect.height,
         });
-        setWindowBounds({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
+        setWindowBounds({ width: window.innerWidth, height: window.innerHeight });
       }
     };
-
     measure();
     window.addEventListener("resize", measure);
-    // Add a small timeout measure to ensure layout is complete
-    const timeout = setTimeout(measure, 100);
-    return () => {
-      window.removeEventListener("resize", measure);
-      clearTimeout(timeout);
-    };
+    const t = setTimeout(measure, 100);
+    return () => { window.removeEventListener("resize", measure); clearTimeout(t); };
   }, []);
 
-  // Preload images
-  useEffect(() => {
-    const loadedImages: HTMLImageElement[] = [];
-    for (let i = 1; i <= frameCount; i++) {
-      const img = new Image();
-      img.src = `/bulbe_animation/ezgif-frame-${i.toString().padStart(3, '0')}.jpg`;
-      loadedImages.push(img);
-    }
-    setImages(loadedImages);
-  }, []);
-
+  // ── Scroll progress ───────────────────────────────────────────────────────
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  // Create custom motion values that behave differently based on scroll direction
-  const rawVideoProgress = useMotionValue(0);
-  const rawFrameProgress = useMotionValue(0);
-  const rawTextProgress = useMotionValue(0);
+  // Raw motion values (set imperatively for directional control)
+  const rawVideo  = useMotionValue(0);
+  const rawFrame  = useMotionValue(0);
+  const rawText   = useMotionValue(0);
 
-  // Apply a smooth spring to "slow down" and fluidify the parallax/scroll effect
-  const smoothVideoProgress = useSpring(rawVideoProgress, {
-    stiffness: 40,
-    damping: 15, // Make reverse very smooth
-    restDelta: 0.001
-  });
+  // Spring-smoothed versions
+  const smoothVideo = useSpring(rawVideo, { stiffness: 40, damping: 15, restDelta: 0.001 });
+  const smoothFrame = useSpring(rawFrame, { stiffness: 60, damping: 22, restDelta: 0.001 });
+  const smoothText  = useSpring(rawText,  { stiffness: 60, damping: 22, restDelta: 0.001 });
 
-  const smoothFrameProgress = useSpring(rawFrameProgress, {
-    stiffness: 50,
-    damping: 20,
-    restDelta: 0.001
-  });
-
-  const smoothTextProgress = useSpring(rawTextProgress, {
-    stiffness: 50,
-    damping: 20,
-    restDelta: 0.001
-  });
-
-  // Calculate direction-dependent timings
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const previous = scrollYProgress.getPrevious() || 0;
-    const isScrollingDown = latest >= previous;
+    const prev = scrollYProgress.getPrevious() ?? 0;
+    const goingDown = latest >= prev;
 
-    if (isScrollingDown) {
-      // SCROLL DOWN: Original perfect timings
-      // Phase 1: Scrub video from 0 to 0.4
-      rawFrameProgress.set(Math.max(0, Math.min(1, latest / 0.4)));
-      rawTextProgress.set(Math.max(0, Math.min(1, latest / 0.4)));
-      // Phase 2: Shrink canvas from 0.4 to 0.8
-      rawVideoProgress.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.4)));
+    if (goingDown) {
+      rawFrame.set(Math.max(0, Math.min(1, latest / 0.4)));
+      rawText.set(Math.max(0, Math.min(1,  latest / 0.4)));
+      rawVideo.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.4)));
     } else {
-      // SCROLL UP: Start reverse animations IMMEDIATELY at 1.0, very gradual
-      // Frames reverse gradually across the entire 1.0 -> 0.0 range
-      rawFrameProgress.set(Math.max(0, Math.min(1, latest)));
-      // Video expands gradually across 1.0 -> 0.4
-      rawVideoProgress.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.6)));
-      // Text strictly animates only within the full-screen phase (0.4 -> 0.0)
-      rawTextProgress.set(Math.max(0, Math.min(1, latest / 0.4)));
+      rawFrame.set(Math.max(0, Math.min(1, latest)));
+      rawVideo.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.6)));
+      rawText.set(Math.max(0,  Math.min(1, latest / 0.4)));
     }
 
-    // Trigger the UI fade-up animation AFTER the shrink completes (at 80% scroll)
-    if (latest >= 0.8) {
-      setShowUI(true);
-    }
+    if (latest >= 0.8) setShowUI(true);
+    else if (latest < 0.6) setShowUI(false);
   });
 
-  // Map the specific animations using the smoothed unified values!
-  const frameIndex = useTransform(smoothFrameProgress, [0, 1], [1, frameCount]);
+  // ── Derived motion values ─────────────────────────────────────────────────
+  // Frame index 0-based for the image array
+  const frameIndex = useTransform(smoothFrame, [0, 1], [0, FRAME_COUNT - 1]);
 
-  const canvasWidth = useTransform(smoothVideoProgress, [0, 1], [windowBounds.width || 1920, targetBounds.width || 800]);
-  const canvasHeight = useTransform(smoothVideoProgress, [0, 1], [windowBounds.height || 1080, targetBounds.height || 450]);
-  const canvasTop = useTransform(smoothVideoProgress, [0, 1], [0, targetBounds.top]);
-  const canvasLeft = useTransform(smoothVideoProgress, [0, 1], [0, targetBounds.left]);
-  const canvasRadius = useTransform(smoothVideoProgress, [0, 1], [0, 24]); // 24px = rounded-3xl
+  const W = windowBounds.width  || 1920;
+  const H = windowBounds.height || 1080;
+  const tw = targetBounds.width  || 800;
+  const th = targetBounds.height || 450;
 
-  const gradientOpacity = useTransform(smoothVideoProgress, [0, 1], [0, 1]);
+  const canvasWidth  = useTransform(smoothVideo, [0, 1], [W,  tw]);
+  const canvasHeight = useTransform(smoothVideo, [0, 1], [H,  th]);
+  const canvasTop    = useTransform(smoothVideo, [0, 1], [0,  targetBounds.top]);
+  const canvasLeft   = useTransform(smoothVideo, [0, 1], [0,  targetBounds.left]);
+  const canvasRadius = useTransform(smoothVideo, [0, 1], [0,  24]);
 
-  const titleOpacity = useTransform(smoothVideoProgress, [0.5, 1], [0, 1]);
-  const titleY = useTransform(smoothVideoProgress, [0.5, 1], [30, 0]);
+  const gradientOpacity = useTransform(smoothVideo, [0, 1], [0, 1]);
+  const titleOpacity    = useTransform(smoothVideo, [0.5, 1], [0, 1]);
+  const titleY          = useTransform(smoothVideo, [0.5, 1], [30, 0]);
 
-  // Bulb Text Animations (tied to the isolated text progress phase)
-  const text1Opacity = useTransform(smoothTextProgress, [0.05, 0.25, 0.6, 0.8], [0, 1, 1, 0]);
-  const text1Y = useTransform(smoothTextProgress, [0.05, 0.35], [50, 0]);
-  
-  const text2Opacity = useTransform(smoothTextProgress, [0.25, 0.45, 0.6, 0.8], [0, 1, 1, 0]);
-  const text2Y = useTransform(smoothTextProgress, [0.25, 0.55], [50, 0]);
-
-  // Canvas drawing logic
-  const drawImage = (index: number) => {
-    if (images[index - 1] && canvasRef.current) {
-      const context = canvasRef.current.getContext("2d");
-      if (context) {
-        const img = images[index - 1];
-        if (!img.complete) return;
-        
-        const canvas = canvasRef.current;
-        const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
-        const x = (canvas.width / 2) - (img.width / 2) * scale;
-        const y = (canvas.height / 2) - (img.height / 2) * scale;
-        
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(img, x, y, img.width * scale, img.height * scale);
-      }
-    }
-  };
-
-  useMotionValueEvent(frameIndex, "change", (latest) => {
-    drawImage(Math.round(latest));
-  });
-
-  // Need a separate useMotionValueEvent for height/width to ensure the canvas 
-  // internal resolution matches its display size during animation
-  useMotionValueEvent(canvasWidth, "change", () => {
-    if (canvasRef.current && windowBounds.width > 0) {
-      canvasRef.current.width = canvasWidth.get();
-      canvasRef.current.height = canvasHeight.get();
-      drawImage(Math.round(frameIndex.get()));
-    }
-  });
-
-  // Initial draw once first image is loaded
-  useEffect(() => {
-    if (images[0] && canvasRef.current && windowBounds.width > 0) {
-      const img = images[0];
-      canvasRef.current.width = windowBounds.width;
-      canvasRef.current.height = windowBounds.height;
-      if (img.complete) {
-        drawImage(1);
-      } else {
-        img.onload = () => drawImage(1);
-      }
-    }
-  }, [images, windowBounds]);
+  // Bulb text — staggered slide-up, early exit before shrink
+  const text1Opacity = useTransform(smoothText, [0.05, 0.25, 0.6, 0.8], [0, 1, 1, 0]);
+  const text1Y       = useTransform(smoothText, [0.05, 0.35],            [50, 0]);
+  const text2Opacity = useTransform(smoothText, [0.25, 0.45, 0.6, 0.8], [0, 1, 1, 0]);
+  const text2Y       = useTransform(smoothText, [0.25, 0.55],            [50, 0]);
 
   return (
     <section ref={containerRef} className="h-[250vh] relative z-20 bg-background">
-      <div ref={stickyRef} className="sticky top-0 min-h-[100svh] w-full relative flex flex-col justify-center pt-24 md:pt-32 pb-16 md:pb-24">
-        
-        {/* Animated Background Canvas */}
+      <div
+        ref={stickyRef}
+        className="sticky top-0 min-h-[100svh] w-full relative flex flex-col justify-center pt-24 md:pt-32 pb-16 md:pb-24"
+      >
+        {/* ── Framer Motion image-sequence player ──────────────────────── */}
         <motion.div
           style={{
             position: "absolute",
-            width: canvasWidth,
-            height: canvasHeight,
-            top: canvasTop,
-            left: canvasLeft,
+            width:        canvasWidth,
+            height:       canvasHeight,
+            top:          canvasTop,
+            left:         canvasLeft,
             borderRadius: canvasRadius,
           }}
           className="z-20 overflow-hidden shadow-2xl bg-black"
         >
-          <canvas
-            ref={canvasRef}
-            className="w-full h-full object-cover"
+          <BulbFramePlayer frameIndex={frameIndex} />
+
+          {/* Gradient overlays (only visible in card mode) */}
+          <motion.div
+            style={{ opacity: gradientOpacity }}
+            className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent mix-blend-multiply pointer-events-none"
           />
-          {/* Gradient overlay specifically for the card mode */}
-          <motion.div style={{ opacity: gradientOpacity }} className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent mix-blend-multiply pointer-events-none"></motion.div>
-          <motion.div style={{ opacity: gradientOpacity }} className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent pointer-events-none"></motion.div>
+          <motion.div
+            style={{ opacity: gradientOpacity }}
+            className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent pointer-events-none"
+          />
         </motion.div>
 
-        {/* Full-screen Bulb Text Overlay */}
+        {/* ── Bulb text overlay ─────────────────────────────────────────── */}
         <div className="absolute top-0 left-0 w-full h-[100svh] pointer-events-none flex flex-col md:flex-row items-center justify-between py-[20vh] md:py-0 px-4 md:px-[8vw] lg:px-[12vw] z-30">
-          <motion.div style={{ opacity: text1Opacity, y: text1Y }} className="text-center md:text-left w-full md:w-auto">
+          <motion.div
+            style={{ opacity: text1Opacity, y: text1Y }}
+            className="text-center md:text-left w-full md:w-auto"
+          >
             <h2 className="font-display-hero font-bold tracking-tight text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
-              Your <span className="text-[#A3FF12] drop-shadow-[0_0_20px_rgba(163,255,18,0.5)]">Power,</span>
+              Your{" "}
+              <span className="text-[#A3FF12] drop-shadow-[0_0_20px_rgba(163,255,18,0.5)]">
+                Power,
+              </span>
             </h2>
           </motion.div>
-          <motion.div style={{ opacity: text2Opacity, y: text2Y }} className="text-center md:text-right w-full md:w-auto">
+
+          <motion.div
+            style={{ opacity: text2Opacity, y: text2Y }}
+            className="text-center md:text-right w-full md:w-auto"
+          >
             <h2 className="font-display-hero font-bold tracking-tight text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
-              Always <span className="text-[#A3FF12] drop-shadow-[0_0_20px_rgba(163,255,18,0.5)]">On.</span>
+              Always{" "}
+              <span className="text-[#A3FF12] drop-shadow-[0_0_20px_rgba(163,255,18,0.5)]">
+                On.
+              </span>
             </h2>
           </motion.div>
         </div>
 
-        {/* Foreground Content Grid Wrapper (No z-index to allow interleaving) */}
+        {/* ── Foreground content grid ───────────────────────────────────── */}
         <div className="px-margin-mobile md:px-margin-desktop max-w-[1440px] w-full mx-auto relative pointer-events-none mt-8">
-          <motion.div 
+          <motion.div
             style={{ opacity: titleOpacity, y: titleY }}
             className="text-center mb-16 pointer-events-auto relative z-30"
           >
-            <EnergyTextReveal 
-              text="Intelligent Power Orchestration" 
-              className="font-headline-lg text-headline-lg mb-4" 
+            <EnergyTextReveal
+              text="Intelligent Power Orchestration"
+              className="font-headline-lg text-headline-lg mb-4"
             />
             <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">
               Our proprietary Nexus Inverter acts as the brain of your home, making
@@ -243,65 +207,53 @@ export const SmartSwitching = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 relative z-10">
-            {/* Target Layout Box for Video Only */}
+            {/* Invisible target for the shrink destination */}
             <div className="md:col-span-8 relative group flex flex-col justify-end p-8 md:p-12 pointer-events-auto h-full min-h-[400px]">
-              {/* Invisible Target Div */}
               <div ref={targetRef} className="absolute inset-0 w-full h-full pointer-events-none rounded-3xl" />
             </div>
 
-            {/* Side Cards */}
+            {/* Side cards */}
             <div className="md:col-span-4 flex flex-col gap-3 pointer-events-auto">
-              <motion.div 
-                initial={{ y: 50, opacity: 0 }}
-                animate={showUI ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-                className="flex-1 flex flex-col"
-              >
-                <GlassCard glowBorder className="flex-1 h-full !p-5 md:!p-6">
-                  <Route className="text-primary-fixed mb-2 w-6 h-6" />
-                  <h4 className="font-headline-sm text-headline-sm text-primary mb-1">Smart Switching</h4>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant">
-                    Seamlessly transitions between solar harvesting, battery discharge,
-                    and grid backup in less than 10 milliseconds.
-                  </p>
-                </GlassCard>
-              </motion.div>
-
-              <motion.div 
-                initial={{ y: 50, opacity: 0 }}
-                animate={showUI ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                className="flex-1 flex flex-col"
-              >
-                <GlassCard glowBorder className="flex-1 h-full !p-5 md:!p-6">
-                  <Zap className="text-primary-fixed mb-2 w-6 h-6" />
-                  <h4 className="font-headline-sm text-headline-sm text-primary mb-1">Grid Sync</h4>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant">
-                    Real-time synchronization with local utility prices to export energy
-                    at peak value.
-                  </p>
-                </GlassCard>
-              </motion.div>
-
-              <motion.div 
-                initial={{ y: 50, opacity: 0 }}
-                animate={showUI ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-                className="flex-1 flex flex-col"
-              >
-                <GlassCard className="flex-1 h-full !p-5 md:!p-6">
-                  <BatteryCharging className="text-primary-fixed mb-2 w-6 h-6" />
-                  <h4 className="font-headline-sm text-headline-sm text-primary mb-1">Battery Guard</h4>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant">
-                    Advanced thermal management ensures 20-year operational lifespan for
-                    your storage.
-                  </p>
-                </GlassCard>
-              </motion.div>
+              {[
+                {
+                  icon: <Route className="text-primary-fixed mb-2 w-6 h-6" />,
+                  title: "Smart Switching",
+                  body: "Seamlessly transitions between solar harvesting, battery discharge, and grid backup in less than 10 milliseconds.",
+                  delay: 0.1,
+                  glow: true,
+                },
+                {
+                  icon: <Zap className="text-primary-fixed mb-2 w-6 h-6" />,
+                  title: "Grid Sync",
+                  body: "Real-time synchronization with local utility prices to export energy at peak value.",
+                  delay: 0.2,
+                  glow: true,
+                },
+                {
+                  icon: <BatteryCharging className="text-primary-fixed mb-2 w-6 h-6" />,
+                  title: "Battery Guard",
+                  body: "Advanced thermal management ensures 20-year operational lifespan for your storage.",
+                  delay: 0.3,
+                  glow: false,
+                },
+              ].map(({ icon, title, body, delay, glow }) => (
+                <motion.div
+                  key={title}
+                  initial={{ y: 50, opacity: 0 }}
+                  animate={showUI ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut", delay }}
+                  className="flex-1 flex flex-col"
+                >
+                  <GlassCard glowBorder={glow} className="flex-1 h-full !p-5 md:!p-6">
+                    {icon}
+                    <h4 className="font-headline-sm text-headline-sm text-primary mb-1">{title}</h4>
+                    <p className="font-body-sm text-body-sm text-on-surface-variant">{body}</p>
+                  </GlassCard>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );
