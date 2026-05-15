@@ -189,7 +189,7 @@ export const SmartSwitching = () => {
 
   return (
     <section ref={containerRef} className="h-[250vh] relative z-20 bg-background">
-      <div ref={stickyRef} className="sticky top-0 min-h-[100svh] w-full flex flex-col justify-center pt-24 md:pt-32 pb-16 md:pb-24">
+      <div ref={stickyRef} className="sticky top-0 min-h-[100svh] w-full relative flex flex-col justify-center pt-24 md:pt-32 pb-16 md:pb-24">
         
         {/* Animated Background Canvas */}
         <motion.div
@@ -213,13 +213,13 @@ export const SmartSwitching = () => {
         </motion.div>
 
         {/* Full-screen Bulb Text Overlay */}
-        <div className="absolute inset-0 pointer-events-none flex flex-col md:flex-row items-center justify-between py-[15vh] md:py-0 px-4 md:px-[8vw] lg:px-[12vw] z-30">
-          <motion.div style={{ opacity: text1Opacity, y: text1Y }}>
+        <div className="absolute top-0 left-0 w-full h-[100svh] pointer-events-none flex flex-col md:flex-row items-center justify-between py-[20vh] md:py-0 px-4 md:px-[8vw] lg:px-[12vw] z-30">
+          <motion.div style={{ opacity: text1Opacity, y: text1Y }} className="text-center md:text-left w-full md:w-auto">
             <h2 className="font-display-hero font-bold tracking-tight text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
               Your <span className="text-[#A3FF12] drop-shadow-[0_0_20px_rgba(163,255,18,0.5)]">Power,</span>
             </h2>
           </motion.div>
-          <motion.div style={{ opacity: text2Opacity, y: text2Y }}>
+          <motion.div style={{ opacity: text2Opacity, y: text2Y }} className="text-center md:text-right w-full md:w-auto">
             <h2 className="font-display-hero font-bold tracking-tight text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
               Always <span className="text-[#A3FF12] drop-shadow-[0_0_20px_rgba(163,255,18,0.5)]">On.</span>
             </h2>
