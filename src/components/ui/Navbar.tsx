@@ -51,10 +51,14 @@ export const Navbar = () => {
   }, [pathname]);
 
   return (
-    <nav
-      ref={navRef}
-      className="fixed top-0 w-full z-[999] bg-[#050505]/60 backdrop-blur-xl border-b border-white/10 transition-colors duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
-    >
+    <>
+      <nav
+        ref={navRef}
+        className="fixed top-0 w-full z-[999] transition-colors duration-300"
+      >
+      {/* Top bar background with blur */}
+      <div className="absolute inset-0 bg-[#050505]/60 backdrop-blur-xl border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)] pointer-events-none"></div>
+
       <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 md:py-6 max-w-container-max mx-auto relative z-[999]">
         <Link href="/" className="flex items-center">
           <img src="/cg-solar.png" alt="Codegen Solar" className="h-8 md:h-10 w-auto object-contain" />
@@ -96,9 +100,11 @@ export const Navbar = () => {
         </button>
       </div>
 
+      </nav>
+
       {/* Mobile Menu Overlay */}
       <div 
-        className={`fixed inset-0 bg-[#050505]/95 backdrop-blur-md z-40 transition-all duration-500 flex flex-col pt-24 px-margin-mobile ${
+        className={`fixed inset-0 bg-[#050505]/95 backdrop-blur-md z-[998] transition-all duration-500 flex flex-col pt-24 px-margin-mobile ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
@@ -109,6 +115,7 @@ export const Navbar = () => {
               <Link
                 key={item.label}
                 href={item.href}
+                onClick={() => setIsOpen(false)}
                 className={`text-2xl font-headline-md transition-colors duration-300 ${
                   isActive ? "text-primary drop-shadow-[0_0_10px_rgba(163,255,18,0.5)]" : "text-white"
                 }`}
@@ -124,6 +131,6 @@ export const Navbar = () => {
           </div>
         </div>
       </div>
-    </nav>
+    </>
   );
 };
