@@ -53,9 +53,9 @@ export const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 w-full z-50 bg-transparent backdrop-blur-md md:backdrop-blur-xl border-b border-white/10 transition-colors duration-300"
+      className="fixed top-0 w-full z-[999] bg-[#050505]/60 backdrop-blur-xl border-b border-white/10 transition-colors duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
     >
-      <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 md:py-6 max-w-container-max mx-auto relative z-50">
+      <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 md:py-6 max-w-container-max mx-auto relative z-[999]">
         <Link href="/" className="flex items-center">
           <img src="/cg-solar.png" alt="Codegen Solar" className="h-8 md:h-10 w-auto object-contain" />
         </Link>
@@ -89,7 +89,7 @@ export const Navbar = () => {
 
         {/* Mobile Menu Toggle */}
         <button 
-          className="md:hidden text-white p-2 z-50 relative"
+          className="md:hidden text-white p-2 z-[999] relative"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
