@@ -70,6 +70,7 @@ export const SmartSwitching = () => {
   // Create custom motion values that behave differently based on scroll direction
   const rawVideoProgress = useMotionValue(0);
   const rawFrameProgress = useMotionValue(0);
+  const rawTextProgress = useMotionValue(0);
 
   // Apply a smooth spring to "slow down" and fluidify the parallax/scroll effect
   const smoothVideoProgress = useSpring(rawVideoProgress, {
@@ -84,6 +85,12 @@ export const SmartSwitching = () => {
     restDelta: 0.001
   });
 
+  const smoothTextProgress = useSpring(rawTextProgress, {
+    stiffness: 50,
+    damping: 20,
+    restDelta: 0.001
+  });
+
   // Calculate direction-dependent timings
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     const previous = scrollYProgress.getPrevious() || 0;
@@ -93,6 +100,7 @@ export const SmartSwitching = () => {
       // SCROLL DOWN: Original perfect timings
       // Phase 1: Scrub video from 0 to 0.4
       rawFrameProgress.set(Math.max(0, Math.min(1, latest / 0.4)));
+      rawTextProgress.set(Math.max(0, Math.min(1, latest / 0.4)));
       // Phase 2: Shrink canvas from 0.4 to 0.8
       rawVideoProgress.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.4)));
     } else {
@@ -101,6 +109,8 @@ export const SmartSwitching = () => {
       rawFrameProgress.set(Math.max(0, Math.min(1, latest)));
       // Video expands gradually across 1.0 -> 0.4
       rawVideoProgress.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.6)));
+      // Text strictly animates only within the full-screen phase (0.4 -> 0.0)
+      rawTextProgress.set(Math.max(0, Math.min(1, latest / 0.4)));
     }
 
     // Trigger the UI fade-up animation AFTER the shrink completes (at 80% scroll)
@@ -122,6 +132,13 @@ export const SmartSwitching = () => {
 
   const titleOpacity = useTransform(smoothVideoProgress, [0.5, 1], [0, 1]);
   const titleY = useTransform(smoothVideoProgress, [0.5, 1], [30, 0]);
+
+  // Bulb Text Animations (tied to the isolated text progress phase)
+  const text1Opacity = useTransform(smoothTextProgress, [0.05, 0.25, 0.6, 0.8], [0, 1, 1, 0]);
+  const text1Y = useTransform(smoothTextProgress, [0.05, 0.35], [50, 0]);
+  
+  const text2Opacity = useTransform(smoothTextProgress, [0.25, 0.45, 0.6, 0.8], [0, 1, 1, 0]);
+  const text2Y = useTransform(smoothTextProgress, [0.25, 0.55], [50, 0]);
 
   // Canvas drawing logic
   const drawImage = (index: number) => {
@@ -194,6 +211,20 @@ export const SmartSwitching = () => {
           <motion.div style={{ opacity: gradientOpacity }} className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent mix-blend-multiply pointer-events-none"></motion.div>
           <motion.div style={{ opacity: gradientOpacity }} className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent pointer-events-none"></motion.div>
         </motion.div>
+
+        {/* Full-screen Bulb Text Overlay */}
+        <div className="absolute inset-0 pointer-events-none flex flex-col md:flex-row items-center justify-between py-[15vh] md:py-0 px-4 md:px-[8vw] lg:px-[12vw] z-30">
+          <motion.div style={{ opacity: text1Opacity, y: text1Y }}>
+            <h2 className="font-display-hero font-bold tracking-tight text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+              Your <span className="text-[#A3FF12] drop-shadow-[0_0_20px_rgba(163,255,18,0.5)]">Power,</span>
+            </h2>
+          </motion.div>
+          <motion.div style={{ opacity: text2Opacity, y: text2Y }}>
+            <h2 className="font-display-hero font-bold tracking-tight text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+              Always <span className="text-[#A3FF12] drop-shadow-[0_0_20px_rgba(163,255,18,0.5)]">On.</span>
+            </h2>
+          </motion.div>
+        </div>
 
         {/* Foreground Content Grid Wrapper (No z-index to allow interleaving) */}
         <div className="px-margin-mobile md:px-margin-desktop max-w-[1440px] w-full mx-auto relative pointer-events-none mt-8">
