@@ -34,18 +34,24 @@ export const Hero = () => {
 
   const frameIndex = useTransform(scrollYProgress, [0, 1], [1, frameCount]);
 
-  const ultimateOpacity = useTransform(scrollYProgress, [0.3, 0.4, 0.5, 0.6], [0, 1, 1, 0]);
-  const ultimateY = useTransform(scrollYProgress, [0.3, 0.4, 0.5, 0.6], [30, 0, 0, -30]);
+  const ultimateOpacity = useTransform(scrollYProgress, [0.2, 0.35, 0.55, 0.7], [0, 1, 1, 0]);
+  const ultimateY = useTransform(scrollYProgress, [0.2, 0.35, 0.55, 0.7], [30, 0, 0, -30]);
 
-  const safetyOpacity = useTransform(scrollYProgress, [0.6, 0.7, 0.9, 1.0], [0, 1, 1, 1]);
-  const safetyY = useTransform(scrollYProgress, [0.6, 0.7, 0.9, 1.0], [30, 0, 0, 0]);
+  const safetyOpacity = useTransform(scrollYProgress, [0.65, 0.8, 0.9, 1.0], [0, 1, 1, 1]);
+  const safetyY = useTransform(scrollYProgress, [0.65, 0.8, 0.9, 1.0], [30, 0, 0, 0]);
 
-  const [scrollVal, setScrollVal] = useState(0);
-  useMotionValueEvent(scrollYProgress, "change", (latest) => setScrollVal(latest));
+  const logoOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const logoY = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
+  
+  const [isLogoVisible, setIsLogoVisible] = useState(true);
+  const [isUltimateVisible, setIsUltimateVisible] = useState(false);
+  const [isSafetyVisible, setIsSafetyVisible] = useState(false);
 
-  // Manually calculate logo opacity and Y to bypass any useTransform glitches
-  const manualLogoOpacity = Math.max(0, 1 - (scrollVal / 0.2));
-  const manualLogoY = scrollVal < 0.2 ? -(scrollVal / 0.2) * 100 : -100;
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    setIsLogoVisible(latest <= 0.25);
+    setIsUltimateVisible(latest > 0.15 && latest < 0.75);
+    setIsSafetyVisible(latest > 0.6);
+  });
 
   const drawImage = (index: number) => {
     if (images[index - 1] && canvasRef.current) {
@@ -107,7 +113,7 @@ export const Hero = () => {
       <div ref={containerRef} className="absolute top-0 left-0 w-full h-[300vh] pointer-events-none" />
 
       {/* Sticky container that stays in view */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col pt-24 z-0">
+      <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex flex-col pt-24 z-0">
         {/* Background Canvas */}
         <div className="absolute inset-0 z-0">
           <motion.canvas
@@ -125,43 +131,47 @@ export const Hero = () => {
         {isMounted && (
           <div className="absolute inset-0 z-10 pointer-events-none">
             {/* Initial Logo */}
-            <motion.div
-              style={{ opacity: manualLogoOpacity, transform: `translateY(${manualLogoY}px)` }}
-              className="absolute inset-0 flex items-center justify-center pointer-events-none"
-            >
-              <img 
-                src="/cg-solar.png" 
-                alt="Codegen Solar" 
-                className="w-48 md:w-80 h-auto drop-shadow-[0_0_30px_rgba(163,255,18,0.3)]" 
-              />
-            </motion.div>
+            {isLogoVisible && (
+              <motion.div
+                style={{ opacity: logoOpacity, y: logoY }}
+                className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              >
+                <img 
+                  src="/cg-solar.png" 
+                  alt="Codegen Solar" 
+                  className="w-48 md:w-80 h-auto drop-shadow-[0_0_30px_rgba(163,255,18,0.3)]" 
+                />
+              </motion.div>
+            )}
 
             {/* The Ultimate */}
-            <motion.div
-              style={{ opacity: ultimateOpacity, y: ultimateY }}
-              initial={{ opacity: 0 }}
-              className="absolute inset-0 flex items-center justify-center"
-            >
-              <h1 className="font-display-hero text-display-hero text-primary mb-0 leading-none drop-shadow-2xl text-center">
-                The Ultimate
-              </h1>
-            </motion.div>
+            {isUltimateVisible && (
+              <motion.div
+                style={{ opacity: ultimateOpacity, y: ultimateY }}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <h1 className="font-display-hero text-display-hero text-primary mb-0 leading-none drop-shadow-2xl text-center">
+                  The Ultimate
+                </h1>
+              </motion.div>
+            )}
 
             {/* Safety Net. */}
-            <motion.div
-              style={{ opacity: safetyOpacity, y: safetyY }}
-              initial={{ opacity: 0 }}
-              className="absolute inset-0 flex flex-col items-center justify-center"
-            >
-              <h1 className="font-display-hero text-display-hero text-primary-fixed-dim drop-shadow-[0_0_15px_rgba(159,251,6,0.3)] mb-6 leading-none text-center">
-                Safety Net.
-              </h1>
-              <p className="font-body-lg text-body-lg text-on-surface-variant drop-shadow-md text-center max-w-2xl px-4">
-                Experience uninterrupted power with Codegen Solar's Hybrid Resilience.
-                A tri-mode energy architecture that bridges the gap between solar,
-                storage, and the grid.
-              </p>
-            </motion.div>
+            {isSafetyVisible && (
+              <motion.div
+                style={{ opacity: safetyOpacity, y: safetyY }}
+                className="absolute inset-0 flex flex-col items-center justify-center"
+              >
+                <h1 className="font-display-hero text-display-hero text-primary-fixed-dim drop-shadow-[0_0_15px_rgba(159,251,6,0.3)] mb-6 leading-none text-center">
+                  Safety Net.
+                </h1>
+                <p className="font-body-lg text-body-lg text-on-surface-variant drop-shadow-md text-center max-w-2xl px-4">
+                  Experience uninterrupted power with Codegen Solar's Hybrid Resilience.
+                  A tri-mode energy architecture that bridges the gap between solar,
+                  storage, and the grid.
+                </p>
+              </motion.div>
+            )}
           </div>
         )}
 

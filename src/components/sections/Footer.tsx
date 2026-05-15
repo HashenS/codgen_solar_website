@@ -4,7 +4,7 @@ import Link from "next/link";
 export const Footer = () => {
   return (
     <footer className="w-full rounded-t-xl bg-surface-container-lowest border-t border-outline-variant">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-gutter px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto">
         <div className="md:col-span-1">
           <div className="font-headline-md text-headline-md font-bold text-primary mb-6">
             Codegen Solar

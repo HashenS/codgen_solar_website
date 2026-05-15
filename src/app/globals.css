@@ -86,10 +86,16 @@
     font-family: var(--font-headline-lg);
   }
   .text-headline-lg {
-    font-size: 48px;
-    line-height: 56px;
+    font-size: 32px;
+    line-height: 40px;
     letter-spacing: -0.02em;
     font-weight: 600;
+  }
+  @media (min-width: 768px) {
+    .text-headline-lg {
+      font-size: 48px;
+      line-height: 56px;
+    }
   }
 
   .font-body-md {
@@ -105,9 +111,15 @@
     font-family: var(--font-headline-md);
   }
   .text-headline-md {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 20px;
+    line-height: 28px;
     font-weight: 500;
+  }
+  @media (min-width: 768px) {
+    .text-headline-md {
+      font-size: 24px;
+      line-height: 32px;
+    }
   }
 
   .font-headline-lg-mobile {
@@ -135,10 +147,16 @@
     font-family: var(--font-display-hero);
   }
   .text-display-hero {
-    font-size: 80px;
-    line-height: 90px;
+    font-size: 48px;
+    line-height: 56px;
     letter-spacing: -0.04em;
     font-weight: 700;
+  }
+  @media (min-width: 768px) {
+    .text-display-hero {
+      font-size: 80px;
+      line-height: 90px;
+    }
   }
 
   .glass-panel {

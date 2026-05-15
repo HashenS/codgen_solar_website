@@ -172,7 +172,7 @@ export const SmartSwitching = () => {
 
   return (
     <section ref={containerRef} className="h-[250vh] relative z-20 bg-background">
-      <div ref={stickyRef} className="sticky top-0 min-h-screen w-full flex flex-col justify-center pt-24 md:pt-32 pb-16 md:pb-24">
+      <div ref={stickyRef} className="sticky top-0 min-h-[100svh] w-full flex flex-col justify-center pt-24 md:pt-32 pb-16 md:pb-24">
         
         {/* Animated Background Canvas */}
         <motion.div

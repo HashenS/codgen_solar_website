@@ -1,15 +1,26 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Button } from "./Button";
+import { Menu, X } from "lucide-react";
+
+const NAV_LINKS = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Solutions", href: "/solutions" },
+  { label: "Projects", href: "/projects" },
+  { label: "Contact", href: "/contact" },
+  { label: "FAQs", href: "/faqs" }
+];
 
 export const Navbar = () => {
   const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
 
   useGSAP(() => {
     // Basic entrance animation for the navbar
@@ -22,25 +33,36 @@ export const Navbar = () => {
     });
   });
 
+  // Prevent scrolling when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
+  // Close menu on route change
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 w-full z-50 bg-transparent backdrop-blur-xl border-b border-white/10 transition-colors duration-300"
+      className="fixed top-0 w-full z-50 bg-transparent backdrop-blur-md md:backdrop-blur-xl border-b border-white/10 transition-colors duration-300"
     >
-      <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 max-w-container-max mx-auto">
+      <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 md:py-6 max-w-container-max mx-auto relative z-50">
         <Link href="/" className="flex items-center">
           <img src="/cg-solar.png" alt="Codegen Solar" className="h-8 md:h-10 w-auto object-contain" />
         </Link>
         
+        {/* Desktop Menu */}
         <div className="hidden md:flex gap-8 items-center">
-          {[
-            { label: "Home", href: "/" },
-            { label: "About", href: "/about" },
-            { label: "Solutions", href: "/solutions" },
-            { label: "Projects", href: "/projects" },
-            { label: "Contact", href: "/contact" },
-            { label: "FAQs", href: "/faqs" }
-          ].map((item) => {
+          {NAV_LINKS.map((item) => {
             const isActive = pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
             
             return (
@@ -59,9 +81,48 @@ export const Navbar = () => {
           })}
         </div>
         
-        <Button size="sm" magnetic>
-          Get Started
-        </Button>
+        <div className="hidden md:block">
+          <Button size="sm" magnetic>
+            Get Started
+          </Button>
+        </div>
+
+        {/* Mobile Menu Toggle */}
+        <button 
+          className="md:hidden text-white p-2 z-50 relative"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <div 
+        className={`fixed inset-0 bg-[#050505]/95 backdrop-blur-md z-40 transition-all duration-500 flex flex-col pt-24 px-margin-mobile ${
+          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="flex flex-col gap-6 items-center w-full mt-10">
+          {NAV_LINKS.map((item) => {
+            const isActive = pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`text-2xl font-headline-md transition-colors duration-300 ${
+                  isActive ? "text-primary drop-shadow-[0_0_10px_rgba(163,255,18,0.5)]" : "text-white"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+          <div className="mt-8 w-full max-w-xs">
+            <Button size="lg" className="w-full">
+              Get Started
+            </Button>
+          </div>
+        </div>
       </div>
     </nav>
   );

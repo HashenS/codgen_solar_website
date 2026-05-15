@@ -34,7 +34,7 @@ export const ContactGrid = () => {
 
   return (
     <section ref={containerRef} className="px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
         {/* Contact Form Column */}
         <div className="lg:col-span-7 contact-element">
           <GlassCard className="p-8 md:p-12 rounded-xl h-full border border-white/10">

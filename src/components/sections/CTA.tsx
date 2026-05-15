@@ -28,9 +28,9 @@ export const CTA = () => {
 
   return (
     <section ref={containerRef} className="py-section-gap px-margin-mobile md:px-margin-desktop">
-      <div className="cta-content max-w-container-max mx-auto glass-panel rounded-[48px] overflow-hidden relative border border-primary-fixed/20">
+      <div className="cta-content max-w-container-max mx-auto glass-panel rounded-3xl md:rounded-[48px] overflow-hidden relative border border-primary-fixed/20">
         <div className="absolute inset-0 bg-gradient-to-br from-primary-fixed/10 via-transparent to-transparent"></div>
-        <div className="relative z-10 p-12 md:p-24 text-center">
+        <div className="relative z-10 p-8 md:p-24 text-center">
           <EnergyTextReveal 
             text="Ready for Independence?" 
             className="font-display-hero text-headline-lg md:text-display-hero mb-8" 

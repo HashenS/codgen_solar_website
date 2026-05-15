@@ -18,7 +18,6 @@ export const PeaceOfMind = () => {
       // Initial Blackout State
       gsap.set(imageContainerRef.current, { filter: "brightness(0.2) grayscale(0.8)", scale: 0.95 });
       gsap.set(auraRef.current, { opacity: 0, scale: 0.8 });
-      gsap.set(".pom-text", { y: 40, opacity: 0 });
 
 
 
@@ -72,7 +71,7 @@ export const PeaceOfMind = () => {
 
   return (
     <section ref={containerRef} className="py-section-gap bg-surface-container-lowest overflow-hidden" style={{ perspective: "1000px" }}>
-      <div className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+      <div className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center">
         <div>
           <EnergyTextReveal 
             text="Zero Downtime. Zero Compromise." 
