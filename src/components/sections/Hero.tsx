@@ -132,10 +132,10 @@ export const Hero = () => {
 
   return (
     <section
-      className="relative h-[400vh] bg-black -mb-[100vh]"
+      className="relative h-[600vh] bg-black -mb-[100vh]"
     >
-      {/* Invisible container to track the first 300vh of scroll for animation */}
-      <div ref={containerRef} className="absolute top-0 left-0 w-full h-[300vh] pointer-events-none" />
+      {/* Invisible container to track the first 500vh of scroll for animation */}
+      <div ref={containerRef} className="absolute top-0 left-0 w-full h-[500vh] pointer-events-none" />
 
       {/* Sticky container that stays in view */}
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex flex-col pt-24 z-0">
