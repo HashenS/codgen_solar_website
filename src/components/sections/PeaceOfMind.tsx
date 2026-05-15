@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ShieldCheck, CloudLightning } from "lucide-react";
@@ -19,29 +19,106 @@ const FRAMES = Array.from({ length: FRAME_COUNT }, (_, i) =>
   `/Solar_animation/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`
 );
 
-// A sub-component for a single frame to avoid React setState loops
-function FrameImage({ src, index, frameIndex }: { src: string; index: number; frameIndex: MotionValue<number> }) {
-  // Only visible when the current rounded frame index matches this image's index
-  const opacity = useTransform(frameIndex, (latest) => (Math.round(latest) === index ? 1 : 0));
-  
-  return (
-    <motion.img
-      src={src}
-      alt=""
-      aria-hidden
-      className="absolute inset-0 w-full h-full object-cover"
-      style={{ opacity }}
-    />
-  );
-}
-
 function BulbFramePlayer({ frameIndex }: { frameIndex: MotionValue<number> }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [images, setImages] = useState<HTMLImageElement[]>([]);
+
+  useEffect(() => {
+    const loadedImages: HTMLImageElement[] = [];
+    
+    // Load first 5 frames immediately
+    for (let i = 0; i < Math.min(5, FRAME_COUNT); i++) {
+      const img = new Image();
+      img.src = FRAMES[i];
+      loadedImages.push(img);
+    }
+    setImages([...loadedImages]);
+
+    let currentIndex = 5;
+    const loadNextBatch = () => {
+      if (currentIndex >= FRAME_COUNT) return;
+      
+      const batchSize = 10;
+      const end = Math.min(currentIndex + batchSize - 1, FRAME_COUNT - 1);
+      
+      for (let i = currentIndex; i <= end; i++) {
+        const img = new Image();
+        img.src = FRAMES[i];
+        loadedImages.push(img);
+      }
+      
+      setImages([...loadedImages]);
+      currentIndex = end + 1;
+      
+      if (currentIndex < FRAME_COUNT) {
+        if ('requestIdleCallback' in window) {
+          (window as any).requestIdleCallback(loadNextBatch);
+        } else {
+          setTimeout(loadNextBatch, 50);
+        }
+      }
+    };
+    
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(loadNextBatch);
+    } else {
+      setTimeout(loadNextBatch, 100);
+    }
+  }, []);
+
+  const drawImage = (index: number) => {
+    if (images[index] && canvasRef.current) {
+      const context = canvasRef.current.getContext("2d");
+      if (context) {
+        const img = images[index];
+        if (!img.complete) return;
+        
+        const canvas = canvasRef.current;
+        const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+        const x = (canvas.width / 2) - (img.width / 2) * scale;
+        const y = (canvas.height / 2) - (img.height / 2) * scale;
+        
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(img, x, y, img.width * scale, img.height * scale);
+      }
+    }
+  };
+
+  useMotionValueEvent(frameIndex, "change", (latest) => {
+    const index = Math.round(latest);
+    drawImage(index);
+  });
+
+  useEffect(() => {
+    const resizeCanvas = () => {
+      if (canvasRef.current) {
+        const { width, height } = canvasRef.current.parentElement!.getBoundingClientRect();
+        canvasRef.current.width = width;
+        canvasRef.current.height = height;
+        drawImage(Math.round(frameIndex.get()));
+      }
+    };
+    
+    window.addEventListener("resize", resizeCanvas);
+    setTimeout(resizeCanvas, 0); 
+    return () => window.removeEventListener("resize", resizeCanvas);
+  }, [images, frameIndex]);
+
+  useEffect(() => {
+    if (images[0] && canvasRef.current) {
+      if (images[0].complete) {
+        drawImage(0);
+      } else {
+        images[0].onload = () => drawImage(0);
+      }
+    }
+  }, [images]);
+
   return (
-    <>
-      {FRAMES.map((src, i) => (
-        <FrameImage key={src} src={src} index={i} frameIndex={frameIndex} />
-      ))}
-    </>
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full object-cover"
+    />
   );
 }
 

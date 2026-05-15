@@ -1,12 +1,14 @@
+import dynamic from "next/dynamic";
 import { Navbar } from "@/components/ui/Navbar";
 import { Hero } from "@/components/sections/Hero";
-import { SmartSwitching } from "@/components/sections/SmartSwitching";
-import { PeaceOfMind } from "@/components/sections/PeaceOfMind";
-import { LiveEnergyCommand } from "@/components/sections/LiveEnergyCommand";
-import { SolarCalculator } from "@/components/sections/SolarCalculator";
-import { FAQ } from "@/components/sections/FAQ";
-import { CTA } from "@/components/sections/CTA";
-import { Footer } from "@/components/sections/Footer";
+
+const SmartSwitching = dynamic(() => import("@/components/sections/SmartSwitching").then(m => m.SmartSwitching));
+const PeaceOfMind = dynamic(() => import("@/components/sections/PeaceOfMind").then(m => m.PeaceOfMind));
+const LiveEnergyCommand = dynamic(() => import("@/components/sections/LiveEnergyCommand").then(m => m.LiveEnergyCommand));
+const SolarCalculator = dynamic(() => import("@/components/sections/SolarCalculator").then(m => m.SolarCalculator));
+const FAQ = dynamic(() => import("@/components/sections/FAQ").then(m => m.FAQ));
+const CTA = dynamic(() => import("@/components/sections/CTA").then(m => m.CTA));
+const Footer = dynamic(() => import("@/components/sections/Footer").then(m => m.Footer));
 
 export default function Home() {
   return (

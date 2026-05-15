@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
 
 const frameCount = 210;
@@ -14,17 +15,50 @@ export const Hero = () => {
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [isMounted, setIsMounted] = useState(false);
 
-  // Preload images
+  // Preload images efficiently
   useEffect(() => {
     setIsMounted(true);
     const loadedImages: HTMLImageElement[] = [];
     
-    for (let i = 1; i <= frameCount; i++) {
-      const img = new Image();
+    // 1. Load first 5 frames immediately for instant feedback
+    for (let i = 1; i <= Math.min(5, frameCount); i++) {
+      const img = new window.Image();
       img.src = currentFrame(i);
       loadedImages.push(img);
     }
-    setImages(loadedImages);
+    setImages([...loadedImages]);
+
+    // 2. Load the rest in chunks using requestIdleCallback to avoid blocking the main thread
+    let currentIndex = 6;
+    const loadNextBatch = () => {
+      if (currentIndex > frameCount) return;
+      
+      const batchSize = 10;
+      const end = Math.min(currentIndex + batchSize - 1, frameCount);
+      
+      for (let i = currentIndex; i <= end; i++) {
+        const img = new window.Image();
+        img.src = currentFrame(i);
+        loadedImages.push(img);
+      }
+      
+      setImages([...loadedImages]);
+      currentIndex = end + 1;
+      
+      if (currentIndex <= frameCount) {
+        if ('requestIdleCallback' in window) {
+          (window as any).requestIdleCallback(loadNextBatch);
+        } else {
+          setTimeout(loadNextBatch, 50);
+        }
+      }
+    };
+    
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(loadNextBatch);
+    } else {
+      setTimeout(loadNextBatch, 100);
+    }
   }, []);
 
   const { scrollYProgress } = useScroll({
@@ -39,10 +73,8 @@ export const Hero = () => {
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     if (latest < 0.2) {
       setActiveStage(0);
-    } else if (latest >= 0.2 && latest < 0.6) {
+    } else {
       setActiveStage(1);
-    } else if (latest >= 0.6) {
-      setActiveStage(2);
     }
   });
 
@@ -134,48 +166,80 @@ export const Hero = () => {
                   transition={{ duration: 0.6, ease: "easeOut" }}
                   className="absolute inset-0 flex items-center justify-center pointer-events-none"
                 >
-                  <img 
+                  <Image 
                     src="/cg-solar.png" 
                     alt="Codegen Solar" 
+                    width={320}
+                    height={100}
+                    priority
                     className="w-48 md:w-80 h-auto drop-shadow-[0_0_30px_rgba(163,255,18,0.3)]" 
                   />
                 </motion.div>
               )}
 
-              {/* The Ultimate */}
+              {/* The Ultimate Safety Net. */}
               {activeStage === 1 && (
                 <motion.div
-                  key="ultimate"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -30 }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="absolute inset-0 flex items-center justify-center pointer-events-none"
-                >
-                  <h1 className="font-display-hero text-display-hero text-primary mb-0 leading-none drop-shadow-2xl text-center">
-                    The Ultimate
-                  </h1>
-                </motion.div>
-              )}
-
-              {/* Safety Net. */}
-              {activeStage === 2 && (
-                <motion.div
                   key="safety"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -30 }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    visible: { 
+                      opacity: 1,
+                      transition: { staggerChildren: 0.3, delayChildren: 0.1 }
+                    },
+                    exit: { opacity: 0, y: -30, transition: { duration: 0.4 } }
+                  }}
                   className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none"
                 >
-                  <h1 className="font-display-hero text-display-hero text-primary-fixed-dim drop-shadow-[0_0_15px_rgba(159,251,6,0.3)] mb-6 leading-none text-center">
-                    Safety Net.
-                  </h1>
-                  <p className="font-body-lg text-body-lg text-on-surface-variant drop-shadow-md text-center max-w-2xl px-4">
+                  <div className="flex flex-col items-center mb-6">
+                    <motion.h1 
+                      variants={{
+                        hidden: { opacity: 0, y: -50, filter: "blur(10px)" },
+                        visible: { 
+                          opacity: 1, 
+                          y: 0, 
+                          filter: "blur(0px)",
+                          transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } // Expo out equivalent
+                        }
+                      }}
+                      className="font-display-hero text-display-hero text-primary mb-0 leading-none drop-shadow-2xl text-center"
+                    >
+                      The Ultimate
+                    </motion.h1>
+                    <motion.h1 
+                      variants={{
+                        hidden: { opacity: 0, scale: 0.9, filter: "blur(15px)", textShadow: "0px 0px 0px rgba(163,255,18,0)" },
+                        visible: { 
+                          opacity: 1, 
+                          scale: 1, 
+                          filter: "blur(0px)",
+                          textShadow: ["0px 0px 30px rgba(163,255,18,0.8)", "0px 0px 15px rgba(163,255,18,0.3)"],
+                          transition: { duration: 1.5, ease: [0.16, 1, 0.3, 1] } 
+                        }
+                      }}
+                      className="font-display-hero text-display-hero text-primary-fixed-dim leading-none text-center"
+                    >
+                      Safety Net.
+                    </motion.h1>
+                  </div>
+                  <motion.p 
+                    variants={{
+                        hidden: { opacity: 0, y: 30 },
+                        visible: { 
+                          opacity: 1, 
+                          y: 0, 
+                          transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } 
+                        }
+                    }}
+                    className="font-body-lg text-body-lg text-on-surface-variant drop-shadow-md text-center max-w-2xl px-4"
+                  >
                     Experience uninterrupted power with Codegen Solar's Hybrid Resilience.
                     A tri-mode energy architecture that bridges the gap between solar,
                     storage, and the grid.
-                  </p>
+                  </motion.p>
                 </motion.div>
               )}
             </AnimatePresence>
