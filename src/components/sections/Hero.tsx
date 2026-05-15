@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
 
 const frameCount = 210;
 
@@ -34,23 +34,16 @@ export const Hero = () => {
 
   const frameIndex = useTransform(scrollYProgress, [0, 1], [1, frameCount]);
 
-  const ultimateOpacity = useTransform(scrollYProgress, [0.2, 0.35, 0.55, 0.7], [0, 1, 1, 0]);
-  const ultimateY = useTransform(scrollYProgress, [0.2, 0.35, 0.55, 0.7], [30, 0, 0, -30]);
-
-  const safetyOpacity = useTransform(scrollYProgress, [0.65, 0.8, 0.9, 1.0], [0, 1, 1, 1]);
-  const safetyY = useTransform(scrollYProgress, [0.65, 0.8, 0.9, 1.0], [30, 0, 0, 0]);
-
-  const logoOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const logoY = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
-  
-  const [isLogoVisible, setIsLogoVisible] = useState(true);
-  const [isUltimateVisible, setIsUltimateVisible] = useState(false);
-  const [isSafetyVisible, setIsSafetyVisible] = useState(false);
+  const [activeStage, setActiveStage] = useState(0);
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    setIsLogoVisible(latest <= 0.25);
-    setIsUltimateVisible(latest > 0.15 && latest < 0.75);
-    setIsSafetyVisible(latest > 0.6);
+    if (latest < 0.2) {
+      setActiveStage(0);
+    } else if (latest >= 0.2 && latest < 0.6) {
+      setActiveStage(1);
+    } else if (latest >= 0.6) {
+      setActiveStage(2);
+    }
   });
 
   const drawImage = (index: number) => {
@@ -129,53 +122,65 @@ export const Hero = () => {
 
         {/* Centered Animated Text */}
         {isMounted && (
-          <div className="absolute inset-0 z-10 pointer-events-none">
-            {/* Initial Logo */}
-            {isLogoVisible && (
-              <motion.div
-                style={{ opacity: logoOpacity, y: logoY }}
-                className="absolute inset-0 flex items-center justify-center pointer-events-none"
-              >
-                <img 
-                  src="/cg-solar.png" 
-                  alt="Codegen Solar" 
-                  className="w-48 md:w-80 h-auto drop-shadow-[0_0_30px_rgba(163,255,18,0.3)]" 
-                />
-              </motion.div>
-            )}
+          <div className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              {/* Initial Logo */}
+              {activeStage === 0 && (
+                <motion.div
+                  key="logo"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -50 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                >
+                  <img 
+                    src="/cg-solar.png" 
+                    alt="Codegen Solar" 
+                    className="w-48 md:w-80 h-auto drop-shadow-[0_0_30px_rgba(163,255,18,0.3)]" 
+                  />
+                </motion.div>
+              )}
 
-            {/* The Ultimate */}
-            {isUltimateVisible && (
-              <motion.div
-                style={{ opacity: ultimateOpacity, y: ultimateY }}
-                className="absolute inset-0 flex items-center justify-center"
-              >
-                <h1 className="font-display-hero text-display-hero text-primary mb-0 leading-none drop-shadow-2xl text-center">
-                  The Ultimate
-                </h1>
-              </motion.div>
-            )}
+              {/* The Ultimate */}
+              {activeStage === 1 && (
+                <motion.div
+                  key="ultimate"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -30 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                >
+                  <h1 className="font-display-hero text-display-hero text-primary mb-0 leading-none drop-shadow-2xl text-center">
+                    The Ultimate
+                  </h1>
+                </motion.div>
+              )}
 
-            {/* Safety Net. */}
-            {isSafetyVisible && (
-              <motion.div
-                style={{ opacity: safetyOpacity, y: safetyY }}
-                className="absolute inset-0 flex flex-col items-center justify-center"
-              >
-                <h1 className="font-display-hero text-display-hero text-primary-fixed-dim drop-shadow-[0_0_15px_rgba(159,251,6,0.3)] mb-6 leading-none text-center">
-                  Safety Net.
-                </h1>
-                <p className="font-body-lg text-body-lg text-on-surface-variant drop-shadow-md text-center max-w-2xl px-4">
-                  Experience uninterrupted power with Codegen Solar's Hybrid Resilience.
-                  A tri-mode energy architecture that bridges the gap between solar,
-                  storage, and the grid.
-                </p>
-              </motion.div>
-            )}
+              {/* Safety Net. */}
+              {activeStage === 2 && (
+                <motion.div
+                  key="safety"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -30 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none"
+                >
+                  <h1 className="font-display-hero text-display-hero text-primary-fixed-dim drop-shadow-[0_0_15px_rgba(159,251,6,0.3)] mb-6 leading-none text-center">
+                    Safety Net.
+                  </h1>
+                  <p className="font-body-lg text-body-lg text-on-surface-variant drop-shadow-md text-center max-w-2xl px-4">
+                    Experience uninterrupted power with Codegen Solar's Hybrid Resilience.
+                    A tri-mode energy architecture that bridges the gap between solar,
+                    storage, and the grid.
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         )}
-
-
       </div>
     </section>
   );

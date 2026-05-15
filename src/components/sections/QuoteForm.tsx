@@ -148,11 +148,11 @@ export const QuoteForm = () => {
               <label className="block font-label-caps text-label-caps text-on-surface uppercase tracking-wider">
                 Your Average Monthly Electricity Usage
               </label>
-              <div className="flex gap-4">
-                <div className="flex rounded-lg border border-outline-variant overflow-hidden bg-surface-container-highest p-1">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex rounded-lg border border-outline-variant overflow-hidden bg-surface-container-highest p-1 shrink-0">
                   <button
                     onClick={() => setFormData({...formData, usageType: 'LKR'})}
-                    className={`px-6 py-2 rounded-md font-medium transition-all ${
+                    className={`flex-1 px-6 py-2 rounded-md font-medium transition-all ${
                       formData.usageType === 'LKR'
                         ? 'bg-[#141c25] text-primary-fixed-dim'
                         : 'text-on-surface hover:text-white'
@@ -162,7 +162,7 @@ export const QuoteForm = () => {
                   </button>
                   <button
                     onClick={() => setFormData({...formData, usageType: 'Units'})}
-                    className={`px-6 py-2 rounded-md font-medium transition-all ${
+                    className={`flex-1 px-6 py-2 rounded-md font-medium transition-all ${
                       formData.usageType === 'Units'
                         ? 'bg-[#141c25] text-primary-fixed-dim'
                         : 'text-on-surface hover:text-white'
@@ -175,7 +175,7 @@ export const QuoteForm = () => {
                   type="number" 
                   value={formData.usageValue}
                   onChange={(e) => setFormData({...formData, usageValue: e.target.value})}
-                  className="flex-1 bg-surface-container-highest border border-outline-variant rounded-lg px-4 py-2 text-on-surface focus:outline-none focus:border-primary-fixed-dim transition-colors"
+                  className="w-full bg-surface-container-highest border border-outline-variant rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-primary-fixed-dim transition-colors"
                 />
               </div>
             </div>
