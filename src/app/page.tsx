@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import { Navbar } from "@/components/ui/Navbar";
 import { Hero } from "@/components/sections/Hero";
+import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
 const SmartSwitching = dynamic(() => import("@/components/sections/SmartSwitching").then(m => m.SmartSwitching));
 const PeaceOfMind = dynamic(() => import("@/components/sections/PeaceOfMind").then(m => m.PeaceOfMind));
@@ -14,6 +15,7 @@ const Footer = dynamic(() => import("@/components/sections/Footer").then(m => m.
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col bg-background text-on-background relative">
+      <ScrollToTop />
       <Navbar />
       <Hero />
       <div className="relative z-20 bg-background w-full">
