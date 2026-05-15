@@ -104,8 +104,8 @@ export const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       <div 
-        className={`fixed inset-0 bg-[#050505]/95 backdrop-blur-md z-[998] transition-all duration-500 flex flex-col pt-24 px-margin-mobile ${
-          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        className={`fixed inset-0 bg-[#050505]/95 backdrop-blur-md z-[998] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] flex flex-col pt-24 px-margin-mobile ${
+          isOpen ? "translate-x-0 pointer-events-auto" : "translate-x-full pointer-events-none"
         }`}
       >
         <div className="flex flex-col gap-6 items-center w-full mt-10">
