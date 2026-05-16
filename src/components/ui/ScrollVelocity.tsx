@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import React, { useRef } from "react";
 import {
   motion,
   useScroll,
@@ -13,7 +13,7 @@ import {
 } from "framer-motion";
 
 interface ScrollVelocityProps {
-  text: string;
+  text: React.ReactNode;
   className?: string;
   velocity?: number;
 }
