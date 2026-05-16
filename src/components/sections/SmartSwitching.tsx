@@ -224,7 +224,7 @@ export const SmartSwitching = () => {
   const text2Y       = useTransform(smoothText, [0.25, 0.55],            [50, 0]);
 
   return (
-    <section ref={containerRef} className="h-[400vh] relative z-20 bg-background">
+    <section ref={containerRef} className="h-[250vh] relative z-20 bg-background">
       <div
         ref={stickyRef}
         className="sticky top-0 min-h-[100svh] w-full relative flex flex-col justify-center pt-24 md:pt-32 pb-16 md:pb-24"
