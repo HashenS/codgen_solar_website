@@ -137,14 +137,12 @@ function BulbFramePlayer({ frameIndex }: { frameIndex: MotionValue<number> }) {
 
 export const PeaceOfMind = () => {
   const containerRef   = useRef<HTMLElement>(null);
-  const auraRef        = useRef<HTMLDivElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
 
   // ── GSAP power-on effect (cards + aura entrance) ──────────────────────────
   useGSAP(
     () => {
       gsap.set(imageContainerRef.current, { filter: "brightness(0.2) grayscale(0.8)", scale: 0.95 });
-      gsap.set(auraRef.current, { opacity: 0, scale: 0.8 });
 
       const tl = gsap.timeline({
         scrollTrigger: { trigger: containerRef.current, start: "top 60%" },
@@ -156,12 +154,6 @@ export const PeaceOfMind = () => {
         duration: 1.5,
         ease: "elastic.out(1, 0.4)",
       }, "+=0.1")
-        .to(auraRef.current, {
-          opacity: 0.6,
-          scale: 1,
-          duration: 1.5,
-          ease: "elastic.out(1, 0.4)",
-        }, "<")
         .from(".pom-card", {
           y: 80,
           rotationX: 25,
@@ -247,9 +239,6 @@ export const PeaceOfMind = () => {
 
         {/* Right: scroll-driven bulb animation */}
         <div className="relative">
-          {/* Glow aura */}
-          <div ref={auraRef} className="absolute -inset-10 bg-primary-fixed/30 blur-[80px] rounded-[3rem]" />
-
           <div
             ref={imageContainerRef}
             className="relative rounded-3xl overflow-hidden glass-panel aspect-[4/3] bg-black"
