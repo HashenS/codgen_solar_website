@@ -282,10 +282,10 @@ export const SmartSwitching = () => {
         </div>
 
         {/* ── Foreground content grid ───────────────────────────────────── */}
-        <div className="px-margin-mobile md:px-margin-desktop max-w-[1440px] w-full mx-auto relative pointer-events-none mt-8">
+        <div className="px-margin-mobile md:px-margin-desktop max-w-[1440px] w-full mx-auto relative pointer-events-none mt-8 flex-1 flex flex-col justify-end pb-12">
           <motion.div
             style={{ opacity: titleOpacity, y: titleY }}
-            className="text-center mb-16 pointer-events-auto relative z-30"
+            className="text-center mb-8 md:mb-12 pointer-events-auto relative z-30"
           >
             <EnergyTextReveal
               text="Intelligent Power Orchestration"
@@ -297,53 +297,59 @@ export const SmartSwitching = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 relative z-10 mb-12">
             {/* Invisible target for the shrink destination */}
-            <div className="md:col-span-8 relative group flex flex-col justify-end p-8 md:p-12 pointer-events-auto h-full min-h-[400px]">
+            <div className="md:col-span-7 lg:col-span-8 relative group flex flex-col justify-end p-8 md:p-12 pointer-events-auto h-full min-h-[300px] md:min-h-[400px]">
               <div ref={targetRef} className="absolute inset-0 w-full h-full pointer-events-none rounded-3xl" />
             </div>
 
-            {/* Side cards */}
-            <div className="md:col-span-4 flex flex-col gap-3 pointer-events-auto">
-              {[
-                {
-                  icon: <Route className="text-primary-fixed mb-2 w-6 h-6" />,
-                  title: "Smart Switching",
-                  body: "Seamlessly transitions between solar harvesting, battery discharge, and grid backup in less than 10 milliseconds.",
-                  delay: 0.1,
-                  glow: true,
-                },
-                {
-                  icon: <Zap className="text-primary-fixed mb-2 w-6 h-6" />,
-                  title: "Grid Sync",
-                  body: "Real-time synchronization with local utility prices to export energy at peak value.",
-                  delay: 0.2,
-                  glow: true,
-                },
-                {
-                  icon: <BatteryCharging className="text-primary-fixed mb-2 w-6 h-6" />,
-                  title: "Battery Guard",
-                  body: "Advanced thermal management ensures 20-year operational lifespan for your storage.",
-                  delay: 0.3,
-                  glow: false,
-                },
-              ].map(({ icon, title, body, delay, glow }) => (
-                <motion.div
-                  key={title}
-                  initial={{ y: 50, opacity: 0 }}
-                  animate={showUI ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-                  transition={{ duration: 0.8, ease: "easeOut", delay }}
-                  className="flex-1 flex flex-col"
-                >
-                  <GlassCard glowBorder={glow} className="flex-1 h-full !p-5 md:!p-6">
-                    {icon}
-                    <h3 className="font-headline-sm text-headline-sm text-primary mb-1">{title}</h3>
-                    <p className="font-body-sm text-body-sm text-on-surface-variant">{body}</p>
-                  </GlassCard>
-                </motion.div>
-              ))}
+            {/* Checklist */}
+            <div className="md:col-span-5 lg:col-span-4 flex flex-col justify-center pointer-events-auto">
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={showUI ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="flex flex-col gap-6"
+              >
+                <div>
+                  <h3 className="font-headline-md text-headline-md text-primary mb-2">
+                    Your Best Friend in Solar
+                  </h3>
+                  <p className="font-body-md text-body-md text-on-surface-variant">
+                    We guide you every step of the way on your solar investment journey.
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  {[
+                    "30 Years Warranty",
+                    "Premium After-Sales Service",
+                    "Premium Quality Components",
+                    "Free Consultation by Experts",
+                  ].map((item, i) => (
+                    <motion.div
+                      key={item}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={showUI ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+                      transition={{ duration: 0.5, delay: i * 0.15 + 0.2 }}
+                      className="flex items-center gap-4 glass-panel p-4 rounded-xl border border-white/5 relative overflow-hidden group"
+                    >
+                      {/* Hover glow effect */}
+                      <div className="absolute inset-0 bg-primary-fixed/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                      
+                      <div className="w-8 h-8 rounded-full bg-primary-fixed/10 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(163,255,18,0.15)] relative z-10">
+                        <svg className="w-4 h-4 text-primary-fixed" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span className="font-body-md text-primary font-medium relative z-10">{item}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
             </div>
           </div>
+
         </div>
       </div>
     </section>

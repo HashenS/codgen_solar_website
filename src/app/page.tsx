@@ -4,6 +4,7 @@ import { Hero } from "@/components/sections/Hero";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
 const SmartSwitching = dynamic(() => import("@/components/sections/SmartSwitching").then(m => m.SmartSwitching));
+const FeatureScrollCards = dynamic(() => import("@/components/sections/FeatureScrollCards").then(m => m.FeatureScrollCards));
 const PeaceOfMind = dynamic(() => import("@/components/sections/PeaceOfMind").then(m => m.PeaceOfMind));
 const LiveEnergyCommand = dynamic(() => import("@/components/sections/LiveEnergyCommand").then(m => m.LiveEnergyCommand));
 const SolarCalculator = dynamic(() => import("@/components/sections/SolarCalculator").then(m => m.SolarCalculator));
@@ -20,6 +21,7 @@ export default function Home() {
       <Hero />
       <div className="relative z-20 bg-background w-full">
         <SmartSwitching />
+        <FeatureScrollCards />
         <PeaceOfMind />
         <LiveEnergyCommand />
         <SolarCalculator />
