@@ -2,18 +2,22 @@
 
 import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence, useInView } from "framer-motion";
 
 const frameCount = 210;
 
-const currentFrame = (index: number) => 
-  `/hero-images/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
+const currentFrame = (index: number) => {
+  const path = `/hero-images/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
+  return `/_next/image?url=${encodeURIComponent(path)}&w=1920&q=75`;
+};
 
 export const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [isMounted, setIsMounted] = useState(false);
+
+  const isInView = useInView(containerRef, { once: true, margin: "200% 0px" });
 
   // Preload images efficiently
   useEffect(() => {
@@ -27,11 +31,17 @@ export const Hero = () => {
       loadedImages.push(img);
     }
     setImages([...loadedImages]);
+  }, []);
 
-    // 2. Load the rest in chunks using requestIdleCallback to avoid blocking the main thread
-    let currentIndex = 6;
+  useEffect(() => {
+    if (!isInView || images.length >= frameCount) return;
+
+    let currentIndex = Math.max(6, images.length + 1);
+    let isActive = true;
+    const loadedImages = [...images];
+
     const loadNextBatch = () => {
-      if (currentIndex > frameCount) return;
+      if (!isActive || currentIndex > frameCount) return;
       
       const batchSize = 10;
       const end = Math.min(currentIndex + batchSize - 1, frameCount);
@@ -59,7 +69,9 @@ export const Hero = () => {
     } else {
       setTimeout(loadNextBatch, 100);
     }
-  }, []);
+
+    return () => { isActive = false; };
+  }, [isInView]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,

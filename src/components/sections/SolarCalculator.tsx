@@ -66,6 +66,7 @@ export const SolarCalculator = () => {
             
             <input 
               type="range" 
+              aria-label="Average Monthly Bill"
               min="50" 
               max="1000" 
               step="10"

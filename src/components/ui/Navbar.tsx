@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
@@ -61,7 +62,7 @@ export const Navbar = () => {
 
       <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 md:py-6 max-w-container-max mx-auto relative z-[999]">
         <Link href="/" className="flex items-center">
-          <img src="/cg-solar.png" alt="Codegen Solar" className="h-8 md:h-10 w-auto object-contain" />
+          <Image src="/cg-solar.png" alt="Codegen Solar" width={160} height={40} className="h-8 md:h-10 w-auto object-contain" priority />
         </Link>
         
         {/* Desktop Menu */}

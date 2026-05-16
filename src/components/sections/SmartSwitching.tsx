@@ -9,19 +9,23 @@ import {
   useSpring,
   useMotionValue,
   MotionValue,
+  useInView,
 } from "framer-motion";
 import { GlassCard } from "../ui/GlassCard";
 import { Route, Zap, BatteryCharging } from "lucide-react";
 import { EnergyTextReveal } from "../ui/EnergyTextReveal";
 
 const FRAME_COUNT = 81;
-const FRAMES = Array.from({ length: FRAME_COUNT }, (_, i) =>
-  `/bulbe_animation/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`
-);
+const FRAMES = Array.from({ length: FRAME_COUNT }, (_, i) => {
+  const path = `/bulbe_animation/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
+  return `/_next/image?url=${encodeURIComponent(path)}&w=1920&q=75`;
+});
 
 function BulbFramePlayer({ frameIndex }: { frameIndex: MotionValue<number> }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
+
+  const isInView = useInView(canvasRef, { once: true, margin: "200% 0px" });
 
   useEffect(() => {
     const loadedImages: HTMLImageElement[] = [];
@@ -33,10 +37,17 @@ function BulbFramePlayer({ frameIndex }: { frameIndex: MotionValue<number> }) {
       loadedImages.push(img);
     }
     setImages([...loadedImages]);
+  }, []);
 
-    let currentIndex = 5;
+  useEffect(() => {
+    if (!isInView || images.length >= FRAME_COUNT) return;
+
+    let currentIndex = Math.max(5, images.length);
+    let isActive = true;
+    const loadedImages = [...images];
+
     const loadNextBatch = () => {
-      if (currentIndex >= FRAME_COUNT) return;
+      if (!isActive || currentIndex >= FRAME_COUNT) return;
       
       const batchSize = 10;
       const end = Math.min(currentIndex + batchSize - 1, FRAME_COUNT - 1);
@@ -64,7 +75,9 @@ function BulbFramePlayer({ frameIndex }: { frameIndex: MotionValue<number> }) {
     } else {
       setTimeout(loadNextBatch, 100);
     }
-  }, []);
+
+    return () => { isActive = false; };
+  }, [isInView]);
 
   const drawImage = (index: number) => {
     if (images[index] && canvasRef.current) {
@@ -324,7 +337,7 @@ export const SmartSwitching = () => {
                 >
                   <GlassCard glowBorder={glow} className="flex-1 h-full !p-5 md:!p-6">
                     {icon}
-                    <h4 className="font-headline-sm text-headline-sm text-primary mb-1">{title}</h4>
+                    <h3 className="font-headline-sm text-headline-sm text-primary mb-1">{title}</h3>
                     <p className="font-body-sm text-body-sm text-on-surface-variant">{body}</p>
                   </GlassCard>
                 </motion.div>

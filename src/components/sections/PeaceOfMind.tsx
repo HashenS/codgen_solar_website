@@ -12,16 +12,20 @@ import {
   motion,
   useMotionValueEvent,
   MotionValue,
+  useInView,
 } from "framer-motion";
 
 const FRAME_COUNT = 87;
-const FRAMES = Array.from({ length: FRAME_COUNT }, (_, i) =>
-  `/Solar_animation/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`
-);
+const FRAMES = Array.from({ length: FRAME_COUNT }, (_, i) => {
+  const path = `/Solar_animation/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
+  return `/_next/image?url=${encodeURIComponent(path)}&w=1200&q=75`;
+});
 
 function BulbFramePlayer({ frameIndex }: { frameIndex: MotionValue<number> }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
+
+  const isInView = useInView(canvasRef, { once: true, margin: "200% 0px" });
 
   useEffect(() => {
     const loadedImages: HTMLImageElement[] = [];
@@ -33,10 +37,17 @@ function BulbFramePlayer({ frameIndex }: { frameIndex: MotionValue<number> }) {
       loadedImages.push(img);
     }
     setImages([...loadedImages]);
+  }, []);
 
-    let currentIndex = 5;
+  useEffect(() => {
+    if (!isInView || images.length >= FRAME_COUNT) return;
+
+    let currentIndex = Math.max(5, images.length);
+    let isActive = true;
+    const loadedImages = [...images];
+
     const loadNextBatch = () => {
-      if (currentIndex >= FRAME_COUNT) return;
+      if (!isActive || currentIndex >= FRAME_COUNT) return;
       
       const batchSize = 10;
       const end = Math.min(currentIndex + batchSize - 1, FRAME_COUNT - 1);
@@ -64,7 +75,9 @@ function BulbFramePlayer({ frameIndex }: { frameIndex: MotionValue<number> }) {
     } else {
       setTimeout(loadNextBatch, 100);
     }
-  }, []);
+
+    return () => { isActive = false; };
+  }, [isInView]);
 
   const drawImage = (index: number) => {
     if (images[index] && canvasRef.current) {
@@ -205,9 +218,9 @@ export const PeaceOfMind = () => {
                 <ShieldCheck className="text-primary-fixed w-6 h-6" />
               </div>
               <div>
-                <h5 className="font-headline-md text-headline-md text-primary mb-1">
+                <h3 className="font-headline-md text-headline-md text-primary mb-1">
                   100% Uptime Guarantee
-                </h5>
+                </h3>
                 <p className="font-body-md text-body-md text-on-surface-variant">
                   While neighbors are in the dark, your Hybrid Resilience system
                   engages instantly, powering your entire home's essential circuits.
@@ -220,9 +233,9 @@ export const PeaceOfMind = () => {
                 <CloudLightning className="text-primary-fixed w-6 h-6" />
               </div>
               <div>
-                <h5 className="font-headline-md text-headline-md text-primary mb-1">
+                <h3 className="font-headline-md text-headline-md text-primary mb-1">
                   AI-Powered Forecasting
-                </h5>
+                </h3>
                 <p className="font-body-md text-body-md text-on-surface-variant">
                   System monitors weather patterns and pre-charges batteries if an
                   outage-causing storm is detected in your area.

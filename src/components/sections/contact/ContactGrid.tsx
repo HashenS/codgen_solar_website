@@ -45,6 +45,7 @@ export const ContactGrid = () => {
                   <label className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Full Name</label>
                   <input 
                     type="text" 
+                    aria-label="Full Name"
                     placeholder="John Doe"
                     className="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-fixed focus:shadow-[0_0_15px_rgba(159,251,6,0.2)] transition-all"
                   />
@@ -53,6 +54,7 @@ export const ContactGrid = () => {
                   <label className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Corporate Email</label>
                   <input 
                     type="email" 
+                    aria-label="Corporate Email"
                     placeholder="john@company.com"
                     className="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-fixed focus:shadow-[0_0_15px_rgba(159,251,6,0.2)] transition-all"
                   />
@@ -61,7 +63,7 @@ export const ContactGrid = () => {
 
               <div className="space-y-2">
                 <label className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Inquiry Type</label>
-                <select className="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-fixed focus:shadow-[0_0_15px_rgba(159,251,6,0.2)] transition-all appearance-none">
+                <select aria-label="Inquiry Type" className="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-fixed focus:shadow-[0_0_15px_rgba(159,251,6,0.2)] transition-all appearance-none">
                   <option>Technical Audit</option>
                   <option>Commercial Consultation</option>
                   <option>Project Partnership</option>
@@ -73,6 +75,7 @@ export const ContactGrid = () => {
                 <label className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Project Brief</label>
                 <textarea 
                   rows={4} 
+                  aria-label="Project Brief"
                   placeholder="Describe your vision or technical requirements..."
                   className="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-fixed focus:shadow-[0_0_15px_rgba(159,251,6,0.2)] transition-all"
                 ></textarea>
