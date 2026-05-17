@@ -27,8 +27,9 @@ export const Hero = () => {
     setIsMounted(true);
     const loadedImages: HTMLImageElement[] = [];
     
-    // 1. Load first 5 frames immediately for instant feedback
-    for (let i = 1; i <= Math.min(5, frameCount); i++) {
+    // 1. Load only the first frame immediately to prevent massive initial network payload
+    // The rest will smoothly load in the background via requestIdleCallback
+    for (let i = 1; i <= Math.min(1, frameCount); i++) {
       const img = new window.Image();
       img.src = currentFrame(i);
       loadedImages.push(img);
@@ -39,7 +40,7 @@ export const Hero = () => {
   useEffect(() => {
     if (!isInView || images.length >= frameCount) return;
 
-    let currentIndex = Math.max(6, images.length + 1);
+    let currentIndex = Math.max(2, images.length + 1);
     let isActive = true;
     const loadedImages = [...images];
 
@@ -158,7 +159,7 @@ export const Hero = () => {
         <div className="absolute inset-0 z-0 bg-black">
           {/* Static fallback image ensures it blocks window.onload so the Preloader waits for it */}
           <Image 
-            src={currentFrame(1)} 
+            src="/hero-images/ezgif-frame-001.jpg" 
             alt="Codegen Solar Hybrid Resilience" 
             fill 
             priority
