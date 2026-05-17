@@ -15,18 +15,18 @@ export const ContactHero = () => {
       tl.fromTo(
         ".hero-image",
         { scale: 1.1, opacity: 0 },
-        { scale: 1, opacity: 0.4, duration: 2, ease: "power2.out" }
+        { scale: 1, opacity: 0.4, duration: 1.2, ease: "power2.out" }
       )
         .fromTo(
           ".hero-title",
           { y: 40, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+          { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
           "-=1.2"
         )
         .fromTo(
           ".hero-desc",
           { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+          { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
           "-=0.8"
         );
     },

@@ -17,7 +17,7 @@ export const ContactCTA = () => {
           scale: 1,
           opacity: 1,
           y: 0,
-          duration: 1.2,
+          duration: 0.6,
           ease: "power3.out",
           scrollTrigger: {
             trigger: containerRef.current,
