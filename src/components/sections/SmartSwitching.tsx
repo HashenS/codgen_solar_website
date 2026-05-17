@@ -187,15 +187,15 @@ export const SmartSwitching = () => {
     if (goingDown) {
       rawFrame.set(Math.max(0, Math.min(1, latest / 0.4)));
       rawText.set(Math.max(0, Math.min(1,  latest / 0.4)));
-      rawVideo.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.4)));
+      rawVideo.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.45)));
     } else {
       rawFrame.set(Math.max(0, Math.min(1, latest)));
-      rawVideo.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.6)));
+      rawVideo.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.45)));
       rawText.set(Math.max(0,  Math.min(1, latest / 0.4)));
     }
 
-    if (latest >= 0.8) setShowUI(true);
-    else if (latest < 0.6) setShowUI(false);
+    if (latest >= 0.7) setShowUI(true);
+    else if (latest < 0.5) setShowUI(false);
   });
 
   // ── Derived motion values ─────────────────────────────────────────────────
@@ -224,10 +224,10 @@ export const SmartSwitching = () => {
   const text2Y       = useTransform(smoothText, [0.25, 0.55],            [50, 0]);
 
   return (
-    <section ref={containerRef} className="h-[180vh] relative z-20 bg-background">
+    <section ref={containerRef} className="h-[400vh] relative z-20 bg-background">
       <div
         ref={stickyRef}
-        className="sticky top-0 min-h-[100svh] w-full relative flex flex-col justify-center pt-24 md:pt-32 pb-16 md:pb-24"
+        className="sticky top-0 h-[100svh] w-full relative flex flex-col justify-center pt-20 md:pt-24 pb-8 md:pb-12 overflow-hidden"
       >
         {/* ── Framer Motion image-sequence player ──────────────────────── */}
         <motion.div
@@ -285,11 +285,11 @@ export const SmartSwitching = () => {
         <div className="px-margin-mobile md:px-margin-desktop max-w-[1440px] w-full mx-auto relative pointer-events-none mt-8 flex-1 flex flex-col justify-end pb-12">
           <motion.div
             style={{ opacity: titleOpacity, y: titleY }}
-            className="text-center mb-8 md:mb-12 pointer-events-auto relative z-30"
+            className="text-center mb-6 md:mb-8 pointer-events-auto relative z-30"
           >
             <EnergyTextReveal
               text="Intelligent Power Orchestration"
-              className="font-headline-lg text-headline-lg mb-4"
+              className="font-headline-lg text-headline-lg mb-2"
               blueWords={["Orchestration"]}
             />
             <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">
@@ -298,9 +298,9 @@ export const SmartSwitching = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 relative z-10 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 relative z-10 mb-8">
             {/* Invisible target for the shrink destination */}
-            <div className="md:col-span-7 lg:col-span-8 relative group flex flex-col justify-end p-8 md:p-12 pointer-events-auto h-full min-h-[300px] md:min-h-[400px]">
+            <div className="md:col-span-7 lg:col-span-8 relative group flex flex-col justify-end p-6 md:p-10 pointer-events-auto h-full min-h-[250px] md:min-h-[350px]">
               <div ref={targetRef} className="absolute inset-0 w-full h-full pointer-events-none rounded-3xl" />
             </div>
 

@@ -220,7 +220,7 @@ export const Hero = () => {
                           transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } // Expo out equivalent
                         }
                       }}
-                      className="font-display-hero text-display-hero text-primary mb-0 leading-none drop-shadow-2xl text-center"
+                      className="font-display-hero text-display-hero text-primary mb-0 leading-none drop-shadow-2xl text-center translate-x-1 md:translate-x-2"
                     >
                       The Ultimate
                     </motion.h1>

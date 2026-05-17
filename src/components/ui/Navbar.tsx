@@ -61,12 +61,14 @@ export const Navbar = () => {
       <div className="absolute inset-0 bg-[#050505]/60 backdrop-blur-xl border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)] pointer-events-none"></div>
 
       <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 md:py-6 max-w-container-max mx-auto relative z-[999]">
-        <Link href="/" className="flex items-center">
-          <Image src="/cg-solar.png" alt="Codegen Solar" width={160} height={40} className="h-8 md:h-10 w-auto object-contain" priority />
-        </Link>
+        <div className="flex-1 flex justify-start">
+          <Link href="/" className="flex items-center">
+            <Image src="/cg-solar.png" alt="Codegen Solar" width={160} height={40} className="h-8 md:h-10 w-auto object-contain" priority />
+          </Link>
+        </div>
         
         {/* Desktop Menu */}
-        <div className="hidden md:flex gap-8 items-center">
+        <div className="hidden md:flex gap-8 items-center justify-center">
           {NAV_LINKS.map((item) => {
             const isActive = pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
             
@@ -86,7 +88,7 @@ export const Navbar = () => {
           })}
         </div>
         
-        <div className="hidden md:block">
+        <div className="hidden md:flex flex-1 justify-end">
           <Button size="sm" magnetic>
             Get Started
           </Button>

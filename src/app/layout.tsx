@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { SmoothScrollProvider } from "@/animations/SmoothScrollProvider";
+import { Preloader } from "@/components/ui/Preloader";
 import "./globals.css";
 
 const inter = Inter({
@@ -29,6 +30,7 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} dark scroll-smooth`}
     >
       <body className="min-h-full flex flex-col bg-background text-on-background selection:bg-primary-fixed selection:text-on-primary-fixed">
+        <Preloader />
         <SmoothScrollProvider>
           {children}
         </SmoothScrollProvider>
