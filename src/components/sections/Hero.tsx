@@ -9,8 +9,7 @@ import { useRouter } from "next/navigation";
 const frameCount = 210;
 
 const currentFrame = (index: number) => {
-  const path = `/hero-images/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
-  return `/_next/image?url=${encodeURIComponent(path)}&w=1920&q=75`;
+  return `/hero-images/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
 };
 
 export const Hero = () => {
@@ -25,38 +24,34 @@ export const Hero = () => {
   // Preload images efficiently
   useEffect(() => {
     setIsMounted(true);
-    const loadedImages: HTMLImageElement[] = [];
     
-    // 1. Load only the first frame immediately to prevent massive initial network payload
-    // The rest will smoothly load in the background via requestIdleCallback
-    for (let i = 1; i <= Math.min(1, frameCount); i++) {
-      const img = new window.Image();
-      img.src = currentFrame(i);
-      loadedImages.push(img);
-    }
-    setImages([...loadedImages]);
+    // 1. Load only the first frame immediately
+    const firstImg = new window.Image();
+    firstImg.src = currentFrame(1);
+    setImages([firstImg]);
   }, []);
 
   useEffect(() => {
-    if (!isInView || images.length >= frameCount) return;
+    if (!isInView) return;
 
-    let currentIndex = Math.max(2, images.length + 1);
+    let currentIndex = 2; // Start from frame 2
     let isActive = true;
-    const loadedImages = [...images];
 
     const loadNextBatch = () => {
       if (!isActive || currentIndex > frameCount) return;
       
       const batchSize = 10;
       const end = Math.min(currentIndex + batchSize - 1, frameCount);
+      const newImages: HTMLImageElement[] = [];
       
       for (let i = currentIndex; i <= end; i++) {
         const img = new window.Image();
         img.src = currentFrame(i);
-        loadedImages.push(img);
+        newImages.push(img);
       }
       
-      setImages([...loadedImages]);
+      // Use functional state update to prevent closure race conditions!
+      setImages(prev => [...prev, ...newImages]);
       currentIndex = end + 1;
       
       if (currentIndex <= frameCount) {
