@@ -74,10 +74,10 @@ export const Navbar = () => {
               <Link
                 key={item.label}
                 href={item.href}
-                className={`font-medium transition-colors duration-300 font-label-caps text-label-caps uppercase ${
+                className={`text-sm font-label-caps tracking-widest transition-colors duration-300 ${
                   isActive 
-                    ? "text-primary drop-shadow-[0_0_8px_rgba(163,255,18,0.5)]" 
-                    : "text-on-surface-variant hover:text-primary-fixed-dim"
+                  ? "text-primary drop-shadow-[0_0_8px_rgba(14,156,92,0.5)]" 
+                  : "text-on-surface-variant hover:text-white"
                 }`}
               >
                 {item.label}
@@ -117,8 +117,8 @@ export const Navbar = () => {
                 key={item.label}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className={`text-2xl font-headline-md transition-colors duration-300 ${
-                  isActive ? "text-primary drop-shadow-[0_0_10px_rgba(163,255,18,0.5)]" : "text-white"
+                className={`text-3xl font-display-hero font-medium tracking-tight ${
+                  isActive ? "text-primary drop-shadow-[0_0_10px_rgba(14,156,92,0.5)]" : "text-white"
                 }`}
               >
                 {item.label}

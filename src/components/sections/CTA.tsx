@@ -34,6 +34,7 @@ export const CTA = () => {
           <EnergyTextReveal 
             text="Ready for Independence?" 
             className="font-display-hero text-headline-lg md:text-display-hero mb-8" 
+            blueWords={["Independence?"]}
           />
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
             Our engineering team is ready to design your custom Hybrid Resilience

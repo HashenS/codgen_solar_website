@@ -184,7 +184,7 @@ export const Hero = () => {
                     width={320}
                     height={100}
                     priority
-                    className="w-48 md:w-80 h-auto drop-shadow-[0_0_30px_rgba(163,255,18,0.3)]" 
+                    className="w-48 md:w-80 h-auto drop-shadow-[0_0_20px_rgba(14,156,92,0.3)]" 
                   />
                 </motion.div>
               )}
@@ -223,18 +223,39 @@ export const Hero = () => {
                     </motion.h1>
                     <motion.h1 
                       variants={{
-                        hidden: { opacity: 0, scale: 0.9, filter: "blur(15px)", textShadow: "0px 0px 0px rgba(163,255,18,0)" },
+                        hidden: { opacity: 0, scale: 0.9, filter: "blur(10px)" },
                         visible: { 
                           opacity: 1, 
                           scale: 1, 
                           filter: "blur(0px)",
-                          textShadow: ["0px 0px 30px rgba(163,255,18,0.8)", "0px 0px 15px rgba(163,255,18,0.3)"],
-                          transition: { duration: 1.5, ease: [0.16, 1, 0.3, 1] } 
+                          transition: { 
+                            duration: 0.5, 
+                            ease: "easeOut"
+                          } 
                         }
                       }}
-                      className="font-display-hero text-display-hero text-primary-fixed-dim leading-none text-center"
+                      className="font-display-hero text-display-hero leading-none text-center flex justify-center gap-[0.3em]"
                     >
-                      Safety Net.
+                      <motion.span
+                        variants={{
+                          hidden: { color: "#333333", textShadow: "0px 0px 0px rgba(0,0,0,0)" },
+                          visible: {
+                            color: ["#333333", "#333333", "#ffffff", "#333333", "#ffffff", "#0e9c5c"],
+                            textShadow: ["0px 0px 0px rgba(0,0,0,0)", "0px 0px 0px rgba(0,0,0,0)", "0px 0px 40px rgba(255,255,255,0.8)", "0px 0px 0px rgba(0,0,0,0)", "0px 0px 40px rgba(255,255,255,0.8)", "0px 0px 0px rgba(0,0,0,0)"],
+                            transition: { duration: 2, times: [0, 0.4, 0.45, 0.55, 0.6, 1] }
+                          }
+                        }}
+                      >Safety</motion.span>
+                      <motion.span
+                        variants={{
+                          hidden: { color: "#333333", textShadow: "0px 0px 0px rgba(0,0,0,0)" },
+                          visible: {
+                            color: ["#333333", "#333333", "#ffffff", "#333333", "#ffffff", "#0863a8"],
+                            textShadow: ["0px 0px 0px rgba(0,0,0,0)", "0px 0px 0px rgba(0,0,0,0)", "0px 0px 40px rgba(255,255,255,0.8)", "0px 0px 0px rgba(0,0,0,0)", "0px 0px 40px rgba(255,255,255,0.8)", "0px 0px 0px rgba(0,0,0,0)"],
+                            transition: { duration: 2, times: [0, 0.4, 0.45, 0.55, 0.6, 1] }
+                          }
+                        }}
+                      >Net.</motion.span>
                     </motion.h1>
                   </div>
                   <motion.p 

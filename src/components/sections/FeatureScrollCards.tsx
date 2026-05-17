@@ -41,51 +41,98 @@ export const FeatureScrollCards = () => {
 
   useGSAP(
     () => {
-      // 1. Initial State: cards are off-screen at the bottom
-      gsap.set(cardsRef.current, { 
-        yPercent: 50, 
-        y: window.innerHeight,
-        rotation: 0
+      let mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        // Desktop Animation
+        gsap.set(cardsRef.current, { 
+          yPercent: 50, 
+          y: window.innerHeight * 0.8,
+          rotation: 0,
+          opacity: 1
+        });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top top",
+            end: "+=200%",
+            pin: pinRef.current,
+            scrub: 1,
+          },
+        });
+
+        cardsRef.current.forEach((card, index) => {
+          tl.to(
+            card,
+            {
+              yPercent: 0,
+              y: CARDS[index].yMiddle,
+              rotation: CARDS[index].rotation,
+              opacity: 1,
+              duration: 1,
+              ease: "power2.out",
+            },
+            index * 0.15
+          );
+
+          tl.to(
+            card,
+            {
+              yPercent: -50,
+              y: -window.innerHeight,
+              rotation: 0,
+              opacity: 0,
+              duration: 1,
+              ease: "power2.in",
+            },
+            1.5 + index * 0.15
+          );
+        });
       });
 
-      // 2. Timeline for the whole section (longer duration for pause)
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "+=300%", // Increased scroll distance to accommodate the pause
-          pin: pinRef.current,
-          scrub: 1,
-        },
-      });
+      mm.add("(max-width: 767px)", () => {
+        // Mobile Animation
+        gsap.set(cardsRef.current, { 
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          xPercent: -50,
+          yPercent: -50,
+          y: window.innerHeight * 0.8,
+          opacity: 0,
+          rotation: 0,
+        });
 
-      cardsRef.current.forEach((card, index) => {
-        // 3. IN ANIMATION: Move to center and rotate
-        tl.to(
-          card,
-          {
-            yPercent: 0,
-            y: CARDS[index].yMiddle,
-            rotation: CARDS[index].rotation,
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top top",
+            end: "+=300%",
+            pin: pinRef.current,
+            scrub: 1,
+          },
+        });
+
+        cardsRef.current.forEach((card, index) => {
+          const startTime = index * 2;
+          
+          // Enter
+          tl.to(card, {
+            y: 0,
+            opacity: 1,
             duration: 1,
             ease: "power2.out",
-          },
-          index * 0.15 // Stagger entrance
-        );
-
-        // 4. PAUSE & OUT ANIMATION: Hold position, then exit up
-        // The gap between duration 1 (end of IN) and 2 (start of OUT) creates the pause.
-        tl.to(
-          card,
-          {
-            yPercent: -50,
-            y: -window.innerHeight,
-            rotation: 0,
+          }, startTime);
+          
+          // Exit
+          tl.to(card, {
+            y: -window.innerHeight * 0.8,
+            opacity: 0,
             duration: 1,
             ease: "power2.in",
-          },
-          2 + index * 0.15 // Start exit after a delay, maintaining stagger
-        );
+          }, startTime + 1.5);
+        });
       });
     },
     { scope: containerRef }
@@ -98,11 +145,11 @@ export const FeatureScrollCards = () => {
   };
 
   return (
-    <section ref={containerRef} className="bg-background relative">
+    <section ref={containerRef} className="bg-background relative z-30">
       <div ref={pinRef} className="h-screen w-full relative overflow-hidden flex items-center justify-center">
         <div className="w-full max-w-[1440px] px-4 md:px-8 relative h-full flex items-center justify-center">
           {/* Container for cards */}
-          <div className="flex gap-4 md:gap-8 w-full justify-center scale-[0.85] md:scale-100">
+          <div className="flex gap-4 md:gap-8 w-full h-full items-center justify-center scale-[0.85] md:scale-100 relative">
             {CARDS.map((card) => (
               <div
                 key={card.title}

@@ -40,6 +40,7 @@ export const LiveEnergyCommand = () => {
             <EnergyTextReveal 
               text="Live Energy Command" 
               className="font-headline-lg text-headline-lg mb-2" 
+              blueWords={["Command"]}
             />
             <p className="font-body-md text-body-md text-on-surface-variant">
               Monitor every watt moving through your ecosystem.
@@ -71,13 +72,13 @@ export const LiveEnergyCommand = () => {
           {/* Background Circuit SVG - Desktop */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none hidden md:block -z-10">
             <line x1="16.66%" y1="50%" x2="83.33%" y2="50%" stroke="rgba(255,255,255,0.05)" strokeWidth="2" />
-            <line className="circuit-pulse" x1="16.66%" y1="50%" x2="83.33%" y2="50%" stroke="#A3FF12" strokeWidth="2" strokeDasharray="8 8" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 5px #A3FF12)' }} />
+            <line className="circuit-pulse" x1="16.66%" y1="50%" x2="83.33%" y2="50%" stroke="#0e9c5c" strokeWidth="2" strokeDasharray="8 8" strokeLinecap="round" />
           </svg>
 
           {/* Background Circuit SVG - Mobile */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none block md:hidden -z-10">
             <line x1="50%" y1="16.66%" x2="50%" y2="83.33%" stroke="rgba(255,255,255,0.05)" strokeWidth="2" />
-            <line className="circuit-pulse" x1="50%" y1="16.66%" x2="50%" y2="83.33%" stroke="#A3FF12" strokeWidth="2" strokeDasharray="8 8" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 5px #A3FF12)' }} />
+            <line className="circuit-pulse" x1="50%" y1="16.66%" x2="50%" y2="83.33%" stroke="#0e9c5c" strokeWidth="2" strokeDasharray="8 8" strokeLinecap="round" />
           </svg>
 
           {/* Source 1 */}
@@ -140,7 +141,7 @@ export const LiveEnergyCommand = () => {
               GRID STATUS
             </p>
             <div className="flex items-center justify-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-primary-fixed shadow-[0_0_8px_#A3FF12] animate-pulse"></div>
+              <div className="w-2 h-2 rounded-full bg-primary-fixed animate-pulse"></div>
               <p className="text-lg font-headline-md text-primary">OPTIMAL</p>
             </div>
           </div>

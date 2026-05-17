@@ -48,6 +48,7 @@ export const SolarCalculator = () => {
         <EnergyTextReveal 
           text="Calculate Your Future" 
           className="font-headline-lg text-headline-lg mb-4" 
+          blueWords={["Future"]}
         />
         <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">
           See exactly how much you can save with a custom Codegen Solar array.

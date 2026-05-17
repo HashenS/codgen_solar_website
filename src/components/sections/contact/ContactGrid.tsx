@@ -91,7 +91,7 @@ export const ContactGrid = () => {
         {/* Corporate Details Column */}
         <div className="lg:col-span-5 space-y-12">
           <div className="space-y-6 contact-element">
-            <h3 className="font-headline-md text-primary-fixed drop-shadow-[0_0_20px_rgba(159,251,6,0.4)]">Global Hubs</h3>
+            <h3 className="font-headline-md text-primary-fixed drop-shadow-[0_0_20px_rgba(14,156,92,0.4)]">Global Hubs</h3>
             
             <div className="space-y-8">
               <div className="flex gap-4">

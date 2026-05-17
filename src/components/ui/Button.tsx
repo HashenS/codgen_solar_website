@@ -74,7 +74,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variants = {
       primary:
-        "bg-[#A3FF12] text-black hover:shadow-[0_0_20px_rgba(163,255,18,0.4)]", // removed scale here since gsap handles transform
+        "bg-[#0e9c5c] text-white hover:bg-[#0863a8] transition-colors", // removed scale here since gsap handles transform
       secondary:
         "bg-transparent border border-primary-fixed/30 text-primary-fixed hover:bg-primary-fixed/10",
       glass:
@@ -105,7 +105,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {magnetic && variant === "primary" && (
           <div ref={flareContainerRef} className="absolute inset-0 pointer-events-none z-[-1] overflow-visible">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="absolute w-2 h-2 rounded-full bg-[#A3FF12] opacity-0 shadow-[0_0_8px_#A3FF12]"></div>
+              <div key={i} className="absolute w-2 h-2 rounded-full bg-[#0e9c5c] opacity-0"></div>
             ))}
           </div>
         )}

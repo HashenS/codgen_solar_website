@@ -224,7 +224,7 @@ export const SmartSwitching = () => {
   const text2Y       = useTransform(smoothText, [0.25, 0.55],            [50, 0]);
 
   return (
-    <section ref={containerRef} className="h-[250vh] relative z-20 bg-background">
+    <section ref={containerRef} className="h-[180vh] relative z-20 bg-background">
       <div
         ref={stickyRef}
         className="sticky top-0 min-h-[100svh] w-full relative flex flex-col justify-center pt-24 md:pt-32 pb-16 md:pb-24"
@@ -262,7 +262,7 @@ export const SmartSwitching = () => {
           >
             <h2 className="font-display-hero font-bold tracking-tight text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
               Your{" "}
-              <span className="text-[#A3FF12] drop-shadow-[0_0_20px_rgba(163,255,18,0.5)]">
+              <span className="text-[#0e9c5c] drop-shadow-[0_0_20px_rgba(14,156,92,0.5)]">
                 Power,
               </span>
             </h2>
@@ -274,7 +274,7 @@ export const SmartSwitching = () => {
           >
             <h2 className="font-display-hero font-bold tracking-tight text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
               Always{" "}
-              <span className="text-[#A3FF12] drop-shadow-[0_0_20px_rgba(163,255,18,0.5)]">
+              <span className="text-[#0863a8] drop-shadow-[0_0_20px_rgba(8,99,168,0.5)]">
                 On.
               </span>
             </h2>
@@ -290,6 +290,7 @@ export const SmartSwitching = () => {
             <EnergyTextReveal
               text="Intelligent Power Orchestration"
               className="font-headline-lg text-headline-lg mb-4"
+              blueWords={["Orchestration"]}
             />
             <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">
               Our proprietary Nexus Inverter acts as the brain of your home, making

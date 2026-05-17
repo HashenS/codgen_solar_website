@@ -184,7 +184,7 @@ export const QuoteForm = () => {
             <div className="pt-6 flex justify-end">
               <button 
                 onClick={handleNext}
-                className="bg-[#A3FF12] text-[#102000] font-bold px-10 py-4 rounded-lg hover:bg-[#8bdc00] hover:shadow-[0_0_15px_rgba(163,255,18,0.4)] transition-all"
+                className="bg-[#0e9c5c] text-white font-bold px-10 py-4 rounded-lg hover:bg-[#0863a8] transition-all"
               >
                 Next
               </button>
@@ -226,7 +226,7 @@ export const QuoteForm = () => {
                 Back
               </button>
               <button 
-                className="bg-[#A3FF12] text-[#102000] font-bold px-10 py-4 rounded-lg hover:bg-[#8bdc00] hover:shadow-[0_0_15px_rgba(163,255,18,0.4)] transition-all"
+                className="bg-[#0e9c5c] text-white font-bold px-10 py-4 rounded-lg hover:bg-[#0863a8] transition-all"
               >
                 Submit Request
               </button>

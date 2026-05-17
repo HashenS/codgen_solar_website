@@ -28,7 +28,7 @@ export default function Home() {
         <FAQ />
         <div className="py-12 md:py-24 overflow-hidden bg-background border-y border-white/5 relative z-10">
           <ScrollVelocity 
-            text={<>POWER <span className="text-[#A3FF12]">YOUR FUTURE</span> • TAKE <span className="text-[#A3FF12]">COMMAND</span> • SMART GRID <span className="text-[#A3FF12]">READY</span> • </>} 
+            text={<>POWER <span className="text-[#0e9c5c]">YOUR FUTURE</span> • TAKE <span className="text-[#0863a8]">COMMAND</span> • SMART GRID <span className="text-[#0e9c5c]">READY</span> • </>} 
             className="font-display-hero text-[60px] md:text-[120px] font-bold text-primary tracking-tighter"
             velocity={1}
           />

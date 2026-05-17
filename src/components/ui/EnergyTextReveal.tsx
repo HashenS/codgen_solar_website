@@ -13,9 +13,10 @@ if (typeof window !== "undefined") {
 interface EnergyTextRevealProps {
   text: string;
   className?: string;
+  blueWords?: string[];
 }
 
-export const EnergyTextReveal = ({ text, className }: EnergyTextRevealProps) => {
+export const EnergyTextReveal = ({ text, className, blueWords = [] }: EnergyTextRevealProps) => {
   const containerRef = useRef<HTMLHeadingElement>(null);
 
   useGSAP(() => {
@@ -26,11 +27,13 @@ export const EnergyTextReveal = ({ text, className }: EnergyTextRevealProps) => 
     gsap.fromTo(chars, 
       {
         color: "#333333", // Dim gray
-        textShadow: "0px 0px 0px rgba(163,255,18,0)",
+        textShadow: "0px 0px 0px rgba(0,0,0,0)",
       },
       {
-        color: "#A3FF12", // Bright neon green
-        textShadow: "0px 0px 20px rgba(163,255,18,0.8)",
+        color: (index, target) => target.dataset.color === "blue" ? "#0863a8" : "#0e9c5c",
+        textShadow: (index, target) => target.dataset.color === "blue" 
+          ? "0px 0px 20px rgba(8,99,168,0.8)" 
+          : "0px 0px 20px rgba(14,156,92,0.8)",
         stagger: 0.1,
         ease: "power2.inOut",
         scrollTrigger: {
@@ -48,7 +51,11 @@ export const EnergyTextReveal = ({ text, className }: EnergyTextRevealProps) => 
       {text.split(" ").map((word, wordIndex) => (
         <span key={wordIndex} className="inline-block whitespace-nowrap mr-[0.25em]">
           {word.split("").map((char, charIndex) => (
-            <span key={charIndex} className="energy-char inline-block transition-colors duration-100">
+            <span 
+              key={charIndex} 
+              className="energy-char inline-block transition-colors duration-100"
+              data-color={blueWords.includes(word) ? "blue" : "green"}
+            >
               {char}
             </span>
           ))}
