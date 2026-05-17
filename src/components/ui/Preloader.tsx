@@ -66,8 +66,11 @@ export const Preloader = () => {
             <motion.div 
               className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#0e9c5c] to-[#0863a8]"
               initial={{ width: "0%" }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 2.5, ease: "easeInOut" }}
+              animate={{ width: isLoading ? "90%" : "100%" }}
+              transition={{ 
+                duration: isLoading ? 3 : 0.4, 
+                ease: isLoading ? "easeOut" : "easeInOut" 
+              }}
             />
             {/* Indeterminate sweep effect over the bar */}
             <motion.div 

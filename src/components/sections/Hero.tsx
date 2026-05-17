@@ -155,13 +155,21 @@ export const Hero = () => {
       {/* Sticky container that stays in view */}
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex flex-col pt-24 z-0">
         {/* Background Canvas */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 bg-black">
+          {/* Static fallback image ensures it blocks window.onload so the Preloader waits for it */}
+          <Image 
+            src={currentFrame(1)} 
+            alt="Codegen Solar Hybrid Resilience" 
+            fill 
+            priority
+            className="object-cover opacity-60" 
+          />
           <motion.canvas
             ref={canvasRef}
             initial={{ scale: 1.1, opacity: 0 }}
-            animate={{ scale: 1, opacity: 0.6 }}
+            animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 3, ease: "easeOut" }}
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
           />
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
