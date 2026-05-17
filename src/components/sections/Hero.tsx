@@ -94,38 +94,43 @@ export const Hero = () => {
     }
   });
 
-  const drawImage = (index: number) => {
-    if (images[index - 1] && canvasRef.current) {
-      const context = canvasRef.current.getContext("2d");
-      if (context) {
-        const img = images[index - 1];
-        if (!img.complete) return; // Don't draw if not loaded yet
-        
-        const canvas = canvasRef.current;
-        const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
-        const x = (canvas.width / 2) - (img.width / 2) * scale;
-        const y = (canvas.height / 2) - (img.height / 2) * scale;
-        
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(img, x, y, img.width * scale, img.height * scale);
-      }
+  const drawImage = (targetIndex: number) => {
+    if (!canvasRef.current) return;
+    const context = canvasRef.current.getContext("2d");
+    if (!context) return;
+
+    // If the exact frame isn't loaded yet (because the user scrolled too fast),
+    // fallback to the most recent frame that IS loaded to prevent a blank canvas.
+    let index = targetIndex;
+    while (index > 1 && (!images[index - 1] || !images[index - 1].complete)) {
+      index--;
     }
+
+    const img = images[index - 1];
+    if (!img || !img.complete) return;
+
+    const canvas = canvasRef.current;
+    const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+    const x = (canvas.width / 2) - (img.width / 2) * scale;
+    const y = (canvas.height / 2) - (img.height / 2) * scale;
+    
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(img, x, y, img.width * scale, img.height * scale);
   };
 
   useMotionValueEvent(frameIndex, "change", (latest) => {
-    const index = Math.round(latest);
-    drawImage(index);
+    drawImage(Math.round(latest));
   });
 
-  // Handle resizing canvas
+  // Handle resizing canvas (only change dimensions if they actually changed to prevent clearing)
   useEffect(() => {
     const resizeCanvas = () => {
       if (canvasRef.current) {
-        canvasRef.current.width = window.innerWidth;
-        canvasRef.current.height = window.innerHeight;
-        // Redraw current frame
-        const index = Math.round(frameIndex.get());
-        drawImage(index);
+        if (canvasRef.current.width !== window.innerWidth || canvasRef.current.height !== window.innerHeight) {
+          canvasRef.current.width = window.innerWidth;
+          canvasRef.current.height = window.innerHeight;
+          drawImage(Math.round(frameIndex.get()));
+        }
       }
     };
     
@@ -133,6 +138,11 @@ export const Hero = () => {
     resizeCanvas(); // Initial call
     return () => window.removeEventListener("resize", resizeCanvas);
   }, [images, frameIndex]);
+
+  // Catch up the drawing when new batches of images are loaded
+  useEffect(() => {
+    drawImage(Math.round(frameIndex.get()));
+  }, [images]);
 
   // Initial draw once first image is loaded
   useEffect(() => {
