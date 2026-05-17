@@ -3,6 +3,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence, useInView } from "framer-motion";
+import { Button } from "../ui/Button";
+import { useRouter } from "next/navigation";
 
 const frameCount = 210;
 
@@ -12,6 +14,7 @@ const currentFrame = (index: number) => {
 };
 
 export const Hero = () => {
+  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
@@ -273,6 +276,32 @@ export const Hero = () => {
                     A tri-mode energy architecture that bridges the gap between solar,
                     storage, and the grid.
                   </motion.p>
+                  
+                  <motion.div
+                    variants={{
+                        hidden: { opacity: 0, y: 30 },
+                        visible: { 
+                          opacity: 1, 
+                          y: 0, 
+                          transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } 
+                        }
+                    }}
+                    className="flex flex-col sm:flex-row gap-4 mt-10 justify-center pointer-events-auto relative z-50"
+                  >
+                    <Button variant="primary" size="md" magnetic onClick={() => router.push('/solutions')}>
+                      Our Solutions
+                    </Button>
+                    <Button 
+                      variant="primary" 
+                      size="md" 
+                      magnetic 
+                      className="bg-[#0863a8] hover:bg-[#0e9c5c]"
+                      style={{ color: "#ffffff" }}
+                      onClick={() => router.push('/contact')}
+                    >
+                      Contact Us
+                    </Button>
+                  </motion.div>
                 </motion.div>
               )}
             </AnimatePresence>

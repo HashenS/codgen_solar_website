@@ -133,16 +133,14 @@ export const ContactGrid = () => {
           <div className="relative group cursor-crosshair contact-element">
             <div className="absolute inset-0 bg-primary-fixed/10 opacity-0 group-hover:opacity-20 transition-opacity duration-700 rounded-xl z-10 pointer-events-none"></div>
             <div className="h-64 w-full relative rounded-xl overflow-hidden border border-white/10">
-              <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQvSQ344LwVjJlN2cu30TN8Chg7lp-vtrMEM9y516tPPDkzu-X0PfG_ykII_KNDvEL0yug6-WVAQ-_rceJFAJGYuynSYlAxsw8AeIBMxRlLs2sGYCtsX6EeMu29XM9L-BKhY1Ajn4tTuxtiTfilebod_0AxBmWtl4T3rODYNVwLvY-fTPWQXqullQZGtfabeeFkuSqcb9qu5qHJbJcXngO1WEwCCDesbUjkUvwxJIHpPm4rn8_y-Kc0oFnmY8O7xFbWGd7HoPaej_p"
-                alt="Regional hub location"
-                fill
-                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-              />
-            </div>
-            <div className="absolute bottom-4 left-4 bg-surface/80 backdrop-blur-md px-4 py-2 rounded-full flex items-center gap-2 z-20 border border-white/10">
-              <span className="w-2 h-2 bg-primary-fixed rounded-full animate-pulse shadow-[0_0_10px_rgba(159,251,6,0.8)]"></span>
-              <span className="text-xs font-label-caps text-white tracking-widest">GLOBAL GRID ACTIVE</span>
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.6748038052287!2d79.85848017589655!3d6.929417993070427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25927e44cd567%3A0xb7badf48e5a10763!2sCodeGen%20Solar!5e0!3m2!1sen!2slk!4v1779001869676!5m2!1sen!2slk" 
+                className="w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700"
+                style={{ border: 0 }} 
+                allowFullScreen 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade">
+              </iframe>
             </div>
           </div>
         </div>

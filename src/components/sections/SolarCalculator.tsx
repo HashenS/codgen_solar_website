@@ -55,10 +55,10 @@ export const SolarCalculator = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
         {/* Interactive Controls */}
-        <div className="lg:col-span-5 calc-element">
-          <GlassCard glowBorder>
+        <div className="lg:col-span-5 calc-element h-full">
+          <GlassCard glowBorder className="h-full flex flex-col">
             <h3 className="font-headline-md text-headline-md text-primary mb-8">Average Monthly Bill</h3>
             <div className="flex items-end gap-2 mb-8">
               <span className="text-5xl font-display-hero text-primary-fixed-dim">${bill}</span>
@@ -81,14 +81,14 @@ export const SolarCalculator = () => {
               <span>$1000+</span>
             </div>
 
-            <Button variant="primary" className="w-full mt-12">
+            <Button variant="primary" className="w-full mt-auto pt-4">
               Get Detailed Quote
             </Button>
           </GlassCard>
         </div>
 
         {/* Results Dashboard */}
-        <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6 h-full">
           <GlassCard className="calc-element text-center">
             <p className="font-label-caps text-label-caps text-on-surface-variant mb-4">20-Year Savings</p>
             <p className="text-5xl font-headline-lg text-primary-fixed-dim">
