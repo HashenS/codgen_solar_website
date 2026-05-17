@@ -49,6 +49,7 @@ export const FAQ = () => {
         <EnergyTextReveal 
           text="Common Inquiries" 
           className="font-headline-lg text-headline-lg mb-4" 
+          blueWords={["Inquiries"]}
         />
       </div>
 
