@@ -282,26 +282,26 @@ export const SmartSwitching = () => {
         </div>
 
         {/* ── Foreground content grid ───────────────────────────────────── */}
-        <div className="px-margin-mobile md:px-margin-desktop max-w-[1440px] w-full mx-auto relative pointer-events-none mt-8 flex-1 flex flex-col justify-end pb-12">
+        <div className="px-margin-mobile md:px-margin-desktop max-w-[1440px] w-full mx-auto relative pointer-events-none mt-4 md:mt-8 flex-1 flex flex-col justify-end pb-4 md:pb-12">
           <motion.div
             style={{ opacity: titleOpacity, y: titleY }}
-            className="text-center mb-6 md:mb-8 pointer-events-auto relative z-30"
+            className="text-center mb-4 md:mb-8 pointer-events-auto relative z-30"
           >
             <EnergyTextReveal
               text="Intelligent Power Orchestration"
-              className="font-headline-lg text-headline-lg mb-2"
+              className="font-headline-md text-headline-md md:font-headline-lg md:text-headline-lg mb-1 md:mb-2"
               blueWords={["Orchestration"]}
             />
-            <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">
+            <p className="font-body-sm md:font-body-md text-body-sm md:text-body-md text-on-surface-variant max-w-2xl mx-auto line-clamp-2 md:line-clamp-none">
               Our proprietary Nexus Inverter acts as the brain of your home, making
               microsecond decisions to optimize energy flow.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 relative z-10 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 lg:gap-12 relative z-10 mb-2 md:mb-8">
             {/* Invisible target for the shrink destination */}
-            <div className="md:col-span-7 lg:col-span-8 relative group flex flex-col justify-end p-6 md:p-10 pointer-events-auto h-full min-h-[250px] md:min-h-[350px]">
-              <div ref={targetRef} className="absolute inset-0 w-full h-full pointer-events-none rounded-3xl" />
+            <div className="md:col-span-7 lg:col-span-8 relative group flex flex-col justify-end p-0 md:p-10 pointer-events-auto h-full min-h-[120px] md:min-h-[350px]">
+              <div ref={targetRef} className="absolute inset-0 w-full h-full pointer-events-none rounded-2xl md:rounded-3xl" />
             </div>
 
             {/* Checklist */}
@@ -310,18 +310,18 @@ export const SmartSwitching = () => {
                 initial={{ opacity: 0, x: 50 }}
                 animate={showUI ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="flex flex-col gap-6"
+                className="flex flex-col gap-3 md:gap-6"
               >
                 <div>
-                  <h3 className="font-headline-md text-headline-md text-primary mb-2">
+                  <h3 className="font-headline-sm md:font-headline-md text-headline-sm md:text-headline-md text-primary mb-1 md:mb-2">
                     Your Best Friend in Solar
                   </h3>
-                  <p className="font-body-md text-body-md text-on-surface-variant">
+                  <p className="font-body-sm md:font-body-md text-body-sm md:text-body-md text-on-surface-variant line-clamp-2 md:line-clamp-none">
                     We guide you every step of the way on your solar investment journey.
                   </p>
                 </div>
 
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2 md:gap-3">
                   {[
                     "30 Years Warranty",
                     "Premium After-Sales Service",
@@ -333,17 +333,17 @@ export const SmartSwitching = () => {
                       initial={{ opacity: 0, x: 20 }}
                       animate={showUI ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
                       transition={{ duration: 0.5, delay: i * 0.15 + 0.2 }}
-                      className="flex items-center gap-4 glass-panel p-4 rounded-xl border border-white/5 relative overflow-hidden group"
+                      className="flex items-center gap-3 md:gap-4 glass-panel p-2.5 md:p-4 rounded-xl border border-white/5 relative overflow-hidden group"
                     >
                       {/* Hover glow effect */}
                       <div className="absolute inset-0 bg-primary-fixed/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                       
-                      <div className="w-8 h-8 rounded-full bg-primary-fixed/10 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(163,255,18,0.15)] relative z-10">
-                        <svg className="w-4 h-4 text-primary-fixed" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary-fixed/10 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(163,255,18,0.15)] relative z-10">
+                        <svg className="w-3 h-3 md:w-4 md:h-4 text-primary-fixed" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
-                      <span className="font-body-md text-primary font-medium relative z-10">{item}</span>
+                      <span className="font-body-sm md:font-body-md text-primary font-medium relative z-10">{item}</span>
                     </motion.div>
                   ))}
                 </div>
