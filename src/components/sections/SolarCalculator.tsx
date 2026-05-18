@@ -48,20 +48,25 @@ export const SolarCalculator = () => {
         textContent: (i: number, target: HTMLElement) => target.dataset.val,
         duration: 1,
         snap: { textContent: 1 },
-        ease: "power2.out"
+        ease: "power2.out",
+        modifiers: {
+          textContent: function(value) {
+            return new Intl.NumberFormat('en-US').format(value);
+          }
+        }
       }
     );
   }, [billIndex]);
 
-  // Format Rs with commas
-  const formatRs = (num: number) => new Intl.NumberFormat('en-IN').format(num);
+  // Format Rs with commas (standard international format)
+  const formatRs = (num: number) => new Intl.NumberFormat('en-US').format(num);
 
   return (
     <section ref={containerRef} className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto relative z-30">
       <div className="text-center mb-16 calc-element">
         <EnergyTextReveal 
           text="Calculate Your Solar Capacity" 
-          className="font-headline-lg text-headline-lg mb-4" 
+          className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-3 md:mb-6" 
           blueWords={["Capacity"]}
         />
         <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">
@@ -109,18 +114,22 @@ export const SolarCalculator = () => {
 
         {/* Results Dashboard */}
         <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6 h-full">
-          <GlassCard className="calc-element text-center flex flex-col justify-center items-center">
+          <GlassCard className="calc-element text-center flex flex-col justify-center items-center h-full w-full p-6">
             <p className="font-label-caps text-label-caps text-on-surface-variant mb-4">Recommended Solar Capacity</p>
-            <p className="text-6xl font-headline-lg text-primary">
-              <span className="animated-num" data-val={systemSize}>{systemSize}</span> <span className="text-2xl font-body-md text-on-surface-variant">kW</span>
-            </p>
+            <div className="flex items-baseline gap-2 whitespace-nowrap">
+              <span className="text-6xl font-headline-lg text-primary animated-num" data-val={systemSize}>{systemSize}</span>
+              <span className="text-2xl font-body-md text-on-surface-variant">kW</span>
+            </div>
           </GlassCard>
 
-          <GlassCard className="calc-element text-center flex flex-col justify-center items-center">
+          <GlassCard className="calc-element text-center flex flex-col justify-center items-center h-full w-full p-6">
             <p className="font-label-caps text-label-caps text-on-surface-variant mb-4">20-Year Savings</p>
-            <p className="text-4xl md:text-5xl font-headline-lg text-primary-fixed-dim">
-              Rs. <span className="animated-num" data-val={annualSavings * 20}>{formatRs(annualSavings * 20)}</span>
-            </p>
+            <div className="flex flex-col items-center justify-center whitespace-nowrap">
+              <span className="text-2xl font-headline-md text-primary-fixed-dim/80 mb-1">Rs.</span>
+              <span className="text-4xl md:text-5xl font-headline-lg text-primary-fixed-dim animated-num" data-val={annualSavings * 20}>
+                {new Intl.NumberFormat('en-US').format(annualSavings * 20)}
+              </span>
+            </div>
           </GlassCard>
 
           <GlassCard className="calc-element sm:col-span-2 relative overflow-hidden flex flex-col justify-between">

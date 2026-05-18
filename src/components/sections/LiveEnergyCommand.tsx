@@ -39,7 +39,7 @@ export const LiveEnergyCommand = () => {
           <div>
             <EnergyTextReveal 
               text="Smart Energy Monitoring" 
-              className="font-headline-lg text-headline-lg mb-2" 
+              className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-3 md:mb-4" 
               blueWords={["Monitoring"]}
             />
             <p className="font-body-md text-body-md text-on-surface-variant">
@@ -111,38 +111,48 @@ export const LiveEnergyCommand = () => {
           </div>
         </div>
 
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
-          <div className="text-center p-6 border-r border-white/5 last:border-0">
+        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 min-h-[120px]">
+          <div className="text-center p-4 md:p-6 border-r border-white/5 last:border-0 flex flex-col justify-center">
             <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">
               SELF SUFFICIENCY
             </p>
-            <p className="text-4xl font-headline-lg text-primary">
-              <ScrambleText text="98" className="stat-number" />%
-            </p>
+            <div className="h-[48px] flex items-center justify-center whitespace-nowrap">
+              <p className="text-3xl md:text-4xl font-headline-lg text-primary">
+                <ScrambleText text="98" className="stat-number" />%
+              </p>
+            </div>
           </div>
-          <div className="text-center p-6 border-r border-white/5 last:border-0">
+          <div className="text-center p-4 md:p-6 border-r border-white/5 last:border-0 flex flex-col justify-center">
             <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">
               EST. SAVINGS
             </p>
-            <p className="text-4xl font-headline-lg text-primary-fixed-dim">
-              Rs. <ScrambleText text="45,000" className="stat-number" /><span className="text-xl font-body-md text-on-surface-variant">/mo</span>
-            </p>
+            <div className="h-[48px] flex items-center justify-center whitespace-nowrap">
+              <p className="text-2xl md:text-4xl font-headline-lg text-primary-fixed-dim flex items-baseline">
+                <span className="mr-1">Rs.</span>
+                <ScrambleText text="45,000" className="stat-number inline-block w-[95px] md:w-[130px] text-center" />
+                <span className="text-sm md:text-xl font-body-md text-on-surface-variant ml-1">/mo</span>
+              </p>
+            </div>
           </div>
-          <div className="text-center p-6 border-r border-white/5 last:border-0">
+          <div className="text-center p-4 md:p-6 border-r border-white/5 last:border-0 flex flex-col justify-center">
             <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">
               CO2 SAVED
             </p>
-            <p className="text-4xl font-headline-lg text-primary">
-              <ScrambleText text="1.2" className="stat-number" />t
-            </p>
+            <div className="h-[48px] flex items-center justify-center whitespace-nowrap">
+              <p className="text-3xl md:text-4xl font-headline-lg text-primary">
+                <ScrambleText text="1.2" className="stat-number" />t
+              </p>
+            </div>
           </div>
-          <div className="text-center p-6 last:border-0 flex flex-col items-center justify-center">
+          <div className="text-center p-4 md:p-6 last:border-0 flex flex-col items-center justify-center">
             <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">
               GRID STATUS
             </p>
-            <div className="flex items-center justify-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-primary-fixed animate-pulse"></div>
-              <p className="text-lg font-headline-md text-primary">OPTIMAL</p>
+            <div className="h-[48px] flex items-center justify-center">
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-primary-fixed animate-pulse"></div>
+                <p className="text-lg font-headline-md text-primary">OPTIMAL</p>
+              </div>
             </div>
           </div>
         </div>

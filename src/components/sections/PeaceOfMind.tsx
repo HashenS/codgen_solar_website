@@ -202,8 +202,8 @@ export const PeaceOfMind = () => {
         <div>
           <EnergyTextReveal
             text="Zero Downtime. Zero Compromise."
-            className="font-headline-lg text-headline-lg mb-8"
-            blueWords={["Compromise."]}
+            className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-3 md:mb-6"
+            blueWords={["Zero", "Compromise."]}
           />
           <div className="space-y-6 perspective-[1000px]">
             <div className="pom-card glass-panel p-6 rounded-2xl flex items-start gap-4 border border-white/5 relative z-10 transform-style-3d">

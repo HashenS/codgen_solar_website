@@ -48,7 +48,7 @@ export const FAQ = () => {
       <div className="text-center mb-16">
         <EnergyTextReveal 
           text="Common Inquiries" 
-          className="font-headline-lg text-headline-lg mb-4" 
+          className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-3 md:mb-6" 
           blueWords={["Inquiries"]}
         />
       </div>

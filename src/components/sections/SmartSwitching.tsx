@@ -289,10 +289,10 @@ export const SmartSwitching = () => {
           >
             <EnergyTextReveal
               text="Intelligent Power Orchestration"
-              className="font-headline-md text-headline-md md:font-headline-lg md:text-headline-lg mb-1 md:mb-2"
+              className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-3 md:mb-4"
               blueWords={["Orchestration"]}
             />
-            <p className="font-body-sm md:font-body-md text-body-sm md:text-body-md text-on-surface-variant max-w-2xl mx-auto line-clamp-2 md:line-clamp-none">
+            <p className="font-body-sm md:font-body-lg text-body-sm md:text-body-lg text-on-surface-variant max-w-2xl mx-auto line-clamp-2 md:line-clamp-none">
               Our proprietary Nexus Inverter acts as the brain of your home, making
               microsecond decisions to optimize energy flow.
             </p>

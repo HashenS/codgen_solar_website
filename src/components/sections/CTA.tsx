@@ -33,7 +33,7 @@ export const CTA = () => {
         <div className="relative z-10 p-8 md:p-24 text-center">
           <EnergyTextReveal 
             text="Ready for Independence?" 
-            className="font-display-hero text-headline-lg md:text-display-hero mb-8" 
+            className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-4 md:mb-8" 
             blueWords={["Independence?"]}
           />
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
