@@ -260,9 +260,9 @@ export const SmartSwitching = () => {
             style={{ opacity: text1Opacity, y: text1Y }}
             className="text-center md:text-left w-full md:w-auto"
           >
-            <h2 className="font-display-hero font-bold tracking-tight text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+            <h2 className="font-display-hero font-bold tracking-tight text-5xl md:text-6xl lg:text-7xl text-white">
               Your{" "}
-              <span className="text-[#0e9c5c] drop-shadow-[0_0_20px_rgba(14,156,92,0.5)]">
+              <span className="text-[#0e9c5c]">
                 Power,
               </span>
             </h2>
@@ -272,9 +272,9 @@ export const SmartSwitching = () => {
             style={{ opacity: text2Opacity, y: text2Y }}
             className="text-center md:text-right w-full md:w-auto"
           >
-            <h2 className="font-display-hero font-bold tracking-tight text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+            <h2 className="font-display-hero font-bold tracking-tight text-5xl md:text-6xl lg:text-7xl text-white">
               Always{" "}
-              <span className="text-[#0863a8] drop-shadow-[0_0_20px_rgba(8,99,168,0.5)]">
+              <span className="text-[#0863a8]">
                 On.
               </span>
             </h2>

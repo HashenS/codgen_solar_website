@@ -234,7 +234,7 @@ export const Hero = () => {
                           transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } // Expo out equivalent
                         }
                       }}
-                      className="font-display-hero text-display-hero text-primary mb-0 leading-none drop-shadow-2xl text-center translate-x-1 md:translate-x-2"
+                      className="font-display-hero text-display-hero text-primary mb-0 leading-none text-center translate-x-1 md:translate-x-2"
                     >
                       The Ultimate
                     </motion.h1>
@@ -258,7 +258,6 @@ export const Hero = () => {
                           hidden: { color: "#333333", textShadow: "0px 0px 0px rgba(0,0,0,0)" },
                           visible: {
                             color: ["#333333", "#333333", "#ffffff", "#333333", "#ffffff", "#0e9c5c"],
-                            textShadow: ["0px 0px 0px rgba(0,0,0,0)", "0px 0px 0px rgba(0,0,0,0)", "0px 0px 40px rgba(255,255,255,0.8)", "0px 0px 0px rgba(0,0,0,0)", "0px 0px 40px rgba(255,255,255,0.8)", "0px 0px 0px rgba(0,0,0,0)"],
                             transition: { duration: 2, times: [0, 0.4, 0.45, 0.55, 0.6, 1] }
                           }
                         }}
@@ -268,7 +267,6 @@ export const Hero = () => {
                           hidden: { color: "#333333", textShadow: "0px 0px 0px rgba(0,0,0,0)" },
                           visible: {
                             color: ["#333333", "#333333", "#ffffff", "#333333", "#ffffff", "#0863a8"],
-                            textShadow: ["0px 0px 0px rgba(0,0,0,0)", "0px 0px 0px rgba(0,0,0,0)", "0px 0px 40px rgba(255,255,255,0.8)", "0px 0px 0px rgba(0,0,0,0)", "0px 0px 40px rgba(255,255,255,0.8)", "0px 0px 0px rgba(0,0,0,0)"],
                             transition: { duration: 2, times: [0, 0.4, 0.45, 0.55, 0.6, 1] }
                           }
                         }}
@@ -284,7 +282,7 @@ export const Hero = () => {
                           transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } 
                         }
                     }}
-                    className="font-body-lg text-body-lg text-on-surface-variant drop-shadow-md text-center max-w-2xl px-4"
+                    className="font-body-lg text-body-lg text-on-surface-variant text-center max-w-2xl px-4"
                   >
                     Experience uninterrupted power with Codegen Solar's Hybrid Resilience.
                     A tri-mode energy architecture that bridges the gap between solar,

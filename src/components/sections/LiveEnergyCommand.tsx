@@ -38,9 +38,9 @@ export const LiveEnergyCommand = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-8">
           <div>
             <EnergyTextReveal 
-              text="Live Energy Command" 
+              text="Smart Energy Monitoring" 
               className="font-headline-lg text-headline-lg mb-2" 
-              blueWords={["Command"]}
+              blueWords={["Monitoring"]}
             />
             <p className="font-body-md text-body-md text-on-surface-variant">
               Monitor every watt moving through your ecosystem.
@@ -93,7 +93,7 @@ export const LiveEnergyCommand = () => {
           <div className="relative z-10">
             <div className="w-40 h-40 mx-auto bg-background rounded-3xl flex flex-col items-center justify-center border border-white/20 glow-border relative">
               <Cpu className="w-10 h-10 text-primary mb-2" />
-              <p className="font-label-caps text-label-caps font-bold">NEXUS CORE</p>
+              <p className="font-label-caps text-label-caps font-bold">SMART INVERTER</p>
             </div>
             {/* Decorative HUD elements */}
             <div className="absolute inset-0 flex items-center justify-center -z-10">
@@ -125,7 +125,7 @@ export const LiveEnergyCommand = () => {
               EST. SAVINGS
             </p>
             <p className="text-4xl font-headline-lg text-primary-fixed-dim">
-              $<ScrambleText text="412" className="stat-number" />
+              Rs. <ScrambleText text="45,000" className="stat-number" /><span className="text-xl font-body-md text-on-surface-variant">/mo</span>
             </p>
           </div>
           <div className="text-center p-6 border-r border-white/5 last:border-0">

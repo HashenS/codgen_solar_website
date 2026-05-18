@@ -27,13 +27,9 @@ export const EnergyTextReveal = ({ text, className, blueWords = [] }: EnergyText
     gsap.fromTo(chars, 
       {
         color: "#333333", // Dim gray
-        textShadow: "0px 0px 0px rgba(0,0,0,0)",
       },
       {
         color: (index, target) => target.dataset.color === "blue" ? "#0863a8" : "#0e9c5c",
-        textShadow: (index, target) => target.dataset.color === "blue" 
-          ? "0px 0px 20px rgba(8,99,168,0.8)" 
-          : "0px 0px 20px rgba(14,156,92,0.8)",
         stagger: 0.1,
         ease: "power2.inOut",
         scrollTrigger: {
