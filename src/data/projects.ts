@@ -8,6 +8,7 @@ export interface Project {
   thumbnail: string;
   gallery: string[];
   description: string;
+  blueWords?: string[];
 }
 
 export const projectsData: Record<string, Project> = {
@@ -24,7 +25,8 @@ export const projectsData: Record<string, Project> = {
       "/recent-projects/Henuka_Fresh_Fruits_Project_Heiyanthuduwa/henuka-03-1024x1024.jpg",
       "/recent-projects/Henuka_Fresh_Fruits_Project_Heiyanthuduwa/henuka-04-1024x1024.jpg"
     ],
-    description: "CodeGen Solar, the Renewable Energy division of CodeGen International, delivers top-tier solar solutions with the best after-sales support and the friendliest service. We guided Henuka Fresh Fruits every step of the way on their solar investment journey, empowering their facility with a robust 100kW infrastructure."
+    description: "CodeGen Solar, the Renewable Energy division of CodeGen International, delivers top-tier solar solutions with the best after-sales support and the friendliest service. We guided Henuka Fresh Fruits every step of the way on their solar investment journey, empowering their facility with a robust 100kW infrastructure.",
+    blueWords: ["100kW", "Project"]
   },
   "malitha-lanka-project-ganemulla": {
     id: "2",
@@ -43,7 +45,8 @@ export const projectsData: Record<string, Project> = {
       "/recent-projects/Malitha_Lanka_Project_Ganemulla/malitha-lanka-07-2048x2048.jpg",
       "/recent-projects/Malitha_Lanka_Project_Ganemulla/malitha-lanka-08-2048x2048.jpg"
     ],
-    description: "A comprehensive 100kW commercial solar installation designed to significantly reduce grid reliance and operational costs for Malitha Lanka in Ganemulla. This project features state-of-the-art smart inverters and high-efficiency panels ensuring maximum yield."
+    description: "A comprehensive 100kW commercial solar installation designed to significantly reduce grid reliance and operational costs for Malitha Lanka in Ganemulla. This project features state-of-the-art smart inverters and high-efficiency panels ensuring maximum yield.",
+    blueWords: ["100kW", "Project"]
   },
   "the-rise-tech-village-kandy": {
     id: "3",
@@ -58,6 +61,7 @@ export const projectsData: Record<string, Project> = {
       "/recent-projects/Rise_Tech_Village_Kandy/rise-04.jpg",
       "/recent-projects/Rise_Tech_Village_Kandy/rise-05.jpg"
     ],
-    description: "An advanced smart grid integration for The Rise Tech Village in Kandy. This 100kW setup not only offsets carbon emissions but utilizes our proprietary power orchestration to seamlessly blend solar generation with complex tech-park demand."
+    description: "An advanced smart grid integration for The Rise Tech Village in Kandy. This 100kW setup not only offsets carbon emissions but utilizes our proprietary power orchestration to seamlessly blend solar generation with complex tech-park demand.",
+    blueWords: ["100kW", "Project"]
   }
 };

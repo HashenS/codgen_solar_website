@@ -46,23 +46,59 @@ export const ProjectClient = ({ project }: ProjectClientProps) => {
       }
     );
 
-    // Animate gallery images
-    gsap.fromTo(
-      ".gallery-img",
-      { y: 60, opacity: 0, scale: 0.95 },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".gallery-grid",
-          start: "top 80%",
+    // Big image expand effect
+    gsap.utils.toArray(".gallery-big").forEach((elem: any) => {
+      gsap.fromTo(elem,
+        { scale: 0.3, opacity: 0, transformOrigin: "center center" },
+        {
+          scale: 1,
+          opacity: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: elem,
+            start: "top bottom",
+            end: "center center",
+            scrub: 1.5,
+          }
         }
-      }
-    );
+      );
+    });
+
+    // Left images slide in
+    gsap.utils.toArray(".gallery-left").forEach((elem: any) => {
+      gsap.fromTo(elem,
+        { x: -150, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: elem,
+            start: "top bottom",
+            end: "center center",
+            scrub: 1.5,
+          }
+        }
+      );
+    });
+
+    // Right images slide in
+    gsap.utils.toArray(".gallery-right").forEach((elem: any) => {
+      gsap.fromTo(elem,
+        { x: 150, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: elem,
+            start: "top bottom",
+            end: "center center",
+            scrub: 1.5,
+          }
+        }
+      );
+    });
   }, { scope: containerRef });
 
   return (
@@ -95,7 +131,7 @@ export const ProjectClient = ({ project }: ProjectClientProps) => {
             <EnergyTextReveal 
               text={project.title} 
               className="font-display-hero font-bold tracking-tight text-4xl md:text-6xl lg:text-7xl mb-4 max-w-4xl"
-              blueWords={[]}
+              blueWords={project.blueWords || []}
             />
           </div>
         </div>
@@ -141,22 +177,28 @@ export const ProjectClient = ({ project }: ProjectClientProps) => {
         </div>
 
         {/* Gallery */}
-        <div className="gallery-grid grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-24">
-          {project.gallery.map((imgUrl, index) => (
-            <div 
-              key={index} 
-              className={`gallery-img relative overflow-hidden rounded-2xl bg-surface-container-low ${
-                index % 3 === 0 ? "md:col-span-2 aspect-video" : "aspect-[4/3]"
-              }`}
-            >
-              <Image
-                src={imgUrl}
-                alt={`${project.title} Gallery Image ${index + 1}`}
-                fill
-                className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
-              />
-            </div>
-          ))}
+        <div className="gallery-grid grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-24 overflow-hidden">
+          {project.gallery.map((imgUrl, index) => {
+            const isBig = index % 3 === 0;
+            const isLeft = index % 3 === 1;
+
+            return (
+              <div 
+                key={index} 
+                className={`relative overflow-hidden rounded-2xl bg-surface-container-low ${
+                  isBig ? "gallery-big md:col-span-2 aspect-video" : 
+                  isLeft ? "gallery-left aspect-[4/3]" : "gallery-right aspect-[4/3]"
+                }`}
+              >
+                <Image
+                  src={imgUrl}
+                  alt={`${project.title} Gallery Image ${index + 1}`}
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
+                />
+              </div>
+            );
+          })}
         </div>
       </section>
 

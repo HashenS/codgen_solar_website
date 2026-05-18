@@ -64,7 +64,7 @@ export const ProjectGrid = () => {
     const parts = text.split(regex);
     return parts.map((part, i) => {
       if (blueWords.some(w => w.toLowerCase() === part.toLowerCase())) {
-        return <span key={i} className="text-[#0e9c5c]">{part}</span>;
+        return <span key={i} className="text-blue-500">{part}</span>;
       }
       return part;
     });
@@ -88,23 +88,59 @@ export const ProjectGrid = () => {
   }, { scope: containerRef });
 
   useGSAP(() => {
-    // Re-animate when filter changes
-    gsap.fromTo(
-      ".project-card",
-      { y: 40, opacity: 0, scale: 0.98 },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 60%",
+    // Big cards shrink effect
+    gsap.utils.toArray(".anim-big").forEach((elem: any) => {
+      gsap.fromTo(elem,
+        { scale: 1.1, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: elem,
+            start: "top 95%",
+            end: "center center",
+            scrub: 1.5,
+          }
         }
-      }
-    );
+      );
+    });
+
+    // Small cards slide in left
+    gsap.utils.toArray(".anim-left").forEach((elem: any) => {
+      gsap.fromTo(elem,
+        { x: -100, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: elem,
+            start: "top 95%",
+            end: "center center",
+            scrub: 1.5,
+          }
+        }
+      );
+    });
+
+    // Small cards slide in right
+    gsap.utils.toArray(".anim-right").forEach((elem: any) => {
+      gsap.fromTo(elem,
+        { x: 100, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: elem,
+            start: "top 95%",
+            end: "center center",
+            scrub: 1.5,
+          }
+        }
+      );
+    });
   }, { scope: containerRef, dependencies: [filter] });
 
   return (
@@ -133,10 +169,19 @@ export const ProjectGrid = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-        {filteredProjects.map((project) => (
-          <div key={project.id} className={`project-card group relative overflow-hidden rounded-2xl glass-panel glow-border transition-all duration-500 cursor-pointer ${project.colSpan}`}>
-            <div className={`w-full ${project.aspectRatio}`}>
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter overflow-hidden">
+        {filteredProjects.map((project, index) => {
+          const isBig = project.colSpan === "md:col-span-8";
+          const isLeft = index % 2 !== 0;
+          
+          let animClass = "";
+          if (isBig) animClass = "anim-big";
+          else if (isLeft) animClass = "anim-left";
+          else animClass = "anim-right";
+
+          return (
+            <div key={project.id} className={`project-card ${animClass} group relative overflow-hidden rounded-2xl glass-panel glow-border transition-all duration-500 cursor-pointer ${project.colSpan}`}>
+              <div className={`w-full ${project.aspectRatio}`}>
               <Image
                 src={project.image}
                 alt={project.title}
@@ -158,7 +203,8 @@ export const ProjectGrid = () => {
               </div>
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
