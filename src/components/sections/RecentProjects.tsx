@@ -32,20 +32,27 @@ export const RecentProjects = () => {
       }
     );
 
-    // Staggered card entrance
+    // Camera lens expansion effect from bottom
     gsap.fromTo(
       ".recent-project-card",
-      { y: 60, opacity: 0, scale: 0.95 },
+      { 
+        y: 100,
+        clipPath: "circle(10% at 50% 50%)", 
+        scale: 0.5,
+        opacity: 0
+      },
       {
         y: 0,
-        opacity: 1,
+        clipPath: "circle(150% at 50% 50%)",
         scale: 1,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "power2.out",
+        opacity: 1,
+        stagger: 0.1,
+        ease: "none",
         scrollTrigger: {
           trigger: ".recent-project-grid",
-          start: "top 80%",
+          start: "top 90%",
+          end: "top 30%",
+          scrub: 1,
         }
       }
     );
@@ -64,7 +71,7 @@ export const RecentProjects = () => {
           <EnergyTextReveal 
             text="Our Portfolio of Success" 
             className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-4" 
-            blueWords={[]}
+            blueWords={["Success"]}
           />
         </div>
         <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl recent-header-elem">
