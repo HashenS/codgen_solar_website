@@ -2,35 +2,17 @@
 
 import React, { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ArrowRight } from "lucide-react";
 import { EnergyTextReveal } from "../ui/EnergyTextReveal";
 import { GlassCard } from "../ui/GlassCard";
-
-const RECENT_PROJECTS = [
-  {
-    id: 1,
-    title: "Henuka Fresh Fruits 100kW Project - Heiyanthuduwa",
-    tag: "COMMERCIAL",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBjjR6DfK24Uz3R76VwCNiYOa_4aU9h7NvLKrhb9louVpcwwJHJRSiuchocc21JQz2_HDIDA4XymnYIyMUjWOZSVY0fgy68uFZ8fn0EXZAkG1oeI8qRvTY4yzO4mMYkb3zs7MK_epfAqClDX4gJVUdL2UGgG0xAAEc0q7c4vaZSe_xenLFCzSLWEVruPcM-P_RKDhOmC4dlkz7B--uo3gBJ_MOTRMw6lkYkqLfkeK3sXZ4Xzi4o65zUJ4J4rDuTaL7lW--8SaaqC3re",
-  },
-  {
-    id: 2,
-    title: "Malitha Lanka 100kW Project - Ganemulla",
-    tag: "COMMERCIAL",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBbySG6fudrxsACbL2MBk9_vdwhp6wl69ig6SwXD7g6WIOxJOJYgHUMQM26UjBd_6S0WLnbhtoA5_AYG3StRVOiwhUlE8a1TQOmL90H-O8rioSNgFw45aqCUZC0ZradFCBWZw85uJxL3rD8EcRSqfsT2LapJG3PkLvqm6el63nvDtFbHadyHVxyc4V44wZvMO2y5CnaFuJ8Z8BeZzC1r_EhqERwUio325u6_iWW1gPfxYHHnmq9OCj7Uzef3a5J1aEoOz4dBWfzAr9v",
-  },
-  {
-    id: 3,
-    title: "The Rise Tech Village 100kW Project - Kandy",
-    tag: "SMART GRID",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDFXLw-7QG-C5K_i0XnUjhaC64lEIVYaJyRhgpNENeFGD2Kgws0KUa9KY4CvHvllmxzeLF5Twxfg0LQY7qJ0Wsv_SKLlVNyiy3iwhcx4WmCLYCKg9mV6p-YaBK5cXRA69uPKBvD_9CZP_2vnmr3uDrvissqWgPQ-ExYrTHhp5NQxc5yfNB8ri8Ej8DsYA7h8uVj0rcHPsIcbKB2o-Hmzmzj4NgXfYE78o-CFgrdgdPNxbVnLZUocYgs9r1fkWTGk4QpFZC8DB-wBTH4",
-  }
-];
+import { projectsData } from "../../data/projects";
 
 export const RecentProjects = () => {
   const containerRef = useRef<HTMLElement>(null);
+  const recentProjectsList = Object.values(projectsData);
 
   useGSAP(() => {
     // Animate section headers
@@ -92,14 +74,15 @@ export const RecentProjects = () => {
 
       {/* Grid */}
       <div className="recent-project-grid grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-        {RECENT_PROJECTS.map((project) => (
-          <div 
+        {recentProjectsList.map((project) => (
+          <Link 
+            href={`/projects-post/${project.slug}`}
             key={project.id} 
-            className="recent-project-card group relative overflow-hidden rounded-2xl aspect-[4/5] bg-surface-container-low cursor-pointer"
+            className="recent-project-card group relative overflow-hidden rounded-2xl aspect-[4/5] bg-surface-container-low cursor-pointer block"
           >
             {/* Background Image */}
             <Image
-              src={project.image}
+              src={project.thumbnail}
               alt={project.title}
               fill
               className="object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out grayscale-[10%] group-hover:grayscale-0"
@@ -114,7 +97,7 @@ export const RecentProjects = () => {
                 <div className="flex-1">
                   <span className="text-primary-fixed font-label-caps text-[10px] tracking-widest mb-3 flex items-center gap-2">
                     <span className="w-4 h-[1px] bg-primary-fixed"></span>
-                    {project.tag}
+                    {project.category}
                   </span>
                   <h3 className="font-headline-md text-white text-xl md:text-2xl leading-tight font-semibold line-clamp-2 drop-shadow-lg">
                     {project.title}
@@ -127,7 +110,7 @@ export const RecentProjects = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       
