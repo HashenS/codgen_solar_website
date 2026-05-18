@@ -7,9 +7,42 @@ import { useGSAP } from "@gsap/react";
 import { GlassCard } from "../../ui/GlassCard";
 import { MapPin, Network, Mail } from "lucide-react";
 import { Button } from "../../ui/Button";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
+const contactSchema = z.object({
+  fullName: z.string().min(5, "Name is required (at least 2 characters)"),
+  email: z.string().email("Please enter a valid corporate email"),
+  inquiryType: z.string().min(1, "Please select an inquiry type"),
+  projectBrief: z.string().min(10, "Please provide more details (at least 10 characters)"),
+});
+
+type ContactFormValues = z.infer<typeof contactSchema>;
 
 export const ContactGrid = () => {
   const containerRef = useRef<HTMLElement>(null);
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormValues>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      inquiryType: "Technical Audit",
+      projectBrief: "",
+    }
+  });
+
+  const onSubmit = async (data: ContactFormValues) => {
+    // Simulate an API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log("Form Submitted:", data);
+    alert("Inquiry submitted successfully!");
+  };
 
   useGSAP(
     () => {
@@ -39,50 +72,61 @@ export const ContactGrid = () => {
         <div className="lg:col-span-7 contact-element">
           <GlassCard className="p-8 md:p-12 rounded-xl h-full border border-white/10">
             <h2 className="font-headline-lg text-white mb-8">Inquiry Portal</h2>
-            <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Full Name</label>
                   <input 
                     type="text" 
+                    {...register("fullName")}
                     aria-label="Full Name"
                     placeholder="John Doe"
-                    className="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-fixed focus:shadow-[0_0_15px_rgba(159,251,6,0.2)] transition-all"
+                    className={`w-full bg-surface-container-low border ${errors.fullName ? 'border-red-500' : 'border-white/10'} rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-fixed focus:shadow-[0_0_15px_rgba(159,251,6,0.2)] transition-all`}
                   />
+                  {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>}
                 </div>
                 <div className="space-y-2">
                   <label className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Corporate Email</label>
                   <input 
                     type="email" 
+                    {...register("email")}
                     aria-label="Corporate Email"
                     placeholder="john@company.com"
-                    className="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-fixed focus:shadow-[0_0_15px_rgba(159,251,6,0.2)] transition-all"
+                    className={`w-full bg-surface-container-low border ${errors.email ? 'border-red-500' : 'border-white/10'} rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-fixed focus:shadow-[0_0_15px_rgba(159,251,6,0.2)] transition-all`}
                   />
+                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                 </div>
               </div>
 
               <div className="space-y-2">
                 <label className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Inquiry Type</label>
-                <select aria-label="Inquiry Type" className="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-fixed focus:shadow-[0_0_15px_rgba(159,251,6,0.2)] transition-all appearance-none">
-                  <option>Technical Audit</option>
-                  <option>Commercial Consultation</option>
-                  <option>Project Partnership</option>
-                  <option>Residential Engineering</option>
+                <select 
+                  {...register("inquiryType")} 
+                  aria-label="Inquiry Type" 
+                  className={`w-full bg-surface-container-low border ${errors.inquiryType ? 'border-red-500' : 'border-white/10'} rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-fixed focus:shadow-[0_0_15px_rgba(159,251,6,0.2)] transition-all appearance-none`}
+                >
+                  <option value="Technical Audit">Technical Audit</option>
+                  <option value="Commercial Consultation">Commercial Consultation</option>
+                  <option value="Project Partnership">Project Partnership</option>
+                  <option value="Residential Engineering">Residential Engineering</option>
                 </select>
+                {errors.inquiryType && <p className="text-red-500 text-sm mt-1">{errors.inquiryType.message}</p>}
               </div>
 
               <div className="space-y-2">
                 <label className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Project Brief</label>
                 <textarea 
                   rows={4} 
+                  {...register("projectBrief")}
                   aria-label="Project Brief"
                   placeholder="Describe your vision or technical requirements..."
-                  className="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-fixed focus:shadow-[0_0_15px_rgba(159,251,6,0.2)] transition-all"
+                  className={`w-full bg-surface-container-low border ${errors.projectBrief ? 'border-red-500' : 'border-white/10'} rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-fixed focus:shadow-[0_0_15px_rgba(159,251,6,0.2)] transition-all`}
                 ></textarea>
+                {errors.projectBrief && <p className="text-red-500 text-sm mt-1">{errors.projectBrief.message}</p>}
               </div>
 
-              <Button variant="primary" className="w-full py-5 text-body-md font-bold hover:shadow-[0_0_30px_rgba(159,251,6,0.4)]">
-                Initiate Consultation
+              <Button type="submit" disabled={isSubmitting} variant="primary" className="w-full py-5 text-body-md font-bold hover:shadow-[0_0_30px_rgba(159,251,6,0.4)] disabled:opacity-50">
+                {isSubmitting ? "Submitting..." : "Initiate Consultation"}
               </Button>
             </form>
           </GlassCard>
