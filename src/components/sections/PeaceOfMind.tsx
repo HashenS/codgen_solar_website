@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ShieldCheck, CloudLightning } from "lucide-react";
+import { ShieldCheck, CloudLightning, Activity } from "lucide-react";
 import { EnergyTextReveal } from "../ui/EnergyTextReveal";
 import {
   useScroll,
@@ -217,14 +217,20 @@ export const PeaceOfMind = () => {
       className="py-section-gap bg-surface-container-lowest overflow-hidden"
       style={{ perspective: "1000px" }}
     >
+      <div className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mb-12 md:mb-16 flex flex-col items-center text-center">
+        <EnergyTextReveal
+          text="Zero Downtime. Zero Compromise."
+          className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-3 md:mb-4"
+          blueWords={["Zero", "Compromise."]}
+        />
+        <p className="font-body-md text-body-md text-on-surface-variant max-w-xl mx-auto">
+          Experience uninterrupted continuity with our instant battery takeover.
+        </p>
+      </div>
+
       <div className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center">
-        {/* Left: text + cards */}
+        {/* Left: cards */}
         <div className="pom-left">
-          <EnergyTextReveal
-            text="Zero Downtime. Zero Compromise."
-            className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-3 md:mb-6"
-            blueWords={["Zero", "Compromise."]}
-          />
           <div className="space-y-6 perspective-[1000px]">
             <div className="pom-card glass-panel p-6 rounded-2xl flex items-start gap-4 border border-white/5 relative z-10 transform-style-3d">
               <div className="pom-icon w-12 h-12 rounded-full bg-primary-fixed/10 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(163,255,18,0.2)]">
@@ -252,6 +258,20 @@ export const PeaceOfMind = () => {
                 <p className="font-body-md text-body-md text-on-surface-variant">
                   System monitors weather patterns and pre-charges batteries if an
                   outage-causing storm is detected in your area.
+                </p>
+              </div>
+            </div>
+
+            <div className="pom-card glass-panel p-6 rounded-2xl flex items-start gap-4 border border-white/5 relative z-10 transform-style-3d">
+              <div className="pom-icon w-12 h-12 rounded-full bg-primary-fixed/10 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(163,255,18,0.2)]">
+                <Activity className="text-primary-fixed w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-headline-md text-headline-md text-primary mb-1">
+                  Microsecond Transfer
+                </h3>
+                <p className="font-body-md text-body-md text-on-surface-variant">
+                  Switch from grid to battery power in under 10ms. Your electronics and appliances won't even notice the outage.
                 </p>
               </div>
             </div>

@@ -3,46 +3,51 @@
 import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { Button } from "../../ui/Button";
+import { EnergyTextReveal } from "../../ui/EnergyTextReveal";
 
 export const AboutCTA = () => {
   const containerRef = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
-      gsap.fromTo(
-        ".about-cta-content",
-        { scale: 0.95, opacity: 0, y: 40 },
-        {
-          scale: 1,
-          opacity: 1,
-          y: 0,
-          duration: 1.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 80%",
-          },
-        }
-      );
+      gsap.from(".about-cta-content", {
+        scale: 0.95,
+        opacity: 0,
+        y: 40,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+        },
+      });
     },
     { scope: containerRef }
   );
 
   return (
-    <section ref={containerRef} className="py-section-gap">
-      <div className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-        <div className="about-cta-content bg-primary-fixed-dim rounded-3xl p-12 md:p-24 text-center relative overflow-hidden group">
-          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_#000,_transparent)]"></div>
-          <h2 className="font-display-hero text-[32px] md:text-headline-lg text-[#102000] mb-6 relative z-10">
-            Ready to Join the Solar Revolution?
-          </h2>
-          <p className="font-body-lg text-body-lg text-[#102000]/80 mb-10 max-w-2xl mx-auto relative z-10">
+    <section ref={containerRef} className="py-section-gap px-margin-mobile md:px-margin-desktop">
+      <div className="about-cta-content max-w-container-max mx-auto glass-panel rounded-3xl md:rounded-[48px] overflow-hidden relative border border-primary-fixed/20">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-fixed/10 via-transparent to-transparent" />
+        <div className="relative z-10 p-8 md:p-24 text-center">
+          <EnergyTextReveal
+            text="Ready to Join the Solar Revolution?"
+            className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-4 md:mb-8"
+            blueWords={["Solar", "Revolution?"]}
+          />
+          <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
             Join the hundreds of forward-thinking homeowners and enterprises who
             have already secured their energy future with Codegen.
           </p>
-          <button className="bg-[#102000] text-primary-fixed-dim px-12 py-5 rounded-full font-bold text-label-caps tracking-widest relative z-10 hover:bg-[#1f3700] transition-colors hover:scale-105 active:scale-95">
-            REQUEST A FREE QUOTE
-          </button>
+          <div className="flex justify-center">
+            <Button variant="primary" size="lg">
+              Request a Free Quote
+            </Button>
+          </div>
+          <p className="mt-8 text-on-surface-variant/60 font-label-caps text-label-caps">
+            COMPLIMENTARY CONSULTATION • NO OBLIGATION
+          </p>
         </div>
       </div>
     </section>

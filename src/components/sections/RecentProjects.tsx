@@ -62,9 +62,8 @@ export const RecentProjects = () => {
     <section ref={containerRef} className="py-section-gap w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-30">
       
       {/* Header */}
-      <div className="mb-12 md:mb-16">
-        <p className="font-label-caps text-label-caps text-primary-fixed mb-4 recent-header-elem flex items-center gap-4">
-          <span className="w-6 h-[1px] bg-primary-fixed"></span>
+      <div className="mb-12 md:mb-16 flex flex-col items-center text-center">
+        <p className="font-label-caps text-label-caps text-primary-fixed mb-4 recent-header-elem">
           RECENT PROJECTS
         </p>
         <div className="recent-header-elem">
@@ -75,7 +74,7 @@ export const RecentProjects = () => {
           />
         </div>
         <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl recent-header-elem">
-          Powering Progress: See our commitment to quality and innovation in action through diverse solar projects across Sri Lanka.
+          Discover our commitment to quality and innovation across Sri Lanka.
         </p>
       </div>
 

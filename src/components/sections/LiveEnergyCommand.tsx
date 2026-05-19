@@ -35,15 +35,15 @@ export const LiveEnergyCommand = () => {
   return (
     <section ref={containerRef} className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto overflow-hidden">
       <div className="glass-panel rounded-[40px] p-8 md:p-16 relative border border-white/5 shadow-2xl">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-8">
+        <div className="flex flex-col items-center text-center mb-16 gap-8">
           <div>
             <EnergyTextReveal 
               text="Smart Energy Monitoring" 
               className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-3 md:mb-4" 
               blueWords={["Monitoring"]}
             />
-            <p className="font-body-md text-body-md text-on-surface-variant">
-              Monitor every watt moving through your ecosystem.
+            <p className="font-body-md text-body-md text-on-surface-variant max-w-xl mx-auto">
+              Monitor every watt moving through your ecosystem in real time.
             </p>
           </div>
           <div className="flex gap-4">

@@ -51,6 +51,9 @@ export const FAQ = () => {
           className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-3 md:mb-6" 
           blueWords={["Inquiries"]}
         />
+        <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto mt-4">
+          Everything you need to know about our technology, installation, and intelligent energy management.
+        </p>
       </div>
 
       <div className="max-w-3xl mx-auto space-y-4">

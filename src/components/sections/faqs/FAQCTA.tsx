@@ -4,48 +4,53 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Button } from "../../ui/Button";
+import { EnergyTextReveal } from "../../ui/EnergyTextReveal";
 
 export const FAQCTA = () => {
   const containerRef = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
-      gsap.fromTo(
-        ".faq-cta-content",
-        { scale: 0.95, opacity: 0, y: 40 },
-        {
-          scale: 1,
-          opacity: 1,
-          y: 0,
-          duration: 1.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 80%",
-          },
-        }
-      );
+      gsap.from(".faq-cta-content", {
+        scale: 0.95,
+        opacity: 0,
+        y: 40,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+        },
+      });
     },
     { scope: containerRef }
   );
 
   return (
-    <section ref={containerRef} className="py-section-gap px-margin-mobile md:px-margin-desktop relative overflow-hidden">
-      <div className="absolute inset-0 bg-primary-container/5 pointer-events-none"></div>
-      <div className="faq-cta-content max-w-4xl mx-auto bg-surface/70 backdrop-blur-xl border border-primary-fixed/30 rounded-[2rem] p-12 md:p-20 text-center relative z-10 hover:border-primary-fixed transition-colors duration-500 hover:shadow-[0_0_30px_rgba(159,251,6,0.1)]">
-        <h2 className="font-headline-lg text-headline-lg text-primary mb-6">
-          Still have questions?
-        </h2>
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-2xl mx-auto">
-          Our engineering consultants are available for complex technical inquiries and custom architectural project planning.
-        </p>
-        <div className="flex flex-col md:flex-row justify-center gap-6">
-          <Button variant="primary" className="px-10 py-4 text-[18px]">
-            Contact Engineering
-          </Button>
-          <Button variant="glass" className="px-10 py-4 text-[18px] border-white/20">
-            Download Technical PDF
-          </Button>
+    <section ref={containerRef} className="py-section-gap px-margin-mobile md:px-margin-desktop">
+      <div className="faq-cta-content max-w-container-max mx-auto glass-panel rounded-3xl md:rounded-[48px] overflow-hidden relative border border-primary-fixed/20">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-fixed/10 via-transparent to-transparent" />
+        <div className="relative z-10 p-8 md:p-24 text-center">
+          <EnergyTextReveal
+            text="Still Have Questions?"
+            className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-4 md:mb-8"
+            blueWords={["Questions?"]}
+          />
+          <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
+            Our engineering consultants are available for complex technical
+            inquiries and custom architectural project planning.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Button variant="primary" size="lg">
+              Contact Engineering
+            </Button>
+            <Button variant="glass" size="lg">
+              Download Technical PDF
+            </Button>
+          </div>
+          <p className="mt-8 text-on-surface-variant/60 font-label-caps text-label-caps">
+            COMPLIMENTARY CONSULTATION • NO OBLIGATION
+          </p>
         </div>
       </div>
     </section>

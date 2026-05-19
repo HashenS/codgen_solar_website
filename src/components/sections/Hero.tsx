@@ -300,14 +300,13 @@ export const Hero = () => {
                     }}
                     className="flex flex-col sm:flex-row gap-4 mt-10 justify-center pointer-events-auto relative z-50"
                   >
-                    <Button variant="primary" size="md" magnetic onClick={() => router.push('/solutions')}>
+                    <Button variant="primary" size="md" onClick={() => router.push('/solutions')}>
                       Our Solutions
                     </Button>
                     <Button 
                       variant="primary" 
                       size="md" 
-                      magnetic 
-                      className="bg-[#0863a8] hover:bg-[#0e9c5c]"
+                      className="bg-[#0863a8]"
                       style={{ color: "#ffffff" }}
                       onClick={() => router.push('/contact')}
                     >

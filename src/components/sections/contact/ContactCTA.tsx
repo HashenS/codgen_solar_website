@@ -4,50 +4,53 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Button } from "../../ui/Button";
+import { EnergyTextReveal } from "../../ui/EnergyTextReveal";
 
 export const ContactCTA = () => {
   const containerRef = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
-      gsap.fromTo(
-        ".contact-cta-content",
-        { scale: 0.95, opacity: 0, y: 40 },
-        {
-          scale: 1,
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 80%",
-          },
-        }
-      );
+      gsap.from(".contact-cta-content", {
+        scale: 0.95,
+        opacity: 0,
+        y: 40,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+        },
+      });
     },
     { scope: containerRef }
   );
 
   return (
-    <section ref={containerRef} className="py-section-gap bg-surface-container-low/30 px-margin-mobile">
-      <div className="contact-cta-content max-w-4xl mx-auto text-center space-y-8">
-        <span className="font-label-caps text-label-caps text-primary-fixed tracking-[0.3em] uppercase block">
-          Ready for transition?
-        </span>
-        <h2 className="font-headline-lg text-headline-lg text-white">
-          Schedule a Comprehensive Technical Audit
-        </h2>
-        <p className="text-on-surface-variant text-body-lg max-w-3xl mx-auto">
-          Our specialists will evaluate your structural capacity, atmospheric efficiency, and grid-backbone compatibility within 48 hours.
-        </p>
-        <div className="flex flex-col md:flex-row gap-4 justify-center pt-8">
-          <Button variant="primary" className="px-12 py-5 text-body-md">
-            Start Technical Audit
-          </Button>
-          <Button variant="glass" className="px-12 py-5 text-body-md border-white/20">
-            Download Specs
-          </Button>
+    <section ref={containerRef} className="py-section-gap px-margin-mobile md:px-margin-desktop">
+      <div className="contact-cta-content max-w-container-max mx-auto glass-panel rounded-3xl md:rounded-[48px] overflow-hidden relative border border-primary-fixed/20">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-fixed/10 via-transparent to-transparent" />
+        <div className="relative z-10 p-8 md:p-24 text-center">
+          <EnergyTextReveal
+            text="Schedule a Technical Audit"
+            className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-4 md:mb-8"
+            blueWords={["Technical", "Audit"]}
+          />
+          <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
+            Our specialists will evaluate your structural capacity, atmospheric efficiency,
+            and grid-backbone compatibility within 48 hours.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Button variant="primary" size="lg">
+              Start Technical Audit
+            </Button>
+            <Button variant="glass" size="lg">
+              Download Specs
+            </Button>
+          </div>
+          <p className="mt-8 text-on-surface-variant/60 font-label-caps text-label-caps">
+            COMPLIMENTARY CONSULTATION • NO OBLIGATION
+          </p>
         </div>
       </div>
     </section>
