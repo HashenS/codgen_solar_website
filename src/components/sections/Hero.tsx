@@ -3,6 +3,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence, useInView } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import { Button } from "../ui/Button";
 import { useRouter } from "next/navigation";
 
@@ -189,20 +190,42 @@ export const Hero = () => {
               {activeStage === 0 && (
                 <motion.div
                   key="logo"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   exit={{ opacity: 0, y: -50 }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                  className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none"
                 >
-                  <Image 
-                    src="/cg-solar.png" 
-                    alt="Codegen Solar" 
-                    width={320}
-                    height={100}
-                    priority
-                    className="w-48 md:w-80 h-auto drop-shadow-[0_0_20px_rgba(14,156,92,0.3)]" 
-                  />
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                  >
+                    <Image 
+                      src="/cg-solar.png" 
+                      alt="Codegen Solar" 
+                      width={320}
+                      height={100}
+                      priority
+                      className="w-48 md:w-80 h-auto drop-shadow-[0_0_20px_rgba(14,156,92,0.3)]" 
+                    />
+                  </motion.div>
+                  
+                  {/* Scroll Indicator */}
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 2, duration: 1 }}
+                    className="absolute bottom-12 flex flex-col items-center gap-2"
+                  >
+                    <span className="text-white/60 text-sm tracking-widest uppercase font-mono">Scroll to Explore</span>
+                    <motion.div
+                      animate={{ y: [0, 8, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      <ChevronDown className="text-white/60 w-6 h-6" />
+                    </motion.div>
+                  </motion.div>
                 </motion.div>
               )}
 
