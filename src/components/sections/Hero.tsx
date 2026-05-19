@@ -257,8 +257,8 @@ export const Hero = () => {
                         variants={{
                           hidden: { color: "#333333", textShadow: "0px 0px 0px rgba(0,0,0,0)" },
                           visible: {
-                            color: ["#333333", "#333333", "#ffffff", "#333333", "#ffffff", "#0e9c5c"],
-                            transition: { duration: 2, times: [0, 0.4, 0.45, 0.55, 0.6, 1] }
+                            color: ["#333333", "#333333", "#ffffff", "#333333", "#ffffff", "#333333", "#ffffff", "#333333", "#ffffff", "#0e9c5c"],
+                            transition: { duration: 1.8, times: [0, 0.3, 0.32, 0.38, 0.4, 0.45, 0.47, 0.51, 0.53, 1] }
                           }
                         }}
                       >Safety</motion.span>
@@ -266,8 +266,8 @@ export const Hero = () => {
                         variants={{
                           hidden: { color: "#333333", textShadow: "0px 0px 0px rgba(0,0,0,0)" },
                           visible: {
-                            color: ["#333333", "#333333", "#ffffff", "#333333", "#ffffff", "#0863a8"],
-                            transition: { duration: 2, times: [0, 0.4, 0.45, 0.55, 0.6, 1] }
+                            color: ["#333333", "#333333", "#ffffff", "#333333", "#ffffff", "#333333", "#ffffff", "#333333", "#ffffff", "#0863a8"],
+                            transition: { duration: 1.8, times: [0, 0.32, 0.34, 0.4, 0.42, 0.48, 0.5, 0.55, 0.57, 1] }
                           }
                         }}
                       >Net.</motion.span>
