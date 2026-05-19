@@ -111,8 +111,18 @@ export const LiveEnergyCommand = () => {
           </div>
         </div>
 
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 min-h-[120px]">
-          <div className="text-center p-4 md:p-6 border-r border-white/5 last:border-0 flex flex-col justify-center">
+        <div className="mt-20 relative min-h-[120px] border-t border-white/5 pt-8 md:pt-0 md:border-t-0">
+          {/* Desktop Dividers */}
+          <div className="absolute top-0 bottom-0 left-1/4 w-px bg-white/5 hidden md:block"></div>
+          <div className="absolute top-0 bottom-0 left-1/2 w-px bg-white/5 hidden md:block"></div>
+          <div className="absolute top-0 bottom-0 left-3/4 w-px bg-white/5 hidden md:block"></div>
+          
+          {/* Mobile Dividers */}
+          <div className="absolute top-8 bottom-0 left-1/2 w-px bg-white/5 md:hidden"></div>
+          <div className="absolute top-1/2 left-0 right-0 h-px bg-white/5 md:hidden mt-4"></div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 h-full">
+            <div className="text-center p-4 md:p-8 flex flex-col justify-center">
             <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">
               SELF SUFFICIENCY
             </p>
@@ -122,7 +132,7 @@ export const LiveEnergyCommand = () => {
               </p>
             </div>
           </div>
-          <div className="text-center p-4 md:p-6 border-r border-white/5 last:border-0 flex flex-col justify-center">
+          <div className="text-center p-4 md:p-8 flex flex-col justify-center">
             <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">
               EST. SAVINGS
             </p>
@@ -134,7 +144,7 @@ export const LiveEnergyCommand = () => {
               </p>
             </div>
           </div>
-          <div className="text-center p-4 md:p-6 border-r border-white/5 last:border-0 flex flex-col justify-center">
+          <div className="text-center p-4 md:p-8 flex flex-col justify-center">
             <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">
               CO2 SAVED
             </p>
@@ -144,7 +154,7 @@ export const LiveEnergyCommand = () => {
               </p>
             </div>
           </div>
-          <div className="text-center p-4 md:p-6 last:border-0 flex flex-col items-center justify-center">
+          <div className="text-center p-4 md:p-8 flex flex-col items-center justify-center">
             <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">
               GRID STATUS
             </p>
@@ -154,6 +164,7 @@ export const LiveEnergyCommand = () => {
                 <p className="text-lg font-headline-md text-primary">OPTIMAL</p>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
