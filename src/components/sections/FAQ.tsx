@@ -62,7 +62,7 @@ export const FAQ = () => {
           return (
             <div key={idx} className="faq-item">
               <GlassCard 
-                className="p-6 cursor-pointer transition-colors hover:bg-white/5"
+                className="rounded-xl p-6 cursor-pointer transition-colors hover:bg-white/5"
                 onClick={() => setOpenIndex(isOpen ? null : idx)}
               >
                 <div className="flex justify-between items-center">

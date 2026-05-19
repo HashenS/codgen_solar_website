@@ -74,7 +74,7 @@ export const SolarCalculator = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         {/* Interactive Controls */}
         <div className="lg:col-span-5 calc-element h-full">
           <GlassCard glowBorder className="h-full flex flex-col p-8 md:p-12">

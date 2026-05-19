@@ -111,7 +111,7 @@ export const RecentProjects = () => {
                 </div>
 
                 {/* Circular Hover Button */}
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center shrink-0 shadow-lg transform scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 ease-out">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary-fixed text-white flex items-center justify-center shrink-0 shadow-lg transform scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 ease-out">
                   <ArrowRight className="w-5 h-5 md:w-6 md:h-6 -rotate-45" />
                 </div>
               </div>

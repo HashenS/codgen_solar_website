@@ -228,7 +228,7 @@ export const PeaceOfMind = () => {
         </p>
       </div>
 
-      <div className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center">
+      <div className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-start">
         {/* Left: cards */}
         <div className="pom-left">
           <div className="space-y-6 perspective-[1000px]">
