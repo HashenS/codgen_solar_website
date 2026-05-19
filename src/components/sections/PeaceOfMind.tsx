@@ -139,38 +139,58 @@ export const PeaceOfMind = () => {
   const containerRef   = useRef<HTMLElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
 
-  // ── GSAP power-on effect (cards + aura entrance) ──────────────────────────
+  // ── GSAP scroll-scrubbed slide + power-on ────────────────────────────────
   useGSAP(
     () => {
       gsap.set(imageContainerRef.current, { filter: "brightness(0.2) grayscale(0.8)", scale: 0.95 });
 
-      const tl = gsap.timeline({
-        scrollTrigger: { trigger: containerRef.current, start: "top 60%" },
+      // ── 1. Scrubbed slide (bidirectional — follows scroll up & down) ──
+      const scrubTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 85%",
+          end: "top 20%",
+          scrub: 1.5,          // silky lag — feels buttery
+        },
       });
 
-      tl.to(imageContainerRef.current, {
-        filter: "brightness(1) grayscale(0)",
-        scale: 1,
-        duration: 1.5,
-        ease: "elastic.out(1, 0.4)",
-      }, "+=0.1")
-        .from(".pom-card", {
-          y: 80,
-          rotationX: 25,
-          rotationY: -15,
-          opacity: 0,
-          duration: 1.2,
-          stagger: 0.2,
+      scrubTl
+        .fromTo(".pom-left",
+          { x: -120, opacity: 0 },
+          { x: 0,    opacity: 1, ease: "power2.out" }
+        )
+        .fromTo(".pom-right",
+          { x: 120, opacity: 0 },
+          { x: 0,   opacity: 1, ease: "power2.out" },
+          "<"   // same time as left
+        );
+
+      // ── 2. One-shot secondary effects (image reveal + card entrance) ──
+      const oneShotTl = gsap.timeline({
+        scrollTrigger: { trigger: containerRef.current, start: "top 55%" },
+      });
+
+      oneShotTl
+        .to(imageContainerRef.current, {
+          filter: "brightness(1) grayscale(0)",
+          scale: 1,
+          duration: 1.6,
           ease: "power3.out",
-        }, "<0.2")
-        .from(".pom-icon", {
-          y: 30,
-          scale: 0.8,
+        })
+        .from(".pom-card", {
+          y: 60,
           opacity: 0,
-          duration: 1,
-          stagger: 0.2,
-          ease: "back.out(1.5)",
-        }, "<0.2");
+          duration: 1.1,
+          stagger: 0.18,
+          ease: "power3.out",
+        }, "-=1.0")
+        .from(".pom-icon", {
+          scale: 0.7,
+          opacity: 0,
+          duration: 0.9,
+          stagger: 0.18,
+          ease: "back.out(1.7)",
+        }, "-=0.9");
     },
     { scope: containerRef }
   );
@@ -199,7 +219,7 @@ export const PeaceOfMind = () => {
     >
       <div className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center">
         {/* Left: text + cards */}
-        <div>
+        <div className="pom-left">
           <EnergyTextReveal
             text="Zero Downtime. Zero Compromise."
             className="font-display-hero font-bold tracking-tight text-3xl md:text-5xl lg:text-6xl mb-3 md:mb-6"
@@ -239,7 +259,7 @@ export const PeaceOfMind = () => {
         </div>
 
         {/* Right: scroll-driven bulb animation */}
-        <div className="relative">
+        <div className="pom-right relative">
           <div
             ref={imageContainerRef}
             className="relative rounded-3xl overflow-hidden glass-panel aspect-[4/3] bg-black"

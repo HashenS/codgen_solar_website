@@ -187,15 +187,15 @@ export const SmartSwitching = () => {
     if (goingDown) {
       rawFrame.set(Math.max(0, Math.min(1, latest / 0.4)));
       rawText.set(Math.max(0, Math.min(1,  latest / 0.4)));
-      rawVideo.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.45)));
+      rawVideo.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.55)));
     } else {
       rawFrame.set(Math.max(0, Math.min(1, latest)));
-      rawVideo.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.45)));
+      rawVideo.set(Math.max(0, Math.min(1, (latest - 0.4) / 0.55)));
       rawText.set(Math.max(0,  Math.min(1, latest / 0.4)));
     }
 
-    if (latest >= 0.7) setShowUI(true);
-    else if (latest < 0.5) setShowUI(false);
+    if (latest >= 0.8) setShowUI(true);
+    else if (latest < 0.6) setShowUI(false);
   });
 
   // ── Derived motion values ─────────────────────────────────────────────────
@@ -224,7 +224,7 @@ export const SmartSwitching = () => {
   const text2Y       = useTransform(smoothText, [0.25, 0.55],            [50, 0]);
 
   return (
-    <section ref={containerRef} className="h-[400vh] relative z-20 bg-background">
+    <section ref={containerRef} className="h-[250vh] relative z-20 bg-background">
       <div
         ref={stickyRef}
         className="sticky top-0 h-[100svh] w-full relative flex flex-col justify-center pt-20 md:pt-24 pb-8 md:pb-12 overflow-hidden"
